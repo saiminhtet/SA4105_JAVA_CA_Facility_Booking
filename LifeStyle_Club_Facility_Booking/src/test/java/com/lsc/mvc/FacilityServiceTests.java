@@ -23,8 +23,8 @@ public class FacilityServiceTests {
 	
 //	@Test
 //	public void whenGetFacility_thenReturnFacility() {
-//		Facility u = fService.getFacility("F010");
-//		outputStringToConsole(u.toString());
+//		Facility f = fService.getFacility("F010");
+//		outputStringToConsole(f.toString());
 //	}
 	
 //	@Test
