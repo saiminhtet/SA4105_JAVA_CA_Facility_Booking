@@ -1,5 +1,10 @@
 package com.lsc.mvc.model;
 
+import java.nio.charset.Charset;
+import javax.xml.bind.DatatypeConverter;
+
+import org.hibernate.annotations.ColumnTransformer;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +21,7 @@ public class User {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "user_id")
-	private Long userId;
+	private Integer userId;
 	
 	@NotBlank
 	@Column(name = "user_number")
@@ -34,13 +39,15 @@ public class User {
 	@Column(name = "last_name")
 	protected String lastName;
 	
-	@NotBlank
 	@Column(name = "middle_name")
 	protected String middleName;
 	
-	@NotBlank
 	@Column(name = "password")
-	protected String password;
+	@ColumnTransformer(
+	        read = "AES_DECRYPT(password, 'SA46Team6')",
+	        write = "AES_ENCRYPT(?, 'SA46Team6')"
+	)
+	protected byte[] password;
 	
 	@NotBlank
 	@Column(name = "email_address")
@@ -51,8 +58,8 @@ public class User {
 	protected String phoneNumber;
 	
 	// Getters and Setters
-	public Long getUserId() { return userId; }
-	public void setUserId(Long userId) { this.userId = userId; }
+	public Integer getUserId() { return userId; }
+	public void setUserId(Integer userId) { this.userId = userId; }
 	public String getUserNumber() { return userNumber; }
 	public void setUserNumber(String userNumber) { this.userNumber = userNumber; }
 	public String getTitle() { return title; }
@@ -61,10 +68,18 @@ public class User {
 	public void setFirstName(String firstName) { this.firstName = firstName; }
 	public String getLastName() { return lastName; }
 	public void setLastName(String lastName) { this.lastName = lastName; }
-	public String getMiddleName() { if (middleName == "NA") middleName = ""; return middleName; }
-	public void setMiddleName(String middleName) { this.middleName = middleName; }
-	public String getPassword() { return password; }
-	public void setPassword(String password) { this.password = password; }
+	public String getMiddleName() { 
+		if (middleName == "NA") middleName = ""; 
+		return middleName; }
+	public void setMiddleName(String middleName) { 
+		if (middleName == null) middleName = "NA";
+		this.middleName = middleName; }
+	public String getPassword() { 
+		String s = new String(password); 
+		return s; }
+	public void setPassword(String password) { 
+		byte[] b = password.getBytes(Charset.forName("UTF-8"));
+		this.password = b; }
 	public String getEmailAddress() { return emailAddress; }
 	public void setEmailAddress(String emailAddress) { this.emailAddress = emailAddress; }
 	public String getPhoneNumber() { return phoneNumber; }
@@ -76,13 +91,11 @@ public class User {
 			@NotBlank String lastName, String middleName, @NotBlank String password,
 			@NotBlank String emailAddress, @NotBlank String phoneNumber) {
 		super();
-		this.userNumber = "A9999";
 		this.title = title;
 		this.firstName = firstName;
 		this.lastName = lastName;
-		if (middleName == null) middleName = "NA";
-		this.middleName = middleName;
-		this.password = password;
+		setMiddleName(middleName);
+		setPassword(password);
 		this.emailAddress = emailAddress;
 		this.phoneNumber = phoneNumber;
 	}
@@ -138,7 +151,8 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", userNumber=" + userNumber + ", "
 				+ "title=" + title + ", firstName=" + firstName + ", "
-				+ "lastName=" + lastName + ", middleName=" + middleName + ", "
+				+ "lastName=" + lastName + ", middleName=" + getMiddleName() + ", "
+				+ "password=" + getPassword() + ", "
 				+ "emailAddress=" + emailAddress + ", phoneNumber=" + phoneNumber + "]";
 	}
 	
