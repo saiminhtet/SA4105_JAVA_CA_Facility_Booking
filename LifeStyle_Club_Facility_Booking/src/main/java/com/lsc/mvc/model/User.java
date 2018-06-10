@@ -1,7 +1,6 @@
 package com.lsc.mvc.model;
 
 import java.nio.charset.Charset;
-import javax.xml.bind.DatatypeConverter;
 
 import org.hibernate.annotations.ColumnTransformer;
 
@@ -11,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @Entity
@@ -50,6 +50,7 @@ public class User {
 	protected byte[] password;
 	
 	@NotBlank
+	@Email(message = "Invalid Email")
 	@Column(name = "email_address")
 	protected String emailAddress;
 	
@@ -85,7 +86,7 @@ public class User {
 	public String getPhoneNumber() { return phoneNumber; }
 	public void setPhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
 	
-	// Constructors
+	// Constructors	
 	public User() { }
 	public User(@NotBlank String title, @NotBlank String firstName,
 			@NotBlank String lastName, String middleName, @NotBlank String password,

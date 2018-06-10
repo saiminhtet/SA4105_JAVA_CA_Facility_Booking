@@ -31,17 +31,17 @@ public class UserModelAndRepoTests {
 //	}
 	
 //	@Test
-//	public void whenAddUserWithMiddleName_thenReturnString() {
+//	public void whenAddUserWithMiddleName_thenReturnUser() {
 //		// Making New User Object
 //		User u = new User("Mr", "Buenos", "Amigos", "Lazada", 
 //				"Aa123!@#", "ba@ba.com", "6512345678");
-//		
+//
 //		// Getting Current Max userId
 //		Integer newId = uRepo.getUserIdMax() + 1;
-//		
+//	
 //		// Assigning New userNumber
 //		DecimalFormat fmt = new DecimalFormat("0000");
-//		u.setUserNumber("M" + fmt.format(newId));
+//		u.setUserNumber( "M" + fmt.format(newId));
 //		
 //		outputStringToConsole(u.toString());
 //		
@@ -54,7 +54,7 @@ public class UserModelAndRepoTests {
 //	}
 	
 //	@Test
-//	public void whenAddUserWithMiddleName_thenReturnString() {
+//	public void whenAddUserWithoutMiddleName_thenReturnUser() {
 //		// Making New User Object
 //		User u = new User("Mr", "Buenos", "Amigos", null, 
 //				"Aa123!@#", "ba@ba.com", "6512345678");

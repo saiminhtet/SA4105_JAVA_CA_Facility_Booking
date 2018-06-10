@@ -4,11 +4,13 @@ import com.lsc.mvc.model.User;
 
 public interface UserService {
 	
-	String addUser(User user);
+	User setNewUserNum(User u, String type);
+	
+	User addUser(User user);
 	
 	User getUser(String userNum);
 
-	String updateUser(User user);
+	User updateUser(User user);
 
-	String removeUser(String userNum);
+	Void removeUser(String userNum);
 }

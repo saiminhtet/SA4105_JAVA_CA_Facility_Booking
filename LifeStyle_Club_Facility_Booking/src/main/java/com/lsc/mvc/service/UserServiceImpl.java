@@ -1,5 +1,7 @@
 package com.lsc.mvc.service;
 
+import java.text.DecimalFormat;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -14,10 +16,21 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private UserRepository uRepo;
 	
+	public User setNewUserNum(User u, String type) {
+		// Getting Current Max userId
+		Integer newId = uRepo.getUserIdMax() + 1;
+		
+		// Assigning New userNumber
+		DecimalFormat fmt = new DecimalFormat("0000");
+		String prefix = (type =="Admin")? "A" : "M";
+		u.setUserNumber(prefix + fmt.format(newId));
+		return u;
+	}
+	
 	@Override
 	@Transactional
-	public String addUser(User user) {
-		return "";
+	public User addUser(User user) {
+		return uRepo.saveAndFlush(user);
 	}
 	
 	@Override
@@ -28,13 +41,14 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	@Transactional
-	public String updateUser(User user) {
-		return "";
+	public User updateUser(User user) {
+		return uRepo.saveAndFlush(user);
 	}
 
 	@Override
 	@Transactional
-	public String removeUser(String userNum) {
-		return "";
+	public Void removeUser(String userNum) {
+		uRepo.delete(getUser(userNum));
+		return null;
 	}
 }
