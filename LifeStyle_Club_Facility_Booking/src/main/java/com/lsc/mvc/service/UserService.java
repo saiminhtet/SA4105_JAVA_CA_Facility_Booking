@@ -2,8 +2,6 @@ package com.lsc.mvc.service;
 
 import java.util.ArrayList;
 
-import org.springframework.data.repository.query.Param;
-
 import com.lsc.mvc.model.User;
 
 public interface UserService {

@@ -68,7 +68,7 @@ public class UserServiceTests {
 //	}
 	
 //	@Test
-//	public void whenRemoveUser_thenReturnString() {
+//	public void whenRemoveUser_thenReturnVoid() {
 //		// Removing From Database
 //		uService.removeUser("M0057");
 //		

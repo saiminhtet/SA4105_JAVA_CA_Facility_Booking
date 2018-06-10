@@ -150,11 +150,15 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userNumber=" + userNumber + ", "
-				+ "title=" + title + ", firstName=" + firstName + ", "
-				+ "lastName=" + lastName + ", middleName=" + getMiddleName() + ", "
+		return "User [userId=" + userId + ", "
+				+ "userNumber=" + userNumber + ", "
+				+ "title=" + title + ", "
+				+ "firstName=" + firstName + ", "
+				+ "lastName=" + lastName + ", "
+				+ "middleName=" + getMiddleName() + ", "
 				+ "password=" + getPassword() + ", "
-				+ "emailAddress=" + emailAddress + ", phoneNumber=" + phoneNumber + "]";
+				+ "emailAddress=" + emailAddress + ", "
+				+ "phoneNumber=" + phoneNumber + "]";
 	}
 	
 //	final static String USER_REQUIRED_FIELDS_BLANK = "Please fill up all the required information, and try again. ";

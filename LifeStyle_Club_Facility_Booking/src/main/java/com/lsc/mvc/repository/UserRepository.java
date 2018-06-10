@@ -9,11 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
-	@Query("SELECT u FROM User u WHERE u.userNumber=:uNum")
-	User getUserByUserNumber(@Param("uNum") String uNum);
-	
 	@Query("SELECT max(userId) FROM User u")
 	Integer getUserIdMax();
+	
+	@Query("SELECT u FROM User u WHERE u.userNumber=:uNum")
+	User getUserByUserNumber(@Param("uNum") String uNum);
 	
 	@Query("SELECT u FROM User u WHERE u.userNumber LIKE 'M%' AND ("
 			+ "lower(u.firstName) LIKE lower(concat('%', :mName,'%')) OR "
