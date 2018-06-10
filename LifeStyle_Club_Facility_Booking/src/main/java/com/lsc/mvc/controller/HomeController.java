@@ -63,5 +63,19 @@ public class HomeController {
 		model.addAttribute("message", "Hello Spring MVC");
 		return "facility/add_facility";
 	}
+	
+	@GetMapping("searchfacility")
+	public String search_facility(Model model) {
+		model.addAttribute("message", "Hello Spring MVC");
+		return "facility/search_facility";
+	}
+	
+	@GetMapping("bookfacility")
+	public String book_facility(Model model) {
+		model.addAttribute("message", "Hello Spring MVC");
+		return "facility/book_facility";
+	}
+	
+	
 
 }
