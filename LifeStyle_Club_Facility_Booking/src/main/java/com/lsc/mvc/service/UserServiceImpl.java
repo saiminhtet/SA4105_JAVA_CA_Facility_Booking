@@ -17,6 +17,7 @@ public class UserServiceImpl implements UserService {
 	@Resource
 	private UserRepository uRepo;
 	
+	@Override
 	public User setNewUserNum(User u, String type) {
 		// Getting Current Max userId
 		Integer newId = uRepo.getUserIdMax() + 1;

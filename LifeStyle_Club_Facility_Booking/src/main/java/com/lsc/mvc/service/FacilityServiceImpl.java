@@ -17,6 +17,7 @@ public class FacilityServiceImpl implements FacilityService {
 	@Resource
 	private FacilityRepository fRepo;
 	
+	@Override
 	public Facility setNewFacNum(Facility f) {
 		// Getting Current Max userId
 		Integer newId = fRepo.getFacIdMax() + 1;
