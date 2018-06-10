@@ -157,7 +157,6 @@ public class User {
 				+ "emailAddress=" + emailAddress + ", phoneNumber=" + phoneNumber + "]";
 	}
 	
-//	// Class Variables
 //	final static String USER_REQUIRED_FIELDS_BLANK = "Please fill up all the required information, and try again. ";
 //	final static String USER_NEWPW_MISMATCH = "The new passwords do not match. Please try again.";
 //	final static String USER_PW_INVALID = "The password provided is incorrect. Please try again.";

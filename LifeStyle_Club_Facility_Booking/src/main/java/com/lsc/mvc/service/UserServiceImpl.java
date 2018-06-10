@@ -1,6 +1,7 @@
 package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import javax.annotation.Resource;
 
@@ -49,6 +50,59 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public Void removeUser(String userNum) {
 		uRepo.delete(getUser(userNum));
+		return null;
+	}
+	
+	@Override
+	public User updatePassword(String userNum, String pw) {
+		// Retrieving Existing User Object
+		User u = getUser(userNum);
+		
+		// Update User Object and Database
+		u.setPassword(pw);
+		return updateUser(u);
+	}
+	
+	@Override
+	public ArrayList<User> getUserListByUserNum(String userNum) {
+		// Retrieving Existing User Object
+		User u = getUser(userNum);
+		
+		// Populating ArrayList
+		ArrayList<User> uList = new ArrayList<User>();
+		uList.add(u);
+		return uList;
+	}
+	
+	@Override
+	public ArrayList<User> getMListByName(String mName) {
+		return uRepo.getMemberListByName(mName);
+	}
+	
+	@Override
+	public ArrayList<User> getAListByName(String aName) {
+		return uRepo.getAdminListByName(aName);
+	}
+	
+	@Override
+	public User getUserByEmailPw(String emailAdd, String pw) {
+		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		for (User u:uList) {
+			if (u.getEmailAddress().equalsIgnoreCase(emailAdd) &&
+					u.getPassword().equals(pw))
+				return u;
+		}
+		return null;
+	}
+	
+	@Override
+	public User validateLogin(String userNum, String pw) {
+		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		for (User u:uList) {
+			if (u.getUserNumber().equalsIgnoreCase(userNum) &&
+					u.getPassword().equals(pw))
+				return u;
+		}
 		return null;
 	}
 }

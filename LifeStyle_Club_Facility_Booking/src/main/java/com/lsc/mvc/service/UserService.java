@@ -1,5 +1,9 @@
 package com.lsc.mvc.service;
 
+import java.util.ArrayList;
+
+import org.springframework.data.repository.query.Param;
+
 import com.lsc.mvc.model.User;
 
 public interface UserService {
@@ -13,4 +17,16 @@ public interface UserService {
 	User updateUser(User user);
 
 	Void removeUser(String userNum);
+	
+	User updatePassword(String userNum, String pw);
+	
+	ArrayList<User> getUserListByUserNum(String userNum);
+	
+	ArrayList<User> getMListByName(String mName);
+	
+	ArrayList<User> getAListByName(String aName);
+	
+	User getUserByEmailPw(String emailAdd, String pw);
+	
+	User validateLogin(String userNum, String pw);
 }
