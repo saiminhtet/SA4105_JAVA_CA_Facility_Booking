@@ -253,6 +253,28 @@ public class UserServiceTests {
 //		}
 //	}
 	
+//	@Test
+//	public void whenGetMList_thenReturnList () {
+//		List<User> uList = uService.getMList();
+//		
+//		System.out.println(String.valueOf(uList.size()));
+//		
+//		for (User u:uList) {
+//			System.out.println(u.toString());
+//		}
+//	}
+	
+//	@Test
+//	public void whenGetAList_thenReturnList () {
+//		List<User> uList = uService.getAList();
+//		
+//		System.out.println(String.valueOf(uList.size()));
+//		
+//		for (User u:uList) {
+//			System.out.println(u.toString());
+//		}
+//	}
+	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");

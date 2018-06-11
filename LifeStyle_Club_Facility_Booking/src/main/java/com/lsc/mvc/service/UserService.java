@@ -25,6 +25,10 @@ public interface UserService {
 	
 	ArrayList<User> getAListByName(String aName);
 	
+	List<User> getMList();
+	
+	List<User> getAList();
+	
 	User getUserByEmailPw(String emailAdd, String pw);
 	
 	User validateLogin(String userNum, String pw);
