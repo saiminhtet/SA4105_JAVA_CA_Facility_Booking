@@ -132,4 +132,37 @@ public class UserServiceImpl implements UserService {
 				default: return "";
 			}
 	}
+	
+	@Override
+	public Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw) {
+		// Check for blanks
+		if (oldPw=="" || newPw=="" || confirmPw=="") return false;
+		else {
+			// Check that oldPw valid
+			if (validateLogin(uNum, oldPw)==null) return false;
+			else {
+				// Check that newPw equals confirmPw
+				if (!(newPw.equals(confirmPw))) return false;
+				else {
+					// Check newPw complexity
+					if (!(checkPwComplexity(newPw))) return false;
+					else return true;
+				}
+			}
+		}
+	}
+	
+	// Utility Methods
+	public Boolean checkPwComplexity(String pw) {
+		/*
+		 * Criteria:
+		 * - At least 8 characters long
+		 * - Contains at least 1 digit
+		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+		 * - Contains at least 1 symbol
+		 * - Does not contain space or tab
+		 */
+		String regexPw = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		return pw.matches(regexPw);
+	}
 }

@@ -31,4 +31,9 @@ public interface UserService {
 	User validateEmail(String emailAdd);
 	
 	String getUserType(String uNum);
+	
+	Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw);
+	
+	
+	Boolean checkPwComplexity(String pw);
 }

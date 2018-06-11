@@ -21,11 +21,11 @@ public class UserServiceTests {
 	@Autowired
 	private UserRepository uRepo;
 	
-	@Test
-	public void whenGetUser_thenReturnUser() {
-		User u = uService.getUser("M0055");
-		outputStringToConsole(u.toString());
-	}
+//	@Test
+//	public void whenGetUser_thenReturnUser() {
+//		User u = uService.getUser("M0055");
+//		outputStringToConsole(u.toString());
+//	}
 	
 //	@Test
 //	public void whenAddUser_thenReturnUser() {
@@ -149,6 +149,50 @@ public class UserServiceTests {
 //		if (s != "") outputStringToConsole(s.toString());
 //		else outputStringToConsole("no matching record");
 //	}
+	
+	@Test
+	public void whenCheckPwComplexity_thenReturnBoolean() {
+		/*
+		 * Criteria:
+		 * - At least 8 characters long
+		 * - Contains at least 1 digit
+		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+		 * - Contains at least 1 symbol
+		 * - Does not contain space or tab
+		 */
+		String s;
+		System.out.println("Checking for Blank: Expect false");
+		s = "";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Length: Expect false");
+		s = "1aA!";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Digit: Expect false");
+		s = "Aa!aaaaa";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Lowercase Alphabet: Expect false");
+		s = "1!AAA123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Uppercase Alphabet: Expect false");
+		s = "1!aaa123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Symbol: Expect false");
+		s = "1Aaaa123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Space: Expect false");
+		s = "1A!a a123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Ideal: Expect true");
+		s = "Aa123!@#";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
