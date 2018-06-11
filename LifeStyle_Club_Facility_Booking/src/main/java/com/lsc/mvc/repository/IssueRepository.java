@@ -13,9 +13,9 @@ public interface IssueRepository extends JpaRepository<Issue, Integer> {
 	@Query("SELECT max(issueId) FROM Issue i")
 	Integer getIssueIdMax();
 	
-	@Query("SELECT i FROM Issue i WHERE i.issueNumber=:iNum")
+	@Query("SELECT i FROM Issue i WHERE lower(i.issueNumber)=lower(:iNum)")
 	Issue getIssueByIssueNumber(@Param("iNum") String iNum);
 	
-	@Query("SELECT i FROM Issue i WHERE i.facilityNumber=:fNum")
+	@Query("SELECT i FROM Issue i WHERE lower(i.facilityNumber)=lower(:fNum)")
 	ArrayList<Issue> getIssueListByFacilityNumber(@Param("fNum") String fNum);
 }

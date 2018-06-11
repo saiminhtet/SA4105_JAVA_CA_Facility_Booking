@@ -87,7 +87,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserByEmailPw(String emailAdd, String pw) {
+		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		
+		// Check for any user who matches criteria
 		for (User u:uList) {
 			if (u.getEmailAddress().equalsIgnoreCase(emailAdd) &&
 					u.getPassword().equals(pw))
@@ -98,12 +101,68 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User validateLogin(String userNum, String pw) {
+		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		
+		// Check for any user who matches criteria
 		for (User u:uList) {
 			if (u.getUserNumber().equalsIgnoreCase(userNum) &&
 					u.getPassword().equals(pw))
 				return u;
 		}
 		return null;
+	}
+	
+	@Override
+	public User validateEmail(String emailAdd) {
+		return uRepo.getUserByEmailAddress(emailAdd);
+	}
+	
+	@Override
+	public String getUserType(String uNum) {
+		// Check if userNumber valid
+		if (getUser(uNum)==null) return "";
+		
+		// Return userType based on parsing string
+		if (uNum.equals("A0001")) return "SuperAdmin";
+		else
+			switch (uNum.substring(0,1)) {
+				case "A": return "Admin";
+				case "M": return "Member";
+				default: return "";
+			}
+	}
+	
+	@Override
+	public Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw) {
+		// Check for blanks
+		if (oldPw=="" || newPw=="" || confirmPw=="") return false;
+		else {
+			// Check that oldPw valid
+			if (validateLogin(uNum, oldPw)==null) return false;
+			else {
+				// Check that newPw equals confirmPw
+				if (!(newPw.equals(confirmPw))) return false;
+				else {
+					// Check newPw complexity
+					if (!(checkPwComplexity(newPw))) return false;
+					else return true;
+				}
+			}
+		}
+	}
+	
+	// Utility Methods
+	public Boolean checkPwComplexity(String pw) {
+		/*
+		 * Criteria:
+		 * - At least 8 characters long
+		 * - Contains at least 1 digit
+		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+		 * - Contains at least 1 symbol
+		 * - Does not contain space or tab
+		 */
+		String regexPw = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		return pw.matches(regexPw);
 	}
 }

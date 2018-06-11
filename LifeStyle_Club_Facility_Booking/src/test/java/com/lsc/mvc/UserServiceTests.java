@@ -46,7 +46,7 @@ public class UserServiceTests {
 //	@Test
 //	public void whenUpdateUser_thenReturnUser() {
 //		// Retrieving Existing User Object
-//		User u = uService.getUser("M0056");
+//		User u = uService.getUser("M0055");
 //		
 //		// Modifying Details
 //		u.setTitle("Dr");
@@ -106,7 +106,7 @@ public class UserServiceTests {
 //		User u = uService.getUserByEmailPw("ba@ba.com", "Aa123!@#");
 //		
 //		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("did not find any matching record");
+//		else outputStringToConsole("no matching record");
 //	}
 	
 //	@Test
@@ -123,6 +123,76 @@ public class UserServiceTests {
 //		if (u != null) outputStringToConsole(u.toString());
 //		else outputStringToConsole("Invalid credentials");
 //	}
+	
+//	@Test
+//	public void whenValidateByEmail_thenReturnUser() {
+//		User u = uService.validateEmail("Jasper.Herrod@gmail.com");
+//		
+//		if (u != null) outputStringToConsole(u.toString());
+//		else outputStringToConsole("no matching record");
+//	}
+	
+//	@Test
+//	public void whenGetUserType_thenReturnUser() {
+//		String s = uService.getUserType("M0039");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
+//		
+//		s = uService.getUserType("A0001");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
+//		
+//		s = uService.getUserType("A0050");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
+//	}
+	
+	@Test
+	public void whenCheckPwComplexity_thenReturnBoolean() {
+		/*
+		 * Criteria:
+		 * - At least 8 characters long
+		 * - Contains at least 1 digit
+		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+		 * - Contains at least 1 symbol
+		 * - Does not contain space or tab
+		 */
+		String s;
+		System.out.println("Checking for Blank: Expect false");
+		s = "";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Length: Expect false");
+		s = "1aA!";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Digit: Expect false");
+		s = "Aa!aaaaa";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Lowercase Alphabet: Expect false");
+		s = "1!AAA123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Uppercase Alphabet: Expect false");
+		s = "1!aaa123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Symbol: Expect false");
+		s = "1Aaaa123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Space: Expect false");
+		s = "1A!a a123";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+		
+		System.out.println("Checking for Ideal: Expect true");
+		s = "Aa123!@#";
+		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {

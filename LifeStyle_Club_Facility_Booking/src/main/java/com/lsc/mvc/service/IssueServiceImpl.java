@@ -55,7 +55,10 @@ public class IssueServiceImpl implements IssueService {
 	
 	@Override
 	public ArrayList<Issue> getIssueListByIssueNumber(String iNum) {
+		// Retrieve Existing Issue Object
 		Issue i = getIssue(iNum);
+		
+		// Create New ArrayList and Add Issue Object
 		ArrayList<Issue> iList = new ArrayList<Issue>();
 		iList.add(i);
 		return iList;
