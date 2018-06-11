@@ -23,7 +23,7 @@ public class UserServiceTests {
 	
 //	@Test
 //	public void whenGetUser_thenReturnUser() {
-//		User u = uService.getUser("M0055");
+//		User u = uService.getUser("M0054");
 //		outputStringToConsole(u.toString());
 //	}
 	
@@ -150,49 +150,99 @@ public class UserServiceTests {
 //		else outputStringToConsole("no matching record");
 //	}
 	
-	@Test
-	public void whenCheckPwComplexity_thenReturnBoolean() {
-		/*
-		 * Criteria:
-		 * - At least 8 characters long
-		 * - Contains at least 1 digit
-		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
-		 * - Contains at least 1 symbol
-		 * - Does not contain space or tab
-		 */
-		String s;
-		System.out.println("Checking for Blank: Expect false");
-		s = "";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Length: Expect false");
-		s = "1aA!";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Digit: Expect false");
-		s = "Aa!aaaaa";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Lowercase Alphabet: Expect false");
-		s = "1!AAA123";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Uppercase Alphabet: Expect false");
-		s = "1!aaa123";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Symbol: Expect false");
-		s = "1Aaaa123";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Space: Expect false");
-		s = "1A!a a123";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-		
-		System.out.println("Checking for Ideal: Expect true");
-		s = "Aa123!@#";
-		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
-	}
+//	@Test
+//	public void whenCheckPwComplexity_thenReturnBoolean() {
+//		/*
+//		 * Criteria:
+//		 * - At least 8 characters long
+//		 * - Contains at least 1 digit
+//		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+//		 * - Contains at least 1 symbol
+//		 * - Does not contain space or tab
+//		 */
+//		String s;
+//		System.out.println("Checking for Blank: Expect false");
+//		s = "";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Length: Expect false");
+//		s = "1aA!";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Digit: Expect false");
+//		s = "Aa!aaaaa";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Lowercase Alphabet: Expect false");
+//		s = "1!AAA123";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Uppercase Alphabet: Expect false");
+//		s = "1!aaa123";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Symbol: Expect false");
+//		s = "1Aaaa123";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Space: Expect false");
+//		s = "1A!a a123";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//		
+//		System.out.println("Checking for Ideal: Expect true");
+//		s = "Aa123!@#";
+//		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
+//	}
+	
+//	@Test
+//	public void whenValidatePasswordChange_thenReturnBoolean() {
+//		String uNum, oldPw, newPw, confirmPw;
+//		
+//		System.out.println("Checking for Blank: Expect false");
+//		uNum = "M0054";
+//		oldPw = "KJ8ew2rg!";
+//		newPw = "Aa123!@#";
+//		confirmPw = "";
+//		outputStringToConsole(
+//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+//		);
+//		
+//		System.out.println("Checking that oldPw valid: Expect false");
+//		uNum = "M0054";
+//		oldPw = "KJ8ew2rg!123";
+//		newPw = "Aa123!@#";
+//		confirmPw = newPw;
+//		outputStringToConsole(
+//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+//		);
+//		
+//		System.out.println("Checking that newPw equals confirmPw: Expect false");
+//		uNum = "M0054";
+//		oldPw = "KJ8ew2rg!";
+//		newPw = "Aa123!@#";
+//		confirmPw = newPw + "123";
+//		outputStringToConsole(
+//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+//		);
+//		
+//		System.out.println("Checking that newPw complex: Expect false");
+//		uNum = "M0054";
+//		oldPw = "KJ8ew2rg!";
+//		newPw = "AA123!@#";
+//		confirmPw = newPw;
+//		outputStringToConsole(
+//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+//		);
+//		
+//		System.out.println("Checking ideal: Expect true");
+//		uNum = "M0054";
+//		oldPw = "KJ8ew2rg!";
+//		newPw = "Aa123!@#";
+//		confirmPw = newPw;
+//		outputStringToConsole(
+//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+//		);
+//	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
