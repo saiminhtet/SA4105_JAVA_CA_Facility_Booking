@@ -23,18 +23,20 @@ public class BookingValidatorTest {
 	
 	@Test
 	public void testBookingValidator() throws ResourceDefinitionInvalid {
-		
+		// create validator
 		BookingValidator bv = new BookingValidator();
+		// create data to validate
 		Booking b = new Booking("M0055", "F023", LocalDate.of(2018,6,15), "1000", "1200");
 //		Booking b = new Booking("", "B023", LocalDate.of(2018,6,10), "1300", "1200");
 		bService.setNewBookingNum(b);
-		
+		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(b);
 		binder.setValidator(bv);
+		// validate data
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
 //		outputStringToConsole(results.toString());
-		
+		// check results
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
 		}
