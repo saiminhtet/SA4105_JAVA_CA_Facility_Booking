@@ -72,17 +72,18 @@ public class UserController {
 			userNumber = "M0065";
 			session.setAttribute("userNumber", userNumber);
 		}
-        User existinguser = new User();
-		existinguser = usrService.getUser(userNumber);		
+		User existinguser = new User();
+		existinguser = usrService.getUser(userNumber);
 		existinguser.setEmailAddress(user.getEmailAddress());
 		existinguser.setPhoneNumber(user.getPhoneNumber());
-		
+
 		System.out.println(existinguser.toString());
 		usrService.updateUser(existinguser);
 		return "user/profile";
 	}
+
 	@GetMapping("/changepassword")
-	public String getAllMembers(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
+	public String changePassword(HttpServletRequest req, HttpServletResponse res, ModelMap model) {
 		// Retrieves userNumber from session
 		HttpSession session = req.getSession();
 		String userNumber = (String) session.getAttribute("userNumber");
@@ -93,21 +94,51 @@ public class UserController {
 			session.setAttribute("userNumber", userNumber);
 		}
 
-		//model.addAttribute("user", usrService.getUser(userNumber));
 		return "user/changepassword";
 	}
 
+	@PostMapping("/changepassword")
+	public String updatePassword(HttpServletRequest req, ModelMap model) {
+		HttpSession session = req.getSession();
+		String userNumber = (String) session.getAttribute("userNumber");
+
+		// Sets userNumber to default value if null
+		if (userNumber == null) {
+			userNumber = "M0065";
+			session.setAttribute("userNumber", userNumber);
+		}
+		String currentpassword = req.getParameter("current_password");
+		String newpassword = req.getParameter("password");
+		String confirmpassword = req.getParameter("confirm_password");
+		if (usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword)) {
+			User existinguser = new User();
+			existinguser = usrService.getUser(userNumber);
+			
+			System.out.println(existinguser.toString());
+			
+			existinguser = usrService.updatePassword(userNumber, newpassword);
+				
+			System.out.println(existinguser.toString());
+
+			return "user/profile";
+		}
+		model.put("type", "error");		
+		return "user/changepassword";
+	}
 
 	
+	@ModelAttribute("title")
+	public Title[] genders() {
+		return Title.values();
+	}
 	
-	
-	
+	public enum Title {
+		Dr, Mr, Mrs
+	}
 	
 	@ModelAttribute("user")
 	public User user() {
 		return new User();
 	}
-	
-	
 
 }

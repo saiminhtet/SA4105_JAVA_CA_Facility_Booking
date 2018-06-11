@@ -19,7 +19,7 @@
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
-			<form th:action="@{/user/adduser}" th:method="post" class="custom-form"
+			<form th:action="@{/user/adduser}" th:method="get" class="custom-form"
 				style="background-color: #f3f3f3; width: auto;"
 				th:object="${user}">
 				<h1
@@ -30,11 +30,14 @@
 						<label class="col-form-label" for="name"
 							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Title
 						</label>
-					</div>
+					</div>					
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="name" required="required"
-							th:field="*{title}">
-						<!-- 							th:value="${user.title}" -->
+						<div class="dropdown">
+
+							<select class="custom-select" id="title" th:field="*{title}">
+								<option th:each="tit : ${title}" th:value="${tit}" th:text="${tit}">Choose Title...</option>								
+							</select>
+						</div>
 					</div>
 				</div>
 				<div class="form-row form-group">
