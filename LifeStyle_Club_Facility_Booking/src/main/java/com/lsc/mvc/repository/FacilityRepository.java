@@ -12,7 +12,7 @@ public interface FacilityRepository extends JpaRepository<Facility, Integer>{
 	@Query("SELECT max(facilityId) FROM Facility f")
 	Integer getFacIdMax();
 	
-	@Query("SELECT f FROM Facility f WHERE f.facilityNumber=:fNum")
+	@Query("SELECT f FROM Facility f WHERE lower(f.facilityNumber)=lower(:fNum)")
 	Facility getFacilityByFacilityNumber(@Param("fNum") String fNum);
 	
 	@Query("SELECT DISTINCT(f.facilityType) FROM Facility f")

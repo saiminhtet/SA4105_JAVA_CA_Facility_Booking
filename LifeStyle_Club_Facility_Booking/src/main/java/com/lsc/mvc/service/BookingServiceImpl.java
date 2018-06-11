@@ -58,7 +58,10 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public ArrayList<Booking> getBookingListSelected(ArrayList<Facility> facilityListSelected){
+		// Create New ArrayList of Bookings
 		ArrayList<Booking> bList = new ArrayList<Booking>();
+		
+		// Append Search Results to ArrayList
 		for (Facility f:facilityListSelected) {
 			bList.addAll(bRepo.getBookingListByFacilityNumber(f.getFacilityNumber()));
 		}
@@ -66,7 +69,10 @@ public class BookingServiceImpl implements BookingService {
 	}
 	@Override
 	public ArrayList<Booking> getBookingListSingle(ArrayList<Booking> bookingListSelected, String fNum) {
+		// Create New ArrayList of Bookings
 		ArrayList<Booking> bList = new ArrayList<Booking>();
+		
+		// Filter Bookings By Criteria and Add to ArrayList
 		for (Booking b: bookingListSelected) {
 			if (b.getFacilityNumber().equals(fNum)) bList.add(b);
 		}
