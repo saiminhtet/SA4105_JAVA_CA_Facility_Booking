@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.UserRepository;
 import com.lsc.mvc.service.UserService;
