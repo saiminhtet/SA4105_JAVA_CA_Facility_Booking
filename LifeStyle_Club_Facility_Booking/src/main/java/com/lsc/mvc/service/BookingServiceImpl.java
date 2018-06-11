@@ -3,9 +3,12 @@ package com.lsc.mvc.service;
 import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.assertj.core.util.Arrays;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,6 +80,31 @@ public class BookingServiceImpl implements BookingService {
 			if (b.getFacilityNumber().equals(fNum)) bList.add(b);
 		}
 		return bList;
+	}
+	
+	@Override
+	public List<String> getAvailableSlots(LocalDate slotDate, String fNum) {
+		// Retrieve ArrayList of Bookings
+		ArrayList<Booking> bList = bRepo.getBookingListByFacilityNumberAndDate(fNum, slotDate);
+		
+		// Create ArrayList of Possible Slots
+		ArrayList<String> aList = new ArrayList<String>();
+		aList.add("0900"); aList.add("1000"); aList.add("1100"); aList.add("1200"); aList.add("1300"); aList.add("1400");
+		aList.add("1500"); aList.add("1600"); aList.add("1700"); aList.add("1800"); aList.add("1900"); aList.add("2000");
+		
+		// Convert Booking Blocks into Hourly Slots
+		ArrayList<String> bStrList = new ArrayList();
+		for(String str:aList)
+			for(Booking b:bList) 
+				if (str.compareTo(b.getSlotTimeStart()) >= 0 && str.compareTo(b.getSlotTimeEnd()) < 0) bStrList.add(str);
+		
+		// Add Any Possible Slot Not in Booked Slots into Output List 
+		List<String> outList = new ArrayList();
+		for(String str:aList)
+			if (!bStrList.contains(str)) outList.add(str);
+		
+		// Return Output List
+		return outList;
 	}
 	
 	@Override

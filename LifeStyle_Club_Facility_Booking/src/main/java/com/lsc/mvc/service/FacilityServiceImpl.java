@@ -77,4 +77,9 @@ public class FacilityServiceImpl implements FacilityService {
 	public ArrayList<Facility> getFacilityListByName(String fName) {
 		return fRepo.getFacilityListByName(fName);
 	}
+	
+	@Override
+	public Facility getFacilityByName(String fName) {
+		return fRepo.getFacilityByName(fName);
+	}
 }

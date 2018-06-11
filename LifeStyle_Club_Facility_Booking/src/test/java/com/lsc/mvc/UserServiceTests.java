@@ -1,6 +1,7 @@
 package com.lsc.mvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -242,6 +243,14 @@ public class UserServiceTests {
 //		outputStringToConsole(
 //			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
 //		);
+//	}
+	
+//	@Test
+//	public void whenGetTitleList_thenReturnList () {
+//		List<String> tList = uService.getTitleList();
+//		for (String t:tList) {
+//			System.out.println(t.toString());
+//		}
 //	}
 	
 	// Utility Methods

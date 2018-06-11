@@ -2,6 +2,7 @@ package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -150,6 +151,16 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public List<String> getTitleList() {
+		// Create ArrayList
+		ArrayList<String> tList = new ArrayList<String>();
+		tList.add("Dr"); tList.add("Mdm"); tList.add("Mr");
+		tList.add("Mrs"); tList.add("Ms");
+		
+		return tList;
 	}
 	
 	// Utility Methods

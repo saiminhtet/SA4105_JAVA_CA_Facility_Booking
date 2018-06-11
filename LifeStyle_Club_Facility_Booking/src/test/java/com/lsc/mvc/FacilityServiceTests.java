@@ -131,6 +131,14 @@ public class FacilityServiceTests {
 //		}
 //	}
 	
+//	@Test
+//	public void whenGetFacilityByName_thenReturnFacility() {
+//		// Retrieving ArrayList
+//		Facility f = fService.getFacilityByName("Tennis Court 2");
+//		
+//		outputStringToConsole(f.toString());
+//	}
+	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");
