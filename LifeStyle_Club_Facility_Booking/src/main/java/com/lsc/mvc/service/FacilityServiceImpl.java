@@ -69,10 +69,8 @@ public class FacilityServiceImpl implements FacilityService {
 		// Retrieve Existing Facility Object
 		Facility f = getFacility(fNum);
 		
-		// Create New ArrayList and Add Facility Object
-		ArrayList<Facility> fList = new ArrayList<Facility>();
-		fList.add(f);
-		return fList;
+		// Retrieve All Facility Objects of Same Type
+		return fRepo.getFacilityListByType(f.getFacilityType());
 	}
 	
 	@Override
