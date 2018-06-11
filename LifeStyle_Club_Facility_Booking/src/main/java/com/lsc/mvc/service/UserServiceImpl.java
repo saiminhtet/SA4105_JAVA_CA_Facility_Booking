@@ -87,7 +87,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User getUserByEmailPw(String emailAdd, String pw) {
+		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		
+		// Check for any user who matches criteria
 		for (User u:uList) {
 			if (u.getEmailAddress().equalsIgnoreCase(emailAdd) &&
 					u.getPassword().equals(pw))
@@ -98,7 +101,10 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User validateLogin(String userNum, String pw) {
+		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		
+		// Check for any user who matches criteria
 		for (User u:uList) {
 			if (u.getUserNumber().equalsIgnoreCase(userNum) &&
 					u.getPassword().equals(pw))
@@ -109,8 +115,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User validateEmail(String emailAdd) {
-		User u = uRepo.getUserByEmailAddress(emailAdd);
-		return u;
+		return uRepo.getUserByEmailAddress(emailAdd);
 	}
 	
 	@Override

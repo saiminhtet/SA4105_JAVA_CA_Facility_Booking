@@ -21,11 +21,11 @@ public class UserServiceTests {
 	@Autowired
 	private UserRepository uRepo;
 	
-//	@Test
-//	public void whenGetUser_thenReturnUser() {
-//		User u = uService.getUser("M0055");
-//		outputStringToConsole(u.toString());
-//	}
+	@Test
+	public void whenGetUser_thenReturnUser() {
+		User u = uService.getUser("M0055");
+		outputStringToConsole(u.toString());
+	}
 	
 //	@Test
 //	public void whenAddUser_thenReturnUser() {
