@@ -34,6 +34,5 @@ public interface UserService {
 	
 	Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw);
 	
-	
-	Boolean checkPwComplexity(String pw);
+//	Boolean checkPwComplexity(String pw);
 }
