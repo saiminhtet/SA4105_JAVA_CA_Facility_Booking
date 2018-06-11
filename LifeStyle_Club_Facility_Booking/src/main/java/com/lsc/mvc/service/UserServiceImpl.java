@@ -106,4 +106,25 @@ public class UserServiceImpl implements UserService {
 		}
 		return null;
 	}
+	
+	@Override
+	public User validateEmail(String emailAdd) {
+		User u = uRepo.getUserByEmailAddress(emailAdd);
+		return u;
+	}
+	
+	@Override
+	public String getUserType(String uNum) {
+		// Check if userNumber valid
+		if (getUser(uNum)==null) return "";
+		
+		// Return userType based on parsing string
+		if (uNum.equals("A0001")) return "SuperAdmin";
+		else
+			switch (uNum.substring(0,1)) {
+				case "A": return "Admin";
+				case "M": return "Member";
+				default: return "";
+			}
+	}
 }

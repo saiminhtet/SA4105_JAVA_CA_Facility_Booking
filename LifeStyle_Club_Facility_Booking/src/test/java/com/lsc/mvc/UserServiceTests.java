@@ -46,7 +46,7 @@ public class UserServiceTests {
 //	@Test
 //	public void whenUpdateUser_thenReturnUser() {
 //		// Retrieving Existing User Object
-//		User u = uService.getUser("M0056");
+//		User u = uService.getUser("M0055");
 //		
 //		// Modifying Details
 //		u.setTitle("Dr");
@@ -106,7 +106,7 @@ public class UserServiceTests {
 //		User u = uService.getUserByEmailPw("ba@ba.com", "Aa123!@#");
 //		
 //		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("did not find any matching record");
+//		else outputStringToConsole("no matching record");
 //	}
 	
 //	@Test
@@ -122,6 +122,32 @@ public class UserServiceTests {
 //		
 //		if (u != null) outputStringToConsole(u.toString());
 //		else outputStringToConsole("Invalid credentials");
+//	}
+	
+//	@Test
+//	public void whenValidateByEmail_thenReturnUser() {
+//		User u = uService.validateEmail("Jasper.Herrod@gmail.com");
+//		
+//		if (u != null) outputStringToConsole(u.toString());
+//		else outputStringToConsole("no matching record");
+//	}
+	
+//	@Test
+//	public void whenGetUserType_thenReturnUser() {
+//		String s = uService.getUserType("M0039");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
+//		
+//		s = uService.getUserType("A0001");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
+//		
+//		s = uService.getUserType("A0050");
+//		
+//		if (s != "") outputStringToConsole(s.toString());
+//		else outputStringToConsole("no matching record");
 //	}
 	
 	// Utility Methods

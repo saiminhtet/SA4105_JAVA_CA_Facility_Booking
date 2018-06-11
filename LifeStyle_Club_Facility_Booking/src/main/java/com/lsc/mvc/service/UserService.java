@@ -27,4 +27,8 @@ public interface UserService {
 	User getUserByEmailPw(String emailAdd, String pw);
 	
 	User validateLogin(String userNum, String pw);
+	
+	User validateEmail(String emailAdd);
+	
+	String getUserType(String uNum);
 }
