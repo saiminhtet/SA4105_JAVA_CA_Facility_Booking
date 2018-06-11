@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 
+import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.service.BookingService;
@@ -28,7 +29,12 @@ public class BookingValidatorTest {
 		// create data to validate
 		Booking b = new Booking("M0055", "F023", LocalDate.of(2018,6,15), "1000", "1200");
 //		Booking b = new Booking("", "B023", LocalDate.of(2018,6,10), "1300", "1200");
-		bService.setNewBookingNum(b);
+		try {
+			bService.setNewBookingNum(b);
+		} catch (BookingNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(b);
 		binder.setValidator(bv);

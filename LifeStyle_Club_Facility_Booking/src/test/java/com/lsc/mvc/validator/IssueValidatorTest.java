@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 
+import com.lsc.mvc.exception.IssueNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.model.Issue;
 import com.lsc.mvc.service.IssueService;
@@ -28,7 +29,12 @@ public class IssueValidatorTest {
 		// create data to validate
 		Issue i = new Issue("A0002", "F023", LocalDateTime.of(2018, 6, 13, 12, 00), "Some thing wrong", "Open");
 //		Issue i = new Issue("Z0002", "", LocalDateTime.of(2018, 6, 15, 12, 00), "Some thing wrong", "Close");
-		iService.setNewIssueNum(i);
+		try {
+			iService.setNewIssueNum(i);
+		} catch (IssueNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(i);
 		binder.setValidator(iv);

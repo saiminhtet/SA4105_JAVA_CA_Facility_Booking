@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
+import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.service.UserService;
 
@@ -26,7 +27,12 @@ public class UserValidatorTest {
 		// create data to validate
 		User u = new User("Dr", "Strange", "Love", "Who", "Aa123456!", "1@1.com", "6592345678");
 //		User u = new User("Drs", "Strange", "Love", "Who", "Aa123456", "1@1", "6512345678");
-		uService.setNewUserNum(u, "Member");
+		try {
+			uService.setNewUserNum(u, "Member");
+		} catch (UserNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(u);
 		binder.setValidator(uv);
