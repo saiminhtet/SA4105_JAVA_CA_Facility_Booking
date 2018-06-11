@@ -8,6 +8,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lsc.mvc.exception.BookingNotFound;
+import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.repository.FacilityRepository;
 
@@ -18,7 +20,9 @@ public class FacilityServiceImpl implements FacilityService {
 	private FacilityRepository fRepo;
 	
 	@Override
-	public Facility setNewFacNum(Facility f) {
+	public Facility setNewFacNum(Facility f) throws FacilityNotFound {
+		if (f == null) throw new FacilityNotFound("Facility object provided cannot be null");
+		
 		// Getting Current Max userId
 		Integer newId = fRepo.getFacIdMax() + 1;
 		
@@ -31,25 +35,30 @@ public class FacilityServiceImpl implements FacilityService {
 	
 	@Override
 	@Transactional
-	public Facility addFacility(Facility f) {
+	public Facility addFacility(Facility f) throws FacilityNotFound {
+		if (f == null) throw new FacilityNotFound("Facility object provided cannot be null");
 		return fRepo.saveAndFlush(f);
 	}
 	
 	@Override
 	@Transactional
-	public Facility getFacility(String fNum) {
-		return fRepo.getFacilityByFacilityNumber(fNum);
+	public Facility getFacility(String fNum) throws FacilityNotFound {
+		Facility f = fRepo.getFacilityByFacilityNumber(fNum);
+		if (f == null) throw new FacilityNotFound("Facility number provided is invalid");
+		else return f;
 	}
 	
 	@Override
 	@Transactional
-	public Facility updateFacility(Facility f) {
+	public Facility updateFacility(Facility f) throws FacilityNotFound {
+		if (f == null) throw new FacilityNotFound("Facility object provided cannot be null");
 		return fRepo.saveAndFlush(f);
 	}
 	
 	@Override
 	@Transactional
-	public Void removeFacility(String fNum) {
+	public Void removeFacility(String fNum) throws FacilityNotFound {
+		if (getFacility(fNum) == null) throw new FacilityNotFound("Facility number provided is invalid");
 		fRepo.delete(getFacility(fNum));
 		return null;
 	}
@@ -65,7 +74,9 @@ public class FacilityServiceImpl implements FacilityService {
 	}
 	
 	@Override
-	public ArrayList<Facility> getFacilityListByNumber(String fNum) {
+	public ArrayList<Facility> getFacilityListByNumber(String fNum) throws FacilityNotFound {
+		if (getFacility(fNum) == null) throw new FacilityNotFound("Facility number provided is invalid");
+		
 		// Retrieve Existing Facility Object
 		Facility f = getFacility(fNum);
 		

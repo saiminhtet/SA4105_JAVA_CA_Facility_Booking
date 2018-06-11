@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.UserRepository;
 import com.lsc.mvc.service.UserService;
@@ -81,12 +82,28 @@ public class UserServiceTests {
 //	@Test
 //	public void whenGetMemberListByName_thenReturnArrayList() {
 //		// Retrieving ArrayList
-//		ArrayList<User> mList = uService.getMListByName("ra");
-//		
-//		outputStringToConsole(String.valueOf(mList.size()));
-//		
-//		for (User usr:mList) {
-//			System.out.println(usr.toString());
+//		ArrayList<User> mList;
+//		try {
+//			mList = uService.getMListByName("ra");
+//			
+//			outputStringToConsole(String.valueOf(mList.size()));
+//			
+//			for (User usr:mList) {
+//				System.out.println(usr.toString());
+//			}
+//		} catch (ResourceDefinitionInvalid e) {
+//			outputStringToConsole(e.getMessage());
+//		}
+//		try {
+//			mList = uService.getMListByName("");
+//			
+//			outputStringToConsole(String.valueOf(mList.size()));
+//			
+//			for (User usr:mList) {
+//				System.out.println(usr.toString());
+//			}
+//		} catch (ResourceDefinitionInvalid e) {
+//			outputStringToConsole(e.getMessage());
 //		}
 //	}
 	
