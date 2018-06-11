@@ -21,8 +21,15 @@ import com.lsc.mvc.service.UserService;
 @RequestMapping("/user")
 public class UserController {
 
+
 	@Autowired
 	private UserService usrService;
+
+
+	
+	@Autowired
+	private UserRepository repo;
+	
 
 	@GetMapping
 	public void get(ModelMap model) {

@@ -25,4 +25,7 @@ public interface FacilityRepository extends JpaRepository<Facility, Integer>{
 	@Query("SELECT f FROM Facility f WHERE "
 			+ "lower(f.facilityName) LIKE lower(concat('%', :fName,'%'))")
 	ArrayList<Facility> getFacilityListByName(@Param("fName") String fName);
+	
+	@Query("SELECT f FROM Facility f WHERE lower(f.facilityName)=lower(:fName)")
+	Facility getFacilityByName(@Param("fName") String fName);
 }

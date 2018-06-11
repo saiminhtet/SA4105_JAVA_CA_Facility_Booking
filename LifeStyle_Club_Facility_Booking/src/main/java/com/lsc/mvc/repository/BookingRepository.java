@@ -19,6 +19,9 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
 	@Query("SELECT b FROM Booking b WHERE lower(b.facilityNumber)=lower(:fNum)")
 	ArrayList<Booking> getBookingListByFacilityNumber(@Param("fNum") String fNum);
 	
+	@Query("SELECT b FROM Booking b WHERE lower(b.facilityNumber)=lower(:fNum) AND b.slotDate=:d")
+	ArrayList<Booking> getBookingListByFacilityNumberAndDate(@Param("fNum") String fNum, @Param("d") LocalDate d);
+	
 	@Query("SELECT b FROM Booking b WHERE lower(b.userNumber)=lower(:uNum)")
 	ArrayList<Booking> getBookingListByUserNum(@Param("uNum") String uNum);
 	

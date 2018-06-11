@@ -25,4 +25,6 @@ public interface FacilityService {
 	ArrayList<Facility> getFacilityListByNumber(String fNum);
 	
 	ArrayList<Facility> getFacilityListByName(String fName);
+	
+	Facility getFacilityByName(String fName);
 }

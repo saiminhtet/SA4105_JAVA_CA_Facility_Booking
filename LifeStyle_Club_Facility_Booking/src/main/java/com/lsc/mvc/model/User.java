@@ -190,7 +190,7 @@ public class User {
 //		// Implementation: 
 //		// if(isUserNumber(userNum)) { ... } else { ... }
 //		
-//		String regexA = "[A][0-9]{2}";
+//		String regexA = "[A][0-9]{4}";
 //		String regexM = "[M][0-9]{4}";
 //		
 //		switch (userNum.substring(0,1)) {

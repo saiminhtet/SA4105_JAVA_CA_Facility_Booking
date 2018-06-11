@@ -2,6 +2,7 @@ package com.lsc.mvc.service;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
@@ -25,4 +26,6 @@ public interface BookingService {
 	ArrayList<Booking> getBookingListByUserNumAndDate(String uNum, LocalDate dateStart, LocalDate dateEnd);
 	
 	ArrayList<Booking> getBookingListByUserNum(String uNum);
+	
+	List<String> getAvailableSlots(LocalDate slotDate, String fNum);
 }

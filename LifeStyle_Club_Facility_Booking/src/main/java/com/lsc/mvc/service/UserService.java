@@ -1,6 +1,7 @@
 package com.lsc.mvc.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.lsc.mvc.model.User;
 
@@ -24,6 +25,10 @@ public interface UserService {
 	
 	ArrayList<User> getAListByName(String aName);
 	
+	List<User> getMList();
+	
+	List<User> getAList();
+	
 	User getUserByEmailPw(String emailAdd, String pw);
 	
 	User validateLogin(String userNum, String pw);
@@ -33,6 +38,8 @@ public interface UserService {
 	String getUserType(String uNum);
 	
 	Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw);
+	
+	List<String> getTitleList();
 	
 //	Boolean checkPwComplexity(String pw);
 }

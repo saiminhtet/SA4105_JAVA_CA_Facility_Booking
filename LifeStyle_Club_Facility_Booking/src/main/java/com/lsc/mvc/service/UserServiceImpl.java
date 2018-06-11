@@ -2,6 +2,8 @@ package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -86,6 +88,16 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
+	public List<User> getMList() {
+		return uRepo.findAll().stream().filter(x -> this.getUserType(x.getUserNumber())=="Member").collect(Collectors.toList());
+	}
+	
+	@Override
+	public List<User> getAList() {
+		return uRepo.findAll().stream().filter(x -> x.getUserNumber().substring(0, 1).equals("A")).collect(Collectors.toList());
+	}
+	
+	@Override
 	public User getUserByEmailPw(String emailAdd, String pw) {
 		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
@@ -150,6 +162,16 @@ public class UserServiceImpl implements UserService {
 				}
 			}
 		}
+	}
+	
+	@Override
+	public List<String> getTitleList() {
+		// Create ArrayList
+		ArrayList<String> tList = new ArrayList<String>();
+		tList.add("Dr"); tList.add("Mdm"); tList.add("Mr");
+		tList.add("Mrs"); tList.add("Ms");
+		
+		return tList;
 	}
 	
 	// Utility Methods

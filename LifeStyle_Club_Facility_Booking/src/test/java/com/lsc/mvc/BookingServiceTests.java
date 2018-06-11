@@ -2,6 +2,7 @@ package com.lsc.mvc;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -126,6 +127,19 @@ public class BookingServiceTests {
 //		
 //		for (Booking bk:bList2) {
 //			System.out.println(bk.toString());
+//		}
+//	}
+	
+//	@Test
+//	public void whenGetAvailableSlots_thenReturnList() {
+//		LocalDate d = LocalDate.of(2018, 6, 13);
+//		String fNum = "F023";
+//		List<String> availList = bService.getAvailableSlots(d, fNum);
+//		
+//		outputStringToConsole(String.valueOf(availList.size()));
+//		
+//		for (String s:availList) {
+//			System.out.println(s.toString());
 //		}
 //	}
 	
