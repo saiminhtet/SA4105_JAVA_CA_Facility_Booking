@@ -17,11 +17,9 @@ import com.lsc.mvc.repository.UserRepository;
 @Controller
 @RequestMapping("user")
 public class UserController {
-
 	
 	@Autowired
 	private UserRepository repo;
-	
 	
 	@GetMapping
 	public void get(ModelMap model) {
