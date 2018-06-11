@@ -19,46 +19,99 @@
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
-			<form class="custom-form" style="background-color: #f3f3f3; width:auto;">
+			<form th:action="@{/user/adduser}" th:method="post" class="custom-form"
+				style="background-color: #f3f3f3; width: auto;"
+				th:object="${user}">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">SIGNUP
-					</h1>
+				</h1>
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="padding-right: 88px;">
+					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
-							style="font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Name
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Title
 						</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="name">
+						<input class="form-control" type="text" name="name" required="required"
+							th:field="*{title}">
+						<!-- 							th:value="${user.title}" -->
 					</div>
 				</div>
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="padding-right: 89px;">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">First
+							Name </label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="name" required="required"
+							th:field="*{firstName}">
+						<!-- 							th:value="${user.firstName}" -->
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Last
+							Name </label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="name" required="required"
+							th:field="*{lastName}">
+						<!-- 							th:value="${user.lastName}" -->
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Middle
+							Name </label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="name" required="required"
+							th:field="*{middleName}">
+						<!-- 							th:value="${user.middleName}" -->
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="email"
-							style="font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Email
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Email
 						</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="email" name="email" required="required"
-							placeholder="example@domain.com">
+						<input class="form-control" type="email" name="email"
+							required="required" placeholder="example@domain.com"
+							th:field="*{emailAddress}">
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="phone"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Phone
+						</label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="phone"
+							required="required" 
+							th:field="*{phoneNumber}">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="password"
-							style="padding-right: 57px; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Password
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Password
 						</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="password" name="password"
+						<input class="form-control" type="password" name="password" th:field="*{password}"
 							required="required">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="pawssword-repeat"
-							style="font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; padding-right: 10px;">Repeat
+							style="font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; padding-right: 54%;;">Repeat
 							Password </label>
 					</div>
 					<div class="col-sm-6 input-column">
@@ -66,39 +119,20 @@
 							required="required">
 					</div>
 				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="dropdown-input-field"
-							style="padding-right: 55px; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Dropdown
-						</label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<div class="dropdown">
-							<button class="btn btn-light dropdown-toggle"
-								data-toggle="dropdown" aria-expanded="false" type="button"
-								style="width: 215.656px; height: 42px;">Dropdown</button>
-							<div class="dropdown-menu" role="menu">
-								<a class="dropdown-item" role="presentation" href="#">First
-									Item</a><a class="dropdown-item" role="presentation" href="#">Second
-									Item</a><a class="dropdown-item" role="presentation" href="#">Third
-									Item</a>
-							</div>
-						</div>
-					</div>
-				</div>
+
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column" style="height: 90px;"></div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="reset"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; #39; Yanone Kaffeesatz&amp;#39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
 							type="submit"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; #39; Yanone Kaffeesatz&amp;#39; , sans-serif; font-size: 1.5em; width: 70%;">Submit
-							</button>
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Submit
+						</button>
 					</div>
 				</div>
 			</form>

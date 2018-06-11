@@ -28,11 +28,11 @@ public class HomeController {
 		return "user/changepassword";
 	}
 
-//	@GetMapping("user")
-//	public String User(Model model) {
-//		model.addAttribute("message", "Hello Spring MVC");
-//		return "user/signup";
-//	}
+	@GetMapping("signup")
+	public String User(Model model) {
+		model.addAttribute("message", "Hello Spring MVC");
+		return "user/signup";
+	}
 
 	@GetMapping("profile")
 	public String Profile(Model model) {
