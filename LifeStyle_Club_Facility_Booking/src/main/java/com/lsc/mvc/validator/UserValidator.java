@@ -28,7 +28,7 @@ public class UserValidator implements Validator {
 	public void validate (Object target, Errors errors) {
 		
 		User u = (User) target;
-		
+		// validate not null
 		if (u.getUserNumber() == null) errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
         if (u.getTitle() == null) errors.rejectValue("title", "title.null", "Title cannot be null");
 	    if (u.getFirstName()== null) errors.rejectValue("firstName", "firstName.null", "First name cannot be null");
@@ -36,7 +36,7 @@ public class UserValidator implements Validator {
         if (u.getPassword() == null) errors.rejectValue("password", "password.null", "Password cannot be null");
         if (u.getEmailAddress() == null) errors.rejectValue("emailAddress", "emailAddress.null", "Email address cannot be null");
         if (u.getPhoneNumber() == null) errors.rejectValue("phoneNumber", "phoneNumber.null", "Phone number cannot be null");
-        
+        // validate not empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNumber", "userNumber.empty", "User number cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "title.empty", "Title cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.empty", "First name cannot be empty");
@@ -44,11 +44,11 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Password cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "emailAddress.empty", "Email address cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "Phone number cannot be empty");
-		
+		// validate within range
 		if (u.getTitle() != "Mr" && u.getTitle() != "Ms" && u.getTitle() != "Mrs" && u.getTitle() != "Dr" && u.getTitle() != "Mdm") {
 			errors.rejectValue("title", "title.invalid", "Not a valid title");
 		}
-		
+		// validate format
 		Matcher passwordMatcher = VALID_PASSWORD_REGEX.matcher(u.getPassword());
 		if (!passwordMatcher.find()) {
 			errors.rejectValue("password", "password.invalid", "Invalid password format");

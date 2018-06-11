@@ -23,18 +23,20 @@ public class IssueValidatorTest {
 	
 	@Test
 	public void testIssueValidator() throws ResourceDefinitionInvalid {
-		
+		// create validator
 		IssueValidator iv = new IssueValidator();
+		// create data to validate
 		Issue i = new Issue("A0002", "F023", LocalDateTime.of(2018, 6, 13, 12, 00), "Some thing wrong", "Open");
 //		Issue i = new Issue("Z0002", "", LocalDateTime.of(2018, 6, 15, 12, 00), "Some thing wrong", "Close");
 		iService.setNewIssueNum(i);
-		
+		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(i);
 		binder.setValidator(iv);
+		// validate data
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
 //		outputStringToConsole(results.toString());
-		
+		// check results
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
 		}

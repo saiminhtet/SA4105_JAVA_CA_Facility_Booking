@@ -21,18 +21,20 @@ public class FacilityValidatorTest {
 	
 	@Test
 	public void testFacilityValidator() throws ResourceDefinitionInvalid {
-		
+		// create validator
 		FacilityValidator fv = new FacilityValidator();
+		// create data to validate
 		Facility f = new Facility("Badminton Court", "Badminton Court 5", "This is a long description", 4);
 //		Facility f = new Facility("Badminton Room", "Badminton Court 5", "", 0);
 		fService.setNewFacNum(f);
-		
+		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(f);
 		binder.setValidator(fv);
+		// validate data
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
 //		outputStringToConsole(results.toString());
-		
+		// check results
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
 		}
