@@ -18,61 +18,61 @@ public class HomeController {
 
 	@GetMapping
 	public String index(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "home/member_home";
 	}
 
 	@GetMapping("changepassword")
 	public String CurrentPW(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+		
 		return "user/changepassword";
 	}
 
-//	@GetMapping("user")
-//	public String User(Model model) {
+	@GetMapping("signup")
+	public String User(Model model) {
 //		model.addAttribute("message", "Hello Spring MVC");
-//		return "user/signup";
-//	}
+		return "user/signup";
+	}
 
 	@GetMapping("profile")
 	public String Profile(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "user/profile";
 	}
 
 	@GetMapping("member")
 	public String Member(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "home/member_home.html";
 	}
 
 	@GetMapping("admin")
 	public String Admin(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "home/admin_home";
 	}
 
 	@GetMapping("superadmin")
 	public String SuperAdmin(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "home/super_admin_home";
 	}
 	
 	@GetMapping("addfacility")
 	public String add_facility(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "facility/add_facility";
 	}
 	
 	@GetMapping("searchfacility")
 	public String search_facility(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "facility/search_facility";
 	}
 	
 	@GetMapping("bookfacility")
 	public String book_facility(Model model) {
-		model.addAttribute("message", "Hello Spring MVC");
+//		model.addAttribute("message", "Hello Spring MVC");
 		return "facility/book_facility";
 	}
 	

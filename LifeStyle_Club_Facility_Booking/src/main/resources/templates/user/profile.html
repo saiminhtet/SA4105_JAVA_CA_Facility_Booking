@@ -20,7 +20,7 @@
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;">
+				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/updateprofile}" th:method="post" th:object="${user}">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">PROFILE
 				</h1>
@@ -32,21 +32,58 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" readonly="readonly"
-							name="membernumber" th:value="${user.userNumber}">
+							name="membernumber" th:field="*{userNumber}">
+<!-- 							th:value="${user.userNumber}" -->
+					</div>
+				</div>				
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Title
+						</label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" readonly="readonly"
+							name="name"  th:field="*{title}">
+<!-- 							th:value="${user.title}" -->
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
-							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Name
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">First Name
 						</label>
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" readonly="readonly"
-							name="name" th:value="${user.title} +' '+ ${user.firstName} + ' ' + ${user.middleName} + ' ' + ${user.lastName}">
+							name="name"  th:field="*{firstName}">
+<!-- 							th:value="${user.firstName}" -->
 					</div>
 				</div>
-
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Last Name
+						</label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" readonly="readonly"
+							name="name"  th:field="*{lastName}">
+<!-- 							th:value="${user.lastName}" -->
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="name"
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Middle Name
+						</label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" readonly="readonly"
+							name="name"  th:field="*{middleName}">
+<!-- 							th:value="${user.middleName}" -->
+					</div>
+				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="email"
@@ -55,7 +92,8 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="email" name="email"
-							required="required" placeholder="example@domain.com" th:value="${user.emailAddress}" >
+							required="required" placeholder="example@domain.com" th:field="*{emailAddress}">
+<!-- 							 th:value="${user.emailAddress}" -->
 					</div>
 				</div>
 
@@ -66,7 +104,8 @@
 							Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="phone" th:value="${user.phoneNumber}">
+						<input class="form-control" type="text" name="phone"  th:field="*{phoneNumber}">
+<!-- 						th:value="${user.phoneNumber}" -->
 					</div>
 				</div>
 
@@ -81,7 +120,7 @@
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
-							type="submit"
+							type="submit" value="Update"
 							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Update
 						</button>
 					</div>
