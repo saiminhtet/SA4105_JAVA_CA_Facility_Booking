@@ -38,38 +38,54 @@ public class UserController {
 
 		// Retrieves userNumber from session
 		String userNumber = this.getUserNumber(req);
-		// Sets userNumber to default value if null
-		User user = new User();
-		user = usrService.getUser(userNumber);
-		if (userNumber != null && user != null) {
-			String usertype = usrService.getUserType(userNumber);
-			if (usertype == "Member") {
-				return "redirect:home/member_home";
-			} else if (usertype == "Admin") {
-				return "redirect:home/admin_home";
-			} else {
-				return "redirect:home/super_admin_home";
+		
+		// Check if logged in
+		if (userNumber == null) return "redirect:user/login";
+		else {
+			// Check if userNumber valid
+			User user = new User();
+			try {
+				user = usrService.getUser(userNumber); // throws UserNotFound
+				
+				// At this point, if no exception, userNumber is valid and user object is retrieved
+				// Check userType to decide which welcome page to redirect
+				String userType = usrService.getUserType(userNumber); // throws UserNotFound
+				switch (userType) {
+					case "Member": return "redirect:home/member_home";
+					case "Admin": return "redirect:home/admin_home";
+					case "SuperAdmin": return "redirect:home/super_admin_home";
+					default: return "user/signup";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, thus return to login page
+				return "redirect:user/login";
 			}
 		}
-		return "user/signup";
 	}
 
 	@GetMapping("/login")
 	public String Login(HttpServletRequest req, ModelMap model) {
+		
+		// Retrieves userNumber from session
 		String userNumber = this.getUserNumber(req);
+		
 		User user = new User();
-		user = usrService.getUser(userNumber);
-		if (userNumber != null && user != null) {
-			String usertype = usrService.getUserType(userNumber);
-			if (usertype == "Member") {
-				return "redirect:home/member";
-			} else if (usertype == "Admin") {
-				return "redirect:home/admin";
-			} else {
-				return "redirect:home/superadmin";
+		try {
+			user = usrService.getUser(userNumber); // throws UserNotFound
+			
+			// At this point, if no exception, userNumber is valid and user object is retrieved
+			// Check userType to decide which welcome page to redirect
+			String userType = usrService.getUserType(userNumber); // throws UserNotFound
+			switch (userType) {
+				case "Member": return "redirect:home/member_home";
+				case "Admin": return "redirect:home/admin_home";
+				case "SuperAdmin": return "redirect:home/super_admin_home";
+				default: return "user/login";
 			}
+		} catch (UserNotFound e) {
+			// This means that userNumber is invalid, thus return to login page
+			return "redirect:user/login";
 		}
-		return "user/login";
 	}
 
 	@GetMapping("/signup")
