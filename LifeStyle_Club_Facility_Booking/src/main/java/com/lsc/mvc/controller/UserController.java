@@ -157,6 +157,7 @@ public class UserController {
 		
 			// Check Results
 			BindingResult results = binder.getBindingResult();
+			System.out.println(user.toString());
 			System.out.println(user_to_validate.toString());
 			System.out.println(results.toString());
 			if (results.hasErrors()) {
