@@ -11,6 +11,9 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class EmailGenerator {
 	
 	public void generateEmail(String receiverEmailAddress, String subjectText, String bodyText) {
@@ -50,11 +53,11 @@ public class EmailGenerator {
 	    	// Defining Sign-off
 	    	String footerText = "\n\n--------------------\n\n"
 	    			+ "Please do not reply to this message. \r\n"
-	    			+ "This email was sent from a notification-only email address that does not accept incoming email. \r\n" + 
-	    			"Feel free to contact your personal concierge at +65 9123 4567 for immediate assistance, or \r\n" + 
-	    			"send us an email at support@lifestyle.sg and we will serve you shortly.\r\n" + 
-	    			"\r\n\n" +
-	    			"2018 Lifestyle Club. All rights reserved.";
+	    			+ "This email was sent from a notification-only email address that does not accept incoming email. \r\n"
+	    			+ "Feel free to contact your personal concierge at +65 9123 4567 for immediate assistance, or \r\n" 
+	    			+ "send us an email at support@lifestyle.sg and we will serve you shortly.\r\n" 
+	    			+ "\r\n\n" 
+	    			+ "2018 Lifestyle Club. All rights reserved.";
 	    	
 	    	// Now set the actual message
 	    	message.setText(bodyText + footerText);

@@ -24,13 +24,17 @@ public class EmailServiceTests {
 	public void testNotifyNewUserSignup() {
 		try {
 			User u = uService.getUser("M0015");
+			
+			// In order to verify success and not randomly send emails to others
+			// This is not for production implementation
+			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
+			
 			eService.notifyNewUserSignup(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
-			outputStringToConsole(e.toString());
+			outputStringToConsole(e.getMessage());
 		}
 	}
-
 	
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");

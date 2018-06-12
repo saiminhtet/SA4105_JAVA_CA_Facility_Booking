@@ -1,5 +1,9 @@
 package com.lsc.mvc.service;
 
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
 import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.exception.UserNotFound;
@@ -8,10 +12,13 @@ import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.util.EmailGenerator;
 
+@Service
 public class EmailServiceImpl implements EmailService {
 	
 	private UserService uService;
 	private FacilityService fService;
+	
+	@Resource
 	private EmailGenerator eg;
 
 	@Override
