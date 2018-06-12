@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
-
 import com.lsc.mvc.exception.UserNotFound;
-
 import com.lsc.mvc.model.User;
-import com.lsc.mvc.repository.UserRepository;
 import com.lsc.mvc.service.UserService;
 import com.lsc.mvc.validator.UserValidator;
 
@@ -34,15 +31,16 @@ public class UserController {
 	private UserService usrService;
 
 	@GetMapping
-	public String get(HttpServletRequest req, ModelMap model) {
+	public String get(HttpServletRequest req, ModelMap model) throws UserNotFound {
 
 		// Retrieves userNumber from session
 		String userNumber = this.getUserNumber(req);
 		// Sets userNumber to default value if null
 		User user = new User();
 		user = usrService.getUser(userNumber);
+		String usertype = usrService.getUserType(userNumber);
 		if (userNumber != null && user != null) {
-			String usertype = usrService.getUserType(userNumber);
+			
 			if (usertype == "Member") {
 				return "redirect:home/member_home";
 			} else if (usertype == "Admin") {
@@ -55,12 +53,13 @@ public class UserController {
 	}
 
 	@GetMapping("/login")
-	public String Login(HttpServletRequest req, ModelMap model) {
+	public String Login(HttpServletRequest req, ModelMap model) throws UserNotFound {
 		String userNumber = this.getUserNumber(req);
 		User user = new User();
 		user = usrService.getUser(userNumber);
+		String usertype = usrService.getUserType(userNumber);
 		if (userNumber != null && user != null) {
-			String usertype = usrService.getUserType(userNumber);
+			
 			if (usertype == "Member") {
 				return "redirect:home/member";
 			} else if (usertype == "Admin") {
@@ -82,9 +81,9 @@ public class UserController {
 	}
 
 	@PostMapping("/signup")
-	public String addNewUser(HttpServletRequest req, User user) throws ResourceDefinitionInvalid {
+	public String addNewUser(HttpServletRequest req, User user) throws ResourceDefinitionInvalid, UserNotFound {
 		// Retrieves userNumber from session
-
+		UserValidator uservalidate = new UserValidator();
 		String userNumber = this.getUserNumber(req);
 
 		String usertype = usrService.getUserType(userNumber);
@@ -92,7 +91,7 @@ public class UserController {
 			usertype = "Member";
 		}
 		usrService.setNewUserNum(user, usertype);
-		
+		//create data to validate
 		User user_to_validate = new User();
 		user_to_validate.setUserNumber(user.getUserNumber());
 		user_to_validate.setTitle(user.getTitle());
@@ -102,11 +101,17 @@ public class UserController {
 		user_to_validate.setPassword(user.getPassword());
 		user_to_validate.setEmailAddress(user.getEmailAddress());
 		user_to_validate.setPhoneNumber(user.getPhoneNumber());
+		
+		
 		// Validation Using UserValidator Class
-		UserValidator uservalidate = new UserValidator();
+		//create databinder to bind data and validator
 		DataBinder binder = new DataBinder(user_to_validate);
 		binder.setValidator(uservalidate);
+		
+		//validate data
 		binder.validate();
+		
+		// check results
 		BindingResult results = binder.getBindingResult();
 		System.out.println(user_to_validate.toString());
 		if (results.hasErrors()) {
@@ -120,7 +125,7 @@ public class UserController {
 	}
 
 	@GetMapping("/profile")
-	public String userProfile(HttpServletRequest req, ModelMap model) {
+	public String userProfile(HttpServletRequest req, ModelMap model) throws UserNotFound {
 		String userNumber = this.getUserNumber(req);
 		if (userNumber == null) {
 			
@@ -131,7 +136,7 @@ public class UserController {
 	}
 
 	@PostMapping("/profile")
-	public String updateProfile(HttpServletRequest req, HttpServletResponse res, User user) throws ResourceDefinitionInvalid {
+	public String updateProfile(HttpServletRequest req, HttpServletResponse res, User user) throws ResourceDefinitionInvalid, UserNotFound {
 		// Retrieves userNumber from session
 
 		String userNumber = this.getUserNumber(req);
@@ -177,21 +182,36 @@ public class UserController {
 		String currentpassword = req.getParameter("current_password");
 		String newpassword = req.getParameter("password");
 		String confirmpassword = req.getParameter("confirm_password");
-		if (usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword)) {
-			User existinguser = new User();
-			existinguser = usrService.getUser(userNumber);
+		try {
+			if (usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword)) {
+				User existinguser = new User();
+				existinguser = usrService.getUser(userNumber);
 
-			System.out.println(existinguser.toString());
+				System.out.println(existinguser.toString());
 
-			existinguser = usrService.updatePassword(userNumber, newpassword);
+				existinguser = usrService.updatePassword(userNumber, newpassword);
 
-			System.out.println(existinguser.toString());
+				System.out.println(existinguser.toString());
 
-			return "user/profile";
+				return "user/profile";
+			}
+		} catch (UserNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		model.put("type", "error");
 		return "user/changepassword";
 	}
+	
+	
+	
+	//get member list and bind data to manage member view
+//	public String getMembers(HttpServletRequest req) {
+//		
+//	}
+//	
+	
+	
 
 	// Checking User Session and Get User Number
 	public String getUserNumber(HttpServletRequest req) {
