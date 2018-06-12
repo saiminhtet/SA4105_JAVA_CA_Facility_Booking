@@ -18,11 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
-
 import com.lsc.mvc.exception.UserNotFound;
-
 import com.lsc.mvc.model.User;
-import com.lsc.mvc.repository.UserRepository;
 import com.lsc.mvc.service.UserService;
 import com.lsc.mvc.validator.UserValidator;
 
@@ -34,10 +31,10 @@ public class UserController {
 	private UserService usrService;
 
 	@GetMapping
-	public String get(HttpServletRequest req, ModelMap model) {
+	public String get(HttpServletRequest req, ModelMap model) throws UserNotFound {
 
 		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req);
+		String userNumber = this.getUserNumber(req);	
 		
 		// Check if logged in
 		if (userNumber == null) return "redirect:user/login";
@@ -59,17 +56,22 @@ public class UserController {
 			} catch (UserNotFound e) {
 				// This means that userNumber is invalid, thus return to login page
 				return "redirect:user/login";
+
 			}
 		}
 	}
 
 	@GetMapping("/login")
+
 	public String Login(HttpServletRequest req, ModelMap model) {
 		
 		// Retrieves userNumber from session
+
 		String userNumber = this.getUserNumber(req);
 		
 		User user = new User();
+
+	
 		try {
 			user = usrService.getUser(userNumber); // throws UserNotFound
 			
@@ -81,6 +83,7 @@ public class UserController {
 				case "Admin": return "redirect:home/admin_home";
 				case "SuperAdmin": return "redirect:home/super_admin_home";
 				default: return "user/login";
+
 			}
 		} catch (UserNotFound e) {
 			// This means that userNumber is invalid, thus return to login page
@@ -142,33 +145,40 @@ public class UserController {
 		user_to_validate.setPhoneNumber(user.getPhoneNumber());
 		
 		// Perform validation Using UserValidator Class
-		UserValidator uservalidator = new UserValidator();
-		DataBinder binder = new DataBinder(user_to_validate);
-		binder.setValidator(uservalidator);
-		binder.validate();
-		BindingResult results = binder.getBindingResult();
-		System.out.println(user_to_validate.toString());
-		System.out.println(results.toString());
-		if (results.hasErrors()) {
-			// Provide feedback to user that an error has occurred and what are the actions that can be taken
+			// Create UserValidator
+			UserValidator uservalidator = new UserValidator();
 			
-			// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
-			return "user/signup"; // default redirection for guest/user to retry
-		} else {
-			// This means that there is no validation error
-			try {
-				usrService.addUser(user); // throws UserNotFound : this is to catch is the user object passed to the addUser method is null
-				System.out.println(user.toString());
-				return "user/login"; // This means that sign-up success
-			} catch (UserNotFound e) {
-				System.out.println(e.getMessage());
+			// Create DataBinder to Bind UserValidator
+			DataBinder binder = new DataBinder(user_to_validate);
+			binder.setValidator(uservalidator);
+		
+			// Validate the Data
+			binder.validate();
+		
+			// Check Results
+			BindingResult results = binder.getBindingResult();
+			System.out.println(user_to_validate.toString());
+			System.out.println(results.toString());
+			if (results.hasErrors()) {
+				// Provide feedback to user that an error has occurred and what are the actions that can be taken
+				
+				// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
+				return "user/signup"; // default redirection for guest/user to retry
+			} else {
+				// This means that there is no validation error
+				try {
+					usrService.addUser(user); // throws UserNotFound : this is to catch is the user object passed to the addUser method is null
+					System.out.println(user.toString());
+					return "user/login"; // This means that sign-up success
+				} catch (UserNotFound e) {
+					System.out.println(e.getMessage());
+				}
 			}
-		}
 		return "user/signup"; // default redirection for guest/user to retry
 	}
 
 	@GetMapping("/profile")
-	public String userProfile(HttpServletRequest req, ModelMap model) {
+	public String userProfile(HttpServletRequest req, ModelMap model) throws UserNotFound {
 		String userNumber = this.getUserNumber(req);
 		if (userNumber == null) {
 			
@@ -179,7 +189,7 @@ public class UserController {
 	}
 
 	@PostMapping("/profile")
-	public String updateProfile(HttpServletRequest req, HttpServletResponse res, User user) throws ResourceDefinitionInvalid {
+	public String updateProfile(HttpServletRequest req, HttpServletResponse res, User user) throws ResourceDefinitionInvalid, UserNotFound {
 		// Retrieves userNumber from session
 
 		String userNumber = this.getUserNumber(req);
@@ -225,21 +235,36 @@ public class UserController {
 		String currentpassword = req.getParameter("current_password");
 		String newpassword = req.getParameter("password");
 		String confirmpassword = req.getParameter("confirm_password");
-		if (usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword)) {
-			User existinguser = new User();
-			existinguser = usrService.getUser(userNumber);
+		try {
+			if (usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword)) {
+				User existinguser = new User();
+				existinguser = usrService.getUser(userNumber);
 
-			System.out.println(existinguser.toString());
+				System.out.println(existinguser.toString());
 
-			existinguser = usrService.updatePassword(userNumber, newpassword);
+				existinguser = usrService.updatePassword(userNumber, newpassword);
 
-			System.out.println(existinguser.toString());
+				System.out.println(existinguser.toString());
 
-			return "user/profile";
+				return "user/profile";
+			}
+		} catch (UserNotFound e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		model.put("type", "error");
 		return "user/changepassword";
 	}
+	
+	
+	
+	//get member list and bind data to manage member view
+//	public String getMembers(HttpServletRequest req) {
+//		
+//	}
+//	
+	
+	
 
 	// Checking User Session and Get User Number
 	public String getUserNumber(HttpServletRequest req) {
