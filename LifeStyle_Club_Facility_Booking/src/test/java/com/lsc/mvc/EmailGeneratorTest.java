@@ -13,7 +13,7 @@ public class EmailGeneratorTest {
 	
 	@Test
 	public void whenGenerateEmail_thenReturnVoid() {
-		String receiverEmailAddress = "qigiqinqin@gmail.com";
+		String receiverEmailAddress = "lifestyleclub.singapore@gmail.com";
 		String subjectText = "[Notification] LifeStyleClub Application";
 		String bodyText = "You have recently registered for an account with LifeStyleClub and we are glad to have you onboard.";
 		EmailGenerator eg  = new EmailGenerator();

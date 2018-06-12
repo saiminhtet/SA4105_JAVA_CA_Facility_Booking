@@ -15,9 +15,10 @@ import com.lsc.mvc.util.EmailGenerator;
 @Service
 public class EmailServiceImpl implements EmailService {
 	
+	@Resource
 	private UserService uService;
+	@Resource
 	private FacilityService fService;
-	
 	@Resource
 	private EmailGenerator eg;
 
@@ -44,7 +45,7 @@ public class EmailServiceImpl implements EmailService {
 			String subjectText = "[Notification] Reset Password";
 			String bodyText = "You have required to reset your password.\n" + 
 						"Your new password is \"" + newPassword + "\", please use this password and your User Number to login to your account.\n" +
-					"You are strongly advised to change your password soon.\n";
+					"You are strongly advised to change your password immediately.\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
@@ -57,9 +58,9 @@ public class EmailServiceImpl implements EmailService {
 		else {
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Profile Update";
-			String bodyText = "You have recently updated your profile, below is a summary of your user profile.\n" + 
-						"Name:\t" + u.getTitle() + " " + u.getFirstName() + " " + u.getMiddleName() + " " + u.getLastName() + "\n" +
-					"Email Address:\t" + u.getEmailAddress() + "\n" + "Phone Number:\t" + u.getPhoneNumber() + "\n";
+			String bodyText = "You have recently updated your profile, below is a summary of your user profile.\n\n" + 
+						"Name: " + u.getTitle() + " " + u.getFirstName() + " " + u.getMiddleName() + " " + u.getLastName() + "\n" +
+					"Email Address: " + u.getEmailAddress() + "\n" + "Phone Number: " + u.getPhoneNumber() + "\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
@@ -87,11 +88,11 @@ public class EmailServiceImpl implements EmailService {
 			Facility f = fService.getFacility(b);
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Booking Summary";
-			String bodyText = "You have recently made a booking with us, below is your booking summary.\n" + 
-						"Facility Name:\t" + f.getFacilityName() + "\n" +
-					"Slot Date:\t" + b.getSlotDate().toString() + "\n" +
-						"Slot Start Time:\t" + b.getSlotTimeStart().toString() + "\n" +
-					"Slot End Time:\t" + b.getSlotTimeEnd().toString() + "\n";
+			String bodyText = "You have recently made a booking with us, below is your booking summary.\n\n" + 
+						"Facility Name: " + f.getFacilityName() + "\n" +
+					"Slot Date: " + b.getSlotDate().toString() + "\n" +
+						"Slot Start Time: " + b.getSlotTimeStart().toString() + "\n" +
+					"Slot End Time: " + b.getSlotTimeEnd().toString() + "\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
@@ -106,11 +107,11 @@ public class EmailServiceImpl implements EmailService {
 			Facility f = fService.getFacility(b);
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Booking Cancellation";
-			String bodyText = "You have recently cancelled a booking, bellow is the detail.\n" + 
-					"Facility Name:\t" + f.getFacilityName() + "\n" +
-					"Slot Date:\t" + b.getSlotDate().toString() + "\n" +
-						"Slot Start Time:\t" + b.getSlotTimeStart().toString() + "\n" +
-					"Slot End Time:\t" + b.getSlotTimeEnd().toString() + "\n";
+			String bodyText = "You have recently cancelled a booking, bellow is the detail.\n\n" + 
+					"Facility Name: " + f.getFacilityName() + "\n" +
+					"Slot Date: " + b.getSlotDate().toString() + "\n" +
+						"Slot Start Time: " + b.getSlotTimeStart().toString() + "\n" +
+					"Slot End Time: " + b.getSlotTimeEnd().toString() + "\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
