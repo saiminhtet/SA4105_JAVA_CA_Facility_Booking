@@ -1,0 +1,116 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MANAGE BOOKING</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+
+
+<link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+
+</head>
+
+<body style="background-color: #f3f3f3;">
+	<div class="row register-form">
+		<div class="col-md-6 offset-md-3">
+			<form class="custom-form"
+				style="background-color: #f3f3f3; width: 100%;">
+				<h1
+					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">MANAGE
+					BOOKING</h1>
+				<div class="form-row form-group">
+					<div class="col-sm-3  offset-sm-1 label-column">
+						<label class="col-form-label" for="slotdate"
+							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Desired
+							Booking Date </label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<input type="date" class="form-control" id="date"
+							placeholder="Select value">
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="facilityname"
+							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
+							Name </label>
+					</div>
+					<div class="col-sm-4 input-column">
+						<div class="dropdown">
+
+							<select class="custom-select" id="facilityname">
+								<option selected>Choose...</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="starttime"
+							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Start Time </label>
+					</div>
+					<div class="col-sm-4 input-column">
+						<div class="dropdown">
+
+							<select class="custom-select" id="starttime">
+								<option selected>Choose...</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="endtime"
+							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">End Time </label>
+					</div>
+					<div class="col-sm-4 input-column">
+						<div class="dropdown">
+
+							<select class="custom-select" id="endtime">
+								<option selected>Choose...</option>
+								<option value="1">One</option>
+								<option value="2">Two</option>
+								<option value="3">Three</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				
+								
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column" style="height: 90px;"></div>
+					<div class="col-sm-4 input-column" style="height: 90px;">
+						<button
+							class="btn btn-light active submit-button cancel-btn-hover"
+							type="reset"
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;">Cancel</button>
+					</div>
+					<div class="col-sm-4 input-column" style="height: 90px;">
+						<button class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;">Update
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

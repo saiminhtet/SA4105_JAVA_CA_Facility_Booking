@@ -1,0 +1,163 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SEARCH BOOKING</title>
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+
+
+<link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<style type="text/css">
+.resultsTable {
+	/* 	border-radius: 25px !important; */
+	border-width: 2px !important;
+	border-style: solid !important;
+	border-style: outset;
+	border-color: rgba(0, 128, 255, 0.9) !important;
+	width: 90%; /*Tested and working as expected: */
+	padding-top: 1%;
+	margin: 0px auto;
+	float: none;
+}
+</style>
+</head>
+
+<body style="background-color: #f3f3f3;">
+	<div class="row register-form">
+		<div class="col-md-10 offset-md-1">
+			<form class="custom-form"
+				style="background-color: #f3f3f3; width: 100%;">
+				<h1
+					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">SEARCH
+					FACILITY</h1>
+				<div class="offset-sm-2">
+
+					<div class="form-row form-group">
+						<div class="col-sm-2  offset-sm-2 label-column">
+							<label class="col-form-label" for="membernumber"
+								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member
+								Number </label>
+						</div>
+						<div class="col-sm-3 input-column">
+							<input class="form-control" type="text" name="membernumber"
+								disabled>
+							<div class="col-sm-4 input-column" style="height: 90px;">
+								<button
+									class="btn btn-light active submit-button cancel-btn-hover"
+									type="reset"
+									style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 500%;">Get
+									All</button>
+							</div>
+						</div>
+					</div>
+					<div class="form-row form-group">
+						<div class="col-sm-3  offset-sm-1 label-column">
+							<label class="col-form-label" for="startdate"
+								style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Start
+								Date </label>
+						</div>
+						<div class="col-sm-3 input-column">
+							<input type="date" class="form-control" id="startdate"
+								placeholder="Select value">
+						</div>
+					</div>
+					<div class="form-row form-group">
+						<div class="col-sm-3  offset-sm-1 label-column">
+							<label class="col-form-label" for="enddate"
+								style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">End
+								Date </label>
+						</div>
+						<div class="col-sm-3 input-column">
+							<input type="date" class="form-control" id="enddate"
+								placeholder="Select value">
+							<div class="col-sm-4 input-column" style="height: 90px;">
+								<button class="btn btn-light submit-button button-hover"
+									type="submit"
+									style="margin-left: 5px; margin-left: 1px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 500%;">Search
+								</button>
+							</div>
+						</div>
+
+						<div class="offset-sm-2">
+							<div class="form-row form-group"></div>
+						</div>
+					</div>
+				</div>
+			</form>
+
+			<div class="table-responsive col-md-10 offset-md-1">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Type</th>
+							<th scope="col">Name</th>
+							<th scope="col">Capacity</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">F01</th>
+							<td>Meeting Room</td>
+							<td>Opal Room</td>
+							<td>4</td>
+							<td><button type="button" class="btn btn-success">Update</button>
+								<button type="button" class="btn btn-primary"
+									data-toggle="modal" data-target="#exampleModal"
+									style="margin-left: 5px">Cancel</button></td>
+						</tr>
+						<tr>
+							<th scope="row">F02</th>
+							<td>Meeting Room</td>
+							<td>Opal Room</td>
+							<td>4</td>
+							<td><button type="button" class="btn btn-success">Book</button></td>
+						</tr>
+						<tr>
+							<th scope="row">F03</th>
+							<td>Meeting Room</td>
+							<td>Opal Room</td>
+							<td>4</td>
+							<td><button type="button" class="btn btn-success">Book</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">User Confirmation Required</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">...</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-dismiss="modal" align="left">Close</button>
+					<button type="button" class="btn btn-primary">Ok</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

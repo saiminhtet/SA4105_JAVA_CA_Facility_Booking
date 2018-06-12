@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Signup</title>
+<title>Profile</title>
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet"
@@ -20,7 +20,7 @@
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/updateprofile}" th:method="post" th:object="${user}">
+				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/profile}" th:method="post" th:object="${user}">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">PROFILE
 				</h1>
@@ -113,10 +113,9 @@
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column" style="height: 90px;"></div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
-						<button
-							class="btn btn-light active submit-button cancel-btn-hover"
-							type="reset"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
+						<a class="btn btn-light active submit-button cancel-btn-hover"
+							th:href="@{/user}"
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</a>
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
