@@ -26,13 +26,13 @@ public class BookingValidator implements Validator {
 		
 		Booking b = (Booking) target;
 		// validate not null
-		if (b.getBookingNumber() == null) errors.rejectValue("bookingNumber", "bookingNumber.null", "Booking number cannot be null");
-	    if (b.getUserNumber()== null) errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
-        if (b.getFacilityNumber() == null) errors.rejectValue("facilityNumber", "facilityNumber.null", "Facility number cannot be null");
-        if (b.getTransDateTime() == null) errors.rejectValue("transDateTime", "transDateTime.null", "Transcation date time cannot be null");
-        if (b.getSlotDate() == null) errors.rejectValue("slotDate", "slotDate.null", "Slot date cannot be null");
-        if (b.getSlotTimeStart() == null) errors.rejectValue("slotTimeStart", "slotTimeStart.null", "Slot start time cannot be null");
-        if (b.getSlotTimeEnd() == null) errors.rejectValue("slotTimeEnd", "slotTimeEnd.null", "Slot end time cannot be null");
+		if (b.getBookingNumber() == null) 	errors.rejectValue("bookingNumber", "bookingNumber.null", "Booking number cannot be null");
+	    if (b.getUserNumber()== null) 		errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
+        if (b.getFacilityNumber() == null) 	errors.rejectValue("facilityNumber", "facilityNumber.null", "Facility number cannot be null");
+        if (b.getTransDateTime() == null) 	errors.rejectValue("transDateTime", "transDateTime.null", "Transcation date time cannot be null");
+        if (b.getSlotDate() == null) 		errors.rejectValue("slotDate", "slotDate.null", "Slot date cannot be null");
+        if (b.getSlotTimeStart() == null) 	errors.rejectValue("slotTimeStart", "slotTimeStart.null", "Slot start time cannot be null");
+        if (b.getSlotTimeEnd() == null) 	errors.rejectValue("slotTimeEnd", "slotTimeEnd.null", "Slot end time cannot be null");
         // validate not empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "bookingNumber", "bookingNumber.empty", "Booking name cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNumber", "userNumber.empty", "User name cannot be empty");

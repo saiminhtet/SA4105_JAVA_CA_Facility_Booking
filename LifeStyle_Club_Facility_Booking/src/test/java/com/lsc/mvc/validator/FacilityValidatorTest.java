@@ -21,17 +21,39 @@ public class FacilityValidatorTest {
 	private FacilityService fService;
 	
 	@Test
-	public void testFacilityValidator() throws ResourceDefinitionInvalid {
+	public void testFacilityValidatorSuccess() throws ResourceDefinitionInvalid {
 		// create validator
 		FacilityValidator fv = new FacilityValidator();
 		// create data to validate
 		Facility f = new Facility("Badminton Court", "Badminton Court 5", "This is a long description", 4);
-//		Facility f = new Facility("Badminton Room", "Badminton Court 5", "", 0);
 		try {
 			fService.setNewFacNum(f);
 		} catch (FacilityNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			outputStringToConsole(e.getMessage());
+		}
+		// create databinder to bind data and validator
+		DataBinder binder = new DataBinder(f);
+		binder.setValidator(fv);
+		// validate data
+		binder.validate();
+		BindingResult results = binder.getBindingResult();
+//		outputStringToConsole(results.toString());
+		// check results
+		if (results.hasErrors()) {
+			throw new ResourceDefinitionInvalid();
+		}
+	}
+	
+	@Test
+	public void testFacilityValidatorFailure() throws ResourceDefinitionInvalid {
+		// create validator
+		FacilityValidator fv = new FacilityValidator();
+		// create data to validate
+		Facility f = new Facility("Badminton Room", "Badminton Court 5", "", 0);
+		try {
+			fService.setNewFacNum(f);
+		} catch (FacilityNotFound e) {
+			outputStringToConsole(e.getMessage());
 		}
 		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(f);

@@ -8,6 +8,7 @@ import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.javabeans.FacilityUsage;
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
 
@@ -32,4 +33,10 @@ public interface BookingService {
 	ArrayList<Booking> getBookingListByUserNum(String uNum) throws UserNotFound;
 	
 	List<String> getAvailableSlots(LocalDate slotDate, String fNum) throws FacilityNotFound;
+	
+	FacilityUsage getFacilityUsageByFNumAndDate(String fNum, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound;
+	
+	List<FacilityUsage> getFacilityUsageListByFacilityListAndDate(List<Facility> fList, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound;
+	
+//	Long getSlotNumBetweenDates(LocalDate dStart, LocalDate dEnd);
 }
