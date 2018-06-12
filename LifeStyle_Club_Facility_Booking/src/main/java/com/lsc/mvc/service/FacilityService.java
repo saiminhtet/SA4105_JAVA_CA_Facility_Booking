@@ -4,8 +4,12 @@ import java.util.ArrayList;
 
 import org.springframework.data.repository.query.Param;
 
+import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
+import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
+import com.lsc.mvc.model.User;
 
 public interface FacilityService {
 	
@@ -28,4 +32,6 @@ public interface FacilityService {
 	ArrayList<Facility> getFacilityListByName(String fName);
 	
 	Facility getFacilityByName(String fName);
+	
+	Facility getFacility(Booking b) throws BookingNotFound, FacilityNotFound;
 }
