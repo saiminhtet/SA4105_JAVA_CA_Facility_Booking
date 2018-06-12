@@ -29,6 +29,7 @@ public class UserValidator implements Validator {
 		User u = (User) target;
 
 
+
 		if (u.getUserNumber() == null)
 			errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
 		if (u.getTitle() == null)
@@ -48,13 +49,13 @@ public class UserValidator implements Validator {
 				"User number cannot be empty");
 
 		// validate not null
-		if (u.getUserNumber() == null) errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
-        if (u.getTitle() == null) errors.rejectValue("title", "title.null", "Title cannot be null");
-	    if (u.getFirstName()== null) errors.rejectValue("firstName", "firstName.null", "First name cannot be null");
-        if (u.getLastName() == null) errors.rejectValue("lastName", "lastName.null", "Last name cannot be null");
-        if (u.getPassword() == null) errors.rejectValue("password", "password.null", "Password cannot be null");
-        if (u.getEmailAddress() == null) errors.rejectValue("emailAddress", "emailAddress.null", "Email address cannot be null");
-        if (u.getPhoneNumber() == null) errors.rejectValue("phoneNumber", "phoneNumber.null", "Phone number cannot be null");
+		if (u.getUserNumber() == null) 		errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
+        if (u.getTitle() == null) 			errors.rejectValue("title", "title.null", "Title cannot be null");
+	    if (u.getFirstName()== null) 		errors.rejectValue("firstName", "firstName.null", "First name cannot be null");
+        if (u.getLastName() == null) 		errors.rejectValue("lastName", "lastName.null", "Last name cannot be null");
+        if (u.getPassword() == null) 		errors.rejectValue("password", "password.null", "Password cannot be null");
+        if (u.getEmailAddress() == null) 	errors.rejectValue("emailAddress", "emailAddress.null", "Email address cannot be null");
+        if (u.getPhoneNumber() == null) 	errors.rejectValue("phoneNumber", "phoneNumber.null", "Phone number cannot be null");
         // validate not empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNumber", "userNumber.empty", "User number cannot be empty");
 
@@ -62,9 +63,9 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.empty", "First name cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.empty", "Last name cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "password.empty", "Password cannot be empty");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "emailAddress.empty",
-				"Email address cannot be empty");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "emailAddress.empty", "Email address cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "Phone number cannot be empty");
+
 
 
 		if (u.getTitle() != "Mr" && u.getTitle() != "Ms" && u.getTitle() != "Mrs" && u.getTitle() != "Dr"
