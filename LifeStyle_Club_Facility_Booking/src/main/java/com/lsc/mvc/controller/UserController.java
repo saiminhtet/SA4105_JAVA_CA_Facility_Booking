@@ -175,7 +175,7 @@ public class UserController {
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
 		if (results.hasErrors()) {
-			throw new ResourceDefinitionInvalid();
+			return "user/profile";
 		} else {
 			
 			usrService.updateUser(existinguser);
