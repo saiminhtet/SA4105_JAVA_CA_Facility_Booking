@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.repository.BookingRepository;
@@ -134,12 +135,17 @@ public class BookingServiceTests {
 //	public void whenGetAvailableSlots_thenReturnList() {
 //		LocalDate d = LocalDate.of(2018, 6, 13);
 //		String fNum = "F023";
-//		List<String> availList = bService.getAvailableSlots(d, fNum);
-//		
-//		outputStringToConsole(String.valueOf(availList.size()));
-//		
-//		for (String s:availList) {
-//			System.out.println(s.toString());
+//		List<String> availList;
+//		try {
+//			availList = bService.getAvailableSlots(d, fNum);
+//			
+//			outputStringToConsole(String.valueOf(availList.size()));
+//			
+//			for (String s:availList) {
+//				System.out.println(s.toString());
+//			}
+//		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
 //		}
 //	}
 	

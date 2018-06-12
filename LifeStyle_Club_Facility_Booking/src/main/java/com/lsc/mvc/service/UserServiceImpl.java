@@ -10,6 +10,9 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.lsc.mvc.exception.BookingNotFound;
+import com.lsc.mvc.exception.ResourceDefinitionInvalid;
+import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.UserRepository;
 
@@ -20,7 +23,9 @@ public class UserServiceImpl implements UserService {
 	private UserRepository uRepo;
 	
 	@Override
-	public User setNewUserNum(User u, String type) {
+	public User setNewUserNum(User u, String type) throws UserNotFound {
+		if (u == null) throw new UserNotFound("User object provided cannot be null");
+		
 		// Getting Current Max userId
 		Integer newId = uRepo.getUserIdMax() + 1;
 		
@@ -33,31 +38,38 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Transactional
-	public User addUser(User user) {
+	public User addUser(User user) throws UserNotFound {
+		if (user == null) throw new UserNotFound("User object provided cannot be null");
 		return uRepo.saveAndFlush(user);
 	}
 	
 	@Override
 	@Transactional
-	public User getUser(String userNum) {
-		return uRepo.getUserByUserNumber(userNum);
+	public User getUser(String userNum) throws UserNotFound {
+		User u = uRepo.getUserByUserNumber(userNum);
+		if (u == null) throw new UserNotFound("User number provided is invalid");
+		else return u;
 	}
 
 	@Override
 	@Transactional
-	public User updateUser(User user) {
+	public User updateUser(User user) throws UserNotFound {
+		if (user == null) throw new UserNotFound("User object provided cannot be null");
 		return uRepo.saveAndFlush(user);
 	}
 
 	@Override
 	@Transactional
-	public Void removeUser(String userNum) {
+	public Void removeUser(String userNum) throws UserNotFound {
+		if (getUser(userNum) == null) throw new UserNotFound("User number provided is invalid");
 		uRepo.delete(getUser(userNum));
 		return null;
 	}
 	
 	@Override
-	public User updatePassword(String userNum, String pw) {
+	public User updatePassword(String userNum, String pw) throws UserNotFound {
+		if (getUser(userNum) == null) throw new UserNotFound("User number provided is invalid");
+		
 		// Retrieving Existing User Object
 		User u = getUser(userNum);
 		
@@ -67,7 +79,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public ArrayList<User> getUserListByUserNum(String userNum) {
+	public ArrayList<User> getUserListByUserNum(String userNum) throws UserNotFound {
+		if (getUser(userNum) == null) throw new UserNotFound("User number provided is invalid");
+		
 		// Retrieving Existing User Object
 		User u = getUser(userNum);
 		
@@ -78,18 +92,20 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public ArrayList<User> getMListByName(String mName) {
+	public ArrayList<User> getMListByName(String mName) throws ResourceDefinitionInvalid {
+		if (mName == "") throw new ResourceDefinitionInvalid("Please provide a name to search");
 		return uRepo.getMemberListByName(mName);
 	}
 	
 	@Override
-	public ArrayList<User> getAListByName(String aName) {
+	public ArrayList<User> getAListByName(String aName) throws ResourceDefinitionInvalid {
+		if (aName == "") throw new ResourceDefinitionInvalid("Please provide a name to search");
 		return uRepo.getAdminListByName(aName);
 	}
 	
 	@Override
 	public List<User> getMList() {
-		return uRepo.findAll().stream().filter(x -> this.getUserType(x.getUserNumber())=="Member").collect(Collectors.toList());
+		return uRepo.findAll().stream().filter(x -> x.getUserNumber().substring(0, 1).equals("M")).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -98,9 +114,10 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User getUserByEmailPw(String emailAdd, String pw) {
+	public User getUserByEmailPw(String emailAdd, String pw) throws ResourceDefinitionInvalid {
 		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
+		if (uList.size() == 0) throw new ResourceDefinitionInvalid("There are no user records");
 		
 		// Check for any user who matches criteria
 		for (User u:uList) {
@@ -112,7 +129,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public User validateLogin(String userNum, String pw) {
+	public User validateLogin(String userNum, String pw) throws UserNotFound {
+		if (getUser(userNum) == null) throw new UserNotFound("User number provided is invalid");
+		
 		// Retrieve ArrayList of Users
 		ArrayList<User> uList = (ArrayList<User>) uRepo.findAll();
 		
@@ -131,9 +150,8 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public String getUserType(String uNum) {
-		// Check if userNumber valid
-		if (getUser(uNum)==null) return "";
+	public String getUserType(String uNum) throws UserNotFound {
+		if (getUser(uNum) == null) throw new UserNotFound("User number provided is invalid");
 		
 		// Return userType based on parsing string
 		if (uNum.equals("A0001")) return "SuperAdmin";
@@ -146,7 +164,9 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw) {
+	public Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw) throws UserNotFound {
+		if (getUser(uNum) == null) throw new UserNotFound("User number provided is invalid");
+		
 		// Check for blanks
 		if (oldPw=="" || newPw=="" || confirmPw=="") return false;
 		else {

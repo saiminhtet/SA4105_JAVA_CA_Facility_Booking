@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.repository.FacilityRepository;
 import com.lsc.mvc.service.FacilityService;
@@ -23,8 +24,19 @@ public class FacilityServiceTests {
 	
 //	@Test
 //	public void whenGetFacility_thenReturnFacility() {
-//		Facility f = fService.getFacility("F010");
-//		outputStringToConsole(f.toString());
+//		Facility f;
+//		try {
+//			f = fService.getFacility("F010");
+//			outputStringToConsole(f.toString());
+//		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		}
+//		try {
+//			f = fService.getFacility("F0102");
+//			outputStringToConsole(f.toString());
+//		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		}
 //	}
 	
 //	@Test
