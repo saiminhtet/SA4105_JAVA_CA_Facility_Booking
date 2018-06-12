@@ -1,5 +1,6 @@
 package com.lsc.mvc.validator;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -11,7 +12,8 @@ import com.lsc.mvc.model.User;
 
 @Component
 public class UserValidator implements Validator {
-
+	
+	
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 			.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	private static final Pattern VALID_PHONE_NUMBER_REGEX = Pattern.compile("^65+(6|8|9)+\\d{7}");
@@ -27,26 +29,6 @@ public class UserValidator implements Validator {
 	public void validate(Object target, Errors errors) {
 
 		User u = (User) target;
-
-
-
-		if (u.getUserNumber() == null)
-			errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
-		if (u.getTitle() == null)
-			errors.rejectValue("title", "title.null", "Title cannot be null");
-		if (u.getFirstName() == null)
-			errors.rejectValue("firstName", "firstName.null", "First name cannot be null");
-		if (u.getLastName() == null)
-			errors.rejectValue("lastName", "lastName.null", "Last name cannot be null");
-		if (u.getPassword() == null)
-			errors.rejectValue("password", "password.null", "Password cannot be null");
-		if (u.getEmailAddress() == null)
-			errors.rejectValue("emailAddress", "emailAddress.null", "Email address cannot be null");
-		if (u.getPhoneNumber() == null)
-			errors.rejectValue("phoneNumber", "phoneNumber.null", "Phone number cannot be null");
-
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNumber", "userNumber.empty",
-				"User number cannot be empty");
 
 		// validate not null
 		if (u.getUserNumber() == null) 		errors.rejectValue("userNumber", "userNumber.null", "User number cannot be null");
@@ -66,19 +48,12 @@ public class UserValidator implements Validator {
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "emailAddress", "emailAddress.empty", "Email address cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "Phone number cannot be empty");
 
-
-
-		if (u.getTitle() != "Mr" && u.getTitle() != "Ms" && u.getTitle() != "Mrs" && u.getTitle() != "Dr"
-				&& u.getTitle() != "Mdm") {
-			errors.rejectValue("title", "title.invalid", "Not a valid title");
-		}
-
 		// validate within range
-		if (u.getTitle() != "Mr" && u.getTitle() != "Ms" && u.getTitle() != "Mrs" && u.getTitle() != "Dr" && u.getTitle() != "Mdm") {
-			errors.rejectValue("title", "title.invalid", "Not a valid title");
-		}
-		// validate format
+		ArrayList<String> tList = new ArrayList<String>();
+		tList.add("Dr"); tList.add("Mdm"); tList.add("Mr");tList.add("Mrs"); tList.add("Ms");
+		if (!(tList.contains(u.getTitle()))) errors.rejectValue("title", "title.invalid", "Not a valid title");
 
+		// validate format
 		Matcher passwordMatcher = VALID_PASSWORD_REGEX.matcher(u.getPassword());
 		if (!passwordMatcher.find()) {
 			errors.rejectValue("password", "password.invalid", "Invalid password format");

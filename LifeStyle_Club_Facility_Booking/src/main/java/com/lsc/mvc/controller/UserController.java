@@ -93,25 +93,47 @@ public class UserController {
 
 	@GetMapping("/signup")
 	public String Signup(ModelMap model) {
+		
+		// Allowed for Guests (Non-user to sign up as member), Admin (to sign up for member), SuperAdmin (to sign up for admin)
+		// Hence, no need to retrieve and check userNumber from session
+		
 		User user = new User();
-		user.setPassword("enter password");
-		model.put("title", usrService.getTitleList());
-		model.put("user", user);
+		user.setPassword("Please enter a password");
+		model.put("title", usrService.getTitleList()); // Retrieves title list to populate dropdownlist in signup form
+		model.put("user", user); // Passes blank user object to fill up in signup form
 		return "user/signup";
 	}
 
 	@PostMapping("/signup")
-	public String addNewUser(HttpServletRequest req, User user) throws ResourceDefinitionInvalid, UserNotFound {
+	public String addNewUser(HttpServletRequest req, User user) throws ResourceDefinitionInvalid {
+		
 		// Retrieves userNumber from session
-		UserValidator uservalidate = new UserValidator();
-		String userNumber = this.getUserNumber(req);
-
-		String usertype = usrService.getUserType(userNumber);
-		if (usertype == null) {
-			usertype = "Member";
+		String userNumber = this.getUserNumber(req); // to check if sign-up is done by Guest, Admin or SuperAdmin
+		
+		// Determining the accountType for the signup
+		String acctType;
+		try {
+			String userType = usrService.getUserType(userNumber); // throws UserNotFound
+			switch (userType) {
+				case "Member": return "redirect:home/member_home"; // Member is not supposed to be able to sign up for other accounts
+				case "Admin": acctType = "Member"; // Admin is allowed to sign up for member, e.g. guest request counter staff to sign up for them
+				case "SuperAdmin": acctType = "Admin"; // SuperAdmin is allowed to sign up for admin
+				default: acctType = "Member"; // Guests are allowed to sign up member accounts
+			}
+		} catch (UserNotFound e) {
+			// This means that userNumber is invalid, thus default
+			acctType = "Member";
 		}
-		usrService.setNewUserNum(user, usertype);
-		//create data to validate
+		
+		// Setting the appropriate userNumber for the user object based on acctType
+		try {
+			usrService.setNewUserNum(user, acctType); // throws UserNotFound
+		} catch (UserNotFound e) {
+			// This means that the "user" object passed into this method is null, thus redirect back to signup page to restart
+			return "user/signup";
+		}
+		
+		// Create test user object for validation
 		User user_to_validate = new User();
 		user_to_validate.setUserNumber(user.getUserNumber());
 		user_to_validate.setTitle(user.getTitle());
@@ -122,26 +144,38 @@ public class UserController {
 		user_to_validate.setEmailAddress(user.getEmailAddress());
 		user_to_validate.setPhoneNumber(user.getPhoneNumber());
 		
+		// Perform validation Using UserValidator Class
+			// Create UserValidator
+			UserValidator uservalidator = new UserValidator();
+			
+			// Create DataBinder to Bind UserValidator
+			DataBinder binder = new DataBinder(user_to_validate);
+			binder.setValidator(uservalidator);
 		
-		// Validation Using UserValidator Class
-		//create databinder to bind data and validator
-		DataBinder binder = new DataBinder(user_to_validate);
-		binder.setValidator(uservalidate);
+			// Validate the Data
+			binder.validate();
 		
-		//validate data
-		binder.validate();
-		
-		// check results
-		BindingResult results = binder.getBindingResult();
-		System.out.println(user_to_validate.toString());
-		if (results.hasErrors()) {
-			throw new ResourceDefinitionInvalid();
-		} else {
-			usrService.addUser(user);
+			// Check Results
+			BindingResult results = binder.getBindingResult();
 			System.out.println(user.toString());
-
-			return "user/login";
-		}
+			System.out.println(user_to_validate.toString());
+			System.out.println(results.toString());
+			if (results.hasErrors()) {
+				// Provide feedback to user that an error has occurred and what are the actions that can be taken
+				
+				// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
+				return "user/signup"; // default redirection for guest/user to retry
+			} else {
+				// This means that there is no validation error
+				try {
+					usrService.addUser(user); // throws UserNotFound : this is to catch is the user object passed to the addUser method is null
+					System.out.println(user.toString());
+					return "user/login"; // This means that sign-up success
+				} catch (UserNotFound e) {
+					System.out.println(e.getMessage());
+				}
+			}
+		return "user/signup"; // default redirection for guest/user to retry
 	}
 
 	@GetMapping("/profile")
