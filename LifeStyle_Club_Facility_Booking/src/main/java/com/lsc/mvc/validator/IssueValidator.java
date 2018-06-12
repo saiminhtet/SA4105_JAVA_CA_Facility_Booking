@@ -26,12 +26,12 @@ public class IssueValidator implements Validator {
 		
 		Issue i = (Issue) target;
 		// validate not null
-		if (i.getIssueNumber() == null) errors.rejectValue("issueNumber", "issueNumber.null", "Issue number cannot be null");
-	    if (i.getAdminNumber() == null) errors.rejectValue("adminNumber", "adminNumber.null", "Admin number cannot be null");
-        if (i.getFacilityNumber() == null) errors.rejectValue("facilityNumber", "facilityNumber.null", "Facility number cannot be null");
-        if (i.getReportDateTime() == null) errors.rejectValue("reportDateTime", "reportDateTime.null", "Report date time cannot be null");
-        if (i.getIssueDescription() == null) errors.rejectValue("issueDescription", "issueDescription.null", "Issue description cannot be null");
-        if (i.getIssueStatus() == null) errors.rejectValue("issueStatus", "issueStatus.null", "Issue status cannot be null");
+		if (i.getIssueNumber() == null)			errors.rejectValue("issueNumber", "issueNumber.null", "Issue number cannot be null");
+	    if (i.getAdminNumber() == null) 		errors.rejectValue("adminNumber", "adminNumber.null", "Admin number cannot be null");
+        if (i.getFacilityNumber() == null) 		errors.rejectValue("facilityNumber", "facilityNumber.null", "Facility number cannot be null");
+        if (i.getReportDateTime() == null) 		errors.rejectValue("reportDateTime", "reportDateTime.null", "Report date time cannot be null");
+        if (i.getIssueDescription() == null)	errors.rejectValue("issueDescription", "issueDescription.null", "Issue description cannot be null");
+        if (i.getIssueStatus() == null) 		errors.rejectValue("issueStatus", "issueStatus.null", "Issue status cannot be null");
         // validate not empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "issueNumber", "issueNumber.empty", "Issue number cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "adminNumber", "adminNumber.empty", "Admin number cannot be empty");
@@ -50,7 +50,7 @@ public class IssueValidator implements Validator {
 		}
 		// validate within range
 		if (i.getIssueStatus() != "Open" && i.getIssueStatus() != "Ongoing" && i.getIssueStatus() != "Cancelled" && i.getIssueStatus() != "Closed") {
-			errors.rejectValue("issueStatus", "issueStatus.invalid", "Not a valid issue status");
+			errors.rejectValue("issueStatus", "issueStatus.invalid", "Invalid issue status");
 		}
 
 	}
