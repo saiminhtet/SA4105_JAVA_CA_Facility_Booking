@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
+import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.UserRepository;
 import com.lsc.mvc.service.UserService;
@@ -33,16 +34,22 @@ public class UserServiceTests {
 //	public void whenAddUser_thenReturnUser() {
 //		User u = new User("Mr", "Buenos", "Amigos", "Sayonara", 
 //				"Aa123!@#", "ba@ba.com", "6512345678");
-//		uService.setNewUserNum(u, "Member");
-//		
-//		outputStringToConsole(u.toString());
-//		
-//		// Adding To Database
-//		uService.addUser(u);
-//		
-//		for (User usr:uRepo.findAll()) {
-//			System.out.println(usr.toString());
+//		try {
+//			uService.setNewUserNum(u, "Member");
+//			
+//			outputStringToConsole(u.toString());
+//			
+//			// Adding To Database
+//			uService.addUser(u);
+//			
+//			for (User usr:uRepo.findAll()) {
+//				System.out.println(usr.toString());
+//			}
+//		} catch (UserNotFound e) {
+//			outputStringToConsole(e.getMessage());
 //		}
+//		
+//		
 //	}
 	
 //	@Test

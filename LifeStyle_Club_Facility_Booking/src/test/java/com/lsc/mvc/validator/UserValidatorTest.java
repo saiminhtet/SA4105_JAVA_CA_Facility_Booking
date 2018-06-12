@@ -24,28 +24,52 @@ public class UserValidatorTest {
 	public void testUserValidator() throws ResourceDefinitionInvalid {
 		// create validator
 		UserValidator uv = new UserValidator();
-		// create data to validate
-		User u = new User("Dr", "Strange", "Love", "Who", "Aa123456!", "1@1.com", "6592345678");
-//		User u = new User("Drs", "Strange", "Love", "Who", "Aa123456", "1@1", "6512345678");
-		try {
-			uService.setNewUserNum(u, "Member");
-		} catch (UserNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// create databinder to bind data and validator
-		DataBinder binder = new DataBinder(u);
-		binder.setValidator(uv);
-		// validate data
-		binder.validate();
-		BindingResult results = binder.getBindingResult();
-//		outputStringToConsole(results.toString());
-		// check results
-		if (results.hasErrors()) {
-			throw new ResourceDefinitionInvalid();
-		}
+		
+		// validation test expect pass
+			// create data to validate
+			User u1 = new User("Dr", "Strange", "Love", "Who", "Aa123456!", "1@1.com", "6592345678");
+			try {
+				uService.setNewUserNum(u1, "Member");
+			} catch (UserNotFound e) {
+				outputStringToConsole(e.getMessage());
+			}
+			
+			// create databinder to bind data and validator
+			DataBinder binder1 = new DataBinder(u1);
+			binder1.setValidator(uv);
+			
+			// validate data
+			binder1.validate();
+			
+			// check results
+			BindingResult results1 = binder1.getBindingResult();
+			outputStringToConsole(results1.toString());
+			
+			if (results1.hasErrors()) {
+				throw new ResourceDefinitionInvalid();
+			}
+		
+		// validation test expect fail
+			// create data to validate	
+			User u2 = new User("Drs", "Strange", "Love", "Who", "Aa123456", "1@1", "6512345678");
+		
+			// create databinder to bind data and validator
+			DataBinder binder2 = new DataBinder(u2);
+			binder2.setValidator(uv);
+		
+			// validate data
+			binder2.validate();
+			
+			// check results
+			BindingResult results2 = binder2.getBindingResult();
+			outputStringToConsole(results2.toString());
+			
+			if (results2.hasErrors()) {
+				throw new ResourceDefinitionInvalid();
+			}
 	}
 	
+	// Utility Methods
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");
 		System.out.println(msg.toString());
