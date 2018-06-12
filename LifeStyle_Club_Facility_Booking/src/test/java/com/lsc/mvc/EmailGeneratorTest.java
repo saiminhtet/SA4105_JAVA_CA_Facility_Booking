@@ -11,13 +11,14 @@ import com.lsc.mvc.util.EmailGenerator;
 @SpringBootTest
 public class EmailGeneratorTest {
 	
-//	@Test
-//	public void whenGenerateEmail_thenReturnVoid() {
-//		String receiverEmailAddress = "teong.sam@gmail.com";
-//		String subjectText = "[Notification] LifeStyleClub Application";
-//		String bodyText = "You have recently registered for an account with LifeStyleClub and we are glad to have you onboard.";
-//		EmailGenerator.generateEmail(receiverEmailAddress, subjectText, bodyText);
-//	}
+	@Test
+	public void whenGenerateEmail_thenReturnVoid() {
+		String receiverEmailAddress = "qigiqinqin@gmail.com";
+		String subjectText = "[Notification] LifeStyleClub Application";
+		String bodyText = "You have recently registered for an account with LifeStyleClub and we are glad to have you onboard.";
+		EmailGenerator eg  = new EmailGenerator();
+		eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
+	}
 //	
 //	// Utility Methods
 //	public void outputStringToConsole(String msg) {

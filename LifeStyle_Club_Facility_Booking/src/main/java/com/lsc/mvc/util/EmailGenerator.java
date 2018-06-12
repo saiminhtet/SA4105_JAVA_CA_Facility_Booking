@@ -13,7 +13,7 @@ import javax.mail.internet.MimeMessage;
 
 public class EmailGenerator {
 	
-	public static void generateEmail(String receiverEmailAddress, String subjectText, String bodyText) {
+	public void generateEmail(String receiverEmailAddress, String subjectText, String bodyText) {
 		
 		// Sender Email Credentials
 		String senderEmailAddress = "lifestyleclub.singapore@gmail.com";
