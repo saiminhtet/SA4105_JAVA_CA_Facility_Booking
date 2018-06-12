@@ -175,7 +175,7 @@ public class BookingServiceTests {
 //	public void whenGetFacilityUsageListByFacilityListAndDate_thenReturnFacilityUsageList() {
 //		try {
 //			// Get List of Facility Usage for a List of Facilities (in this case, the entire list of facilities)
-//			List<FacilityUsage> fUsageList = bService.getFacilityUsageListByFacilityListAndDate(fService.getFacilityList(), LocalDate.of(2018, 6, 8), LocalDate.of(2018, 6, 11));
+//			List<FacilityUsage> fUsageList = bService.getFacilityUsageListByFacilityListAndDate(fService.getFacilityList(), LocalDate.now().minusDays(6), LocalDate.now());
 //			
 //			// Check that Number of Records equals Total Number of Facilities 
 //			outputStringToConsole(String.valueOf(fUsageList.size()));
