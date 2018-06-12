@@ -1,0 +1,57 @@
+package com.lsc.mvc.javabeans;
+
+import java.text.DecimalFormat;
+
+public class FacilityUsage {
+	
+	// Attributes
+	private String facilityNumber;
+	private String facilityType;
+	private String facilityName;
+	private double facilityUsage;
+	
+	// Getters and Setters
+	public String getFacilityNumber() {
+		return facilityNumber;
+	}
+	public void setFacilityNumber(String facilityNumber) {
+		this.facilityNumber = facilityNumber;
+	}
+	public String getFacilityType() {
+		return facilityType;
+	}
+	public void setFacilityType(String facilityType) {
+		this.facilityType = facilityType;
+	}
+	public String getFacilityName() {
+		return facilityName;
+	}
+	public void setFacilityName(String facilityName) {
+		this.facilityName = facilityName;
+	}
+	public double getFacilityUsage() {
+		return facilityUsage;
+	}
+	public void setFacilityUsage(double facilityUsage) {
+		this.facilityUsage = facilityUsage;
+	}
+	
+	// Constructors
+	public FacilityUsage() { }
+	
+	public FacilityUsage(String facilityNumber, String facilityType, String facilityName, double facilityUsage) {
+		super();
+		this.facilityNumber = facilityNumber;
+		this.facilityType = facilityType;
+		this.facilityName = facilityName;
+		this.facilityUsage = facilityUsage;
+	}
+	
+	// Methods
+	@Override
+	public String toString() {
+		DecimalFormat fmt = new DecimalFormat("0.00%");
+		return "FacilityUsage [facilityNumber=" + facilityNumber + ", facilityType=" + facilityType + ", facilityName="
+				+ facilityName + ", facilityUsage=" + fmt.format(facilityUsage) + "]";
+	}
+}

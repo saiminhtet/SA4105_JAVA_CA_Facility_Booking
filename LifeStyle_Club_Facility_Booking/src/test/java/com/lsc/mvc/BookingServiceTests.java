@@ -1,5 +1,6 @@
 package com.lsc.mvc;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
+import com.lsc.mvc.javabeans.FacilityUsage;
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.repository.BookingRepository;
@@ -145,6 +148,43 @@ public class BookingServiceTests {
 //				System.out.println(s.toString());
 //			}
 //		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		}
+//	}
+	
+//	@Test
+//	public void whenGetSlotNumBetweenDates_thenReturnLong() {
+//		LocalDate d1 = LocalDate.of(2018, 6, 8);
+//		LocalDate d2 = LocalDate.of(2018, 6, 10);
+//		outputStringToConsole(String.valueOf(bService.getSlotNumBetweenDates(d1,d2)));
+//	}
+	
+//	@Test
+//	public void whenGetFacilityUsageByFNumAndDate_thenReturnFacilityUsage() {
+//		try {
+//			FacilityUsage fUsage = bService.getFacilityUsageByFNumAndDate("F023", LocalDate.of(2018, 6, 8), LocalDate.of(2018, 6, 11));
+//			outputStringToConsole(fUsage.toString());
+//		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		} catch (BookingNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		}
+//	}
+	
+//	@Test
+//	public void whenGetFacilityUsageListByFacilityListAndDate_thenReturnFacilityUsageList() {
+//		try {
+//			// Get List of Facility Usage for a List of Facilities (in this case, the entire list of facilities)
+//			List<FacilityUsage> fUsageList = bService.getFacilityUsageListByFacilityListAndDate(fService.getFacilityList(), LocalDate.of(2018, 6, 8), LocalDate.of(2018, 6, 11));
+//			
+//			// Check that Number of Records equals Total Number of Facilities 
+//			outputStringToConsole(String.valueOf(fUsageList.size()));
+//			
+//			// Output the List of Facility Usage
+//			for(FacilityUsage fUsage: fUsageList) System.out.println(fUsage.toString());
+//		} catch (FacilityNotFound e) {
+//			outputStringToConsole(e.getMessage());
+//		} catch (BookingNotFound e) {
 //			outputStringToConsole(e.getMessage());
 //		}
 //	}
