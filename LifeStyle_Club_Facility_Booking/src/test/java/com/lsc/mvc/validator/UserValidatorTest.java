@@ -51,7 +51,7 @@ public class UserValidatorTest {
 		
 		// validation test expect fail
 			// create data to validate	
-			User u2 = new User("Drs", "Strange", "Love", "Who", "Aa123456", "1@1", "6512345678");
+			User u2 = new User("Mr", "Strange", "Love", "Who", "Aa123456", "1@1", "6592345678");
 		
 			// create databinder to bind data and validator
 			DataBinder binder2 = new DataBinder(u2);
