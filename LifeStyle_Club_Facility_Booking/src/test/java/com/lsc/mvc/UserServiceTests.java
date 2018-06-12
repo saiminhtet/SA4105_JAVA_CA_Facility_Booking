@@ -287,7 +287,7 @@ public class UserServiceTests {
 //			System.out.println(u.toString());
 //		}
 //	}
-	
+//	
 //	@Test
 //	public void whenGetAList_thenReturnList () {
 //		List<User> uList = uService.getAList();

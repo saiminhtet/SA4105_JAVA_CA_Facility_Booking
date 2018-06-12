@@ -2,6 +2,7 @@ package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -103,5 +104,10 @@ public class FacilityServiceImpl implements FacilityService {
 		Facility f = getFacility(b.getFacilityNumber());
 		if (f == null) throw new FacilityNotFound("Unable to find Facility object based on FacilityNumber in Booking object");
 		return f;
+	}
+	
+	@Override
+	public List<Facility> getFacilityList() {
+		return fRepo.findAll();
 	}
 }
