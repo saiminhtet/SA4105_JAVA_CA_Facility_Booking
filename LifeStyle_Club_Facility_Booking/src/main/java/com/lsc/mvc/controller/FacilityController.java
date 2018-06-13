@@ -8,11 +8,15 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lsc.mvc.exception.FacilityNotFound;
+import com.lsc.mvc.exception.IssueNotFound;
 import com.lsc.mvc.javabeans.AuthenticateUser;
 import com.lsc.mvc.model.Facility;
+import com.lsc.mvc.model.Issue;
 import com.lsc.mvc.service.FacilityService;
 import com.lsc.mvc.validator.FacilityValidator;
 
@@ -117,6 +121,80 @@ public class FacilityController {
 		else return "user/login";
 	}
 
+	@RequestMapping(value = "/manage_facility/{facilityNumber}", method = RequestMethod.GET)
+	public String RemoveIssue(HttpServletRequest req, ModelMap model, @PathVariable(required = true, name = "facilityNumber") String facilityNumber) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			try {
+				Facility facility = fService.getFacility(facilityNumber);
+				model.addAttribute("facilityNumber", facility.getFacilityNumber());
+				model.addAttribute("facilityType", facility.getFacilityType());
+				model.addAttribute("facilityName", facility.getFacilityName());
+				model.addAttribute("facilityCapacity", facility.getCapacity().toString());
+				model.addAttribute("facilityDescription", facility.getFacilityDescription());
+			} catch (FacilityNotFound e) {
+				System.out.println(e.toString());
+			}
+			return "facility/manage_facility";	
+		}
+		else return "user/login";
+	}
+	
+	@GetMapping("/facility-update")
+	public String FacilityUpdating(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			String fNumber = req.getParameter("fNumber");
+			if (fNumber.equals("") || fNumber == null) {
+				model.addAttribute("message", "Please choose a facility");
+			} else {
+				try {
+					Facility f = fService.getFacility(fNumber);
+					String fName = req.getParameter("fName");
+					f.setFacilityName(fName);
+					String c = req.getParameter("capacity");
+					if (!tryParseInt(c)) {
+						model.addAttribute("message", "Facility updating failed");
+					}
+					else {
+						int capacity = Integer.parseInt(c);
+						f.setCapacity(capacity);
+						String fDesc = req.getParameter("fDesc");
+						f.setFacilityDescription(fDesc);
+						
+						FacilityValidator fv = new FacilityValidator();
+						// Create DataBinder to Bind FacilityValidator
+						DataBinder binder = new DataBinder(f);
+						binder.setValidator(fv);
+						// Validate the Data
+						binder.validate();
+						// Check Results
+						BindingResult results = binder.getBindingResult();
+						if (results.hasErrors()) {
+							model.addAttribute("message", "Facility updating failed");
+//							System.out.println(results.toString());
+						}					
+						else {
+							try {
+								fService.updateFacility(f);
+								System.out.println(f.toString());
+								model.addAttribute("message", "Facility updated successfully");
+							} catch (FacilityNotFound e) {
+//								System.out.println(e.toString());
+								model.addAttribute("message", "exception");
+							}
+						}
+					}
+				} catch (FacilityNotFound e1) {
+					System.out.println(e1.toString());
+				}
+			}
+			return "facility/manage_facility";
+		}
+		else return "user/login";
+	}
 //	@PostMapping("/add_facility")
 //	public String addNewFacility(HttpServletRequest req, Facility facility) {//throws ResourceDefinitionInvalid, FacilityNotFound{
 //				
