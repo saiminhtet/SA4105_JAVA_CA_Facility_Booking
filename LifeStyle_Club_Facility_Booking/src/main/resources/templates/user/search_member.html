@@ -15,7 +15,7 @@
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
 <style type="text/css">
 .resultsTable {
-/* 	border-radius: 25px !important; */
+	/* 	border-radius: 25px !important; */
 	border-width: 2px !important;
 	border-style: solid !important;
 	border-style: outset;
@@ -25,6 +25,10 @@
 	margin: 0px auto;
 	float: none;
 }
+
+.btn-info : hover {
+	
+}
 </style>
 </head>
 
@@ -32,12 +36,14 @@
 	<div class="row register-form">
 		<div class="col-md-10 offset-md-1">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;">
+				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/searchmember}" method="post">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">SEARCH
 					MEMBER</h1>
-				<div class="offset-sm-2">					
+				<div class="offset-sm-2">
 					<div class="form-row form-group">
+					
+					
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="membernumber"
 								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member
@@ -46,8 +52,16 @@
 						<div class="col-sm-3 input-column">
 							<input class="form-control" type="text" name="membernumber">
 						</div>
+						<div class="col-sm-2 input-column" style="height: 20%;">
+							<button class="btn btn-success" type="submit"
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+							</button>
+						</div>
+						
 					</div>
 					<div class="form-row form-group">
+					
+					
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="membername"
 								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member
@@ -56,65 +70,77 @@
 						<div class="col-sm-3 input-column">
 							<input class="form-control" type="text" name="membername">
 						</div>
-					</div>
-
-
-					<div class="offset-sm-2">
-						<div class="form-row form-group">
-							<div class="col-sm-4 input-column" style="height: 90px;">
-								<button
-									class="btn btn-light active submit-button cancel-btn-hover"
-									type="reset"
-									style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 70%;">Cancel</button>
-							</div>
-							<div class="col-sm-4 input-column" style="height: 90px;">
-								<button class="btn btn-light submit-button button-hover"
-									type="submit"
-									style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Search
-								</button>
-							</div>
+						<div class="col-sm-2 input-column" style="height: 20%;">
+							<button class="btn btn-success" type="submit"
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+							</button>
 						</div>
+					
+						
 					</div>
-				</div>
-			</form>
 
-			<div class="table-responsive col-md-10 offset-md-1">
-				<table class="table table-hover">
-					<thead>
-						<tr>
-							<th scope="col">ID</th>
-							<th scope="col">Type</th>
-							<th scope="col">Name</th>
-							<th scope="col">Capacity</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">F01</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
-						</tr>
-						<tr>
-							<th scope="row">F02</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
-						</tr>
-						<tr>
-							<th scope="row">F03</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
-						</tr>
-					</tbody>
-				</table>
+
+					<!-- 					<div class="offset-sm-2"> -->
+					<!-- 						<div class="form-row form-group"> -->
+					<!-- 							<div class="col-sm-4 input-column" style="height: 90px;"> -->
+					<!-- 								<button -->
+					<!-- 									class="btn btn-light active submit-button cancel-btn-hover" -->
+					<!-- 									type="reset" -->
+					<!-- 									style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 70%;">Cancel</button> -->
+					<!-- 							</div> -->
+					<!-- 							<div class="col-sm-4 input-column" style="height: 90px;"> -->
+					<!-- 								<button class="btn btn-light submit-button button-hover" -->
+					<!-- 									type="submit" -->
+					<!-- 									style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Search -->
+					<!-- 								</button> -->
+					<!-- 							</div> -->
+					<!-- 						</div> -->
+					<!-- 					</div> -->
+					<!-- 				</div> -->
+				</div>
+				<br />
+				<br/>
+				<div class="table-responsive col-md-10 offset-md-1">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th scope="col">ID</th>
+								<th scope="col">Title</th>
+								<th scope="col">First Name</th>
+								<th scope="col">Last Name</th>
+								<th scope="col">Middle Name</th>
+								<th scope="col">Email Address</th>
+								<th scope="col">Phone Number</th>
+								<th scope="col"></th>
+								<th scope="col"></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="member : ${memberlist}">								
+								<th scope="row" th:text="${member.userNumber}"></th>
+								<td th:text="${member.title}"></td>
+								<td th:text="${member.firstName}"></td>
+								<td th:text="${member.lastName}"></td>
+								<td th:text="${member.middleName}"></td>
+								<td th:text="${member.emailAddress}"></td>
+								<td th:text="${member.phoneNumber}"></td>						
+								<td><a th:href="@{'/user/managemember/' + ${member.userNumber}}" class="btn btn-primary">Update</a></td>
+								<td><a th:href="@{'/user/expiremember/' + ${member.userNumber}}" class="btn btn-danger">Expire</a></td>
+							</tr>
+							
+						</tbody>
+					</table>
+				</div>
+				</form>
 			</div>
+			
 		</div>
-	</div>
+
+		<script type="text/javascript" th:inline="javascript">
+		
+		</script>
+
+
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script
