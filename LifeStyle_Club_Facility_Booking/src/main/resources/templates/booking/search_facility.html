@@ -122,7 +122,7 @@
 							<td th:text="${f.capacity}"></td>					
 							<td><a th:href="@{'/booking/book_facility_by_num/' + ${f.facilityNumber}}" class="btn btn-success">Book</a></td>
 							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/facility/manage_facility/' + ${f.facilityNumber}}" class="btn btn-primary">Update</a></div></td>
-							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/facility/expire_facility/' + ${f.facilityNumber}}" class="btn btn-danger">Expire</a></div></td>
+							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/booking/expire_facility/' + ${f.facilityNumber}}" class="btn btn-danger">Expire</a></div></td>
 						</tr>
 					</tbody>
 				</table>

@@ -3,6 +3,7 @@ package com.lsc.mvc.service;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
@@ -215,5 +216,45 @@ public class UserServiceImpl implements UserService {
 		 */
 		String regexPw = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!~*-,./?;:'])(?=\\S+$).{8,}$";
 		return pw.matches(regexPw);
+	}
+	
+	public String generateRandomPw() {
+		
+		String digitCHARS = "0123456789";
+		String alphaUpperCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		String alphaLowerCHARS = "abcdefghijklmnopqrstuvwxyz";
+		String symbolCHARS = "@#$%^&+=!~*-,./?;:'";
+		String saltCHARS = digitCHARS + alphaUpperCHARS + alphaLowerCHARS +  symbolCHARS;
+		
+		// Select at least 1 digit
+		
+		StringBuilder salt = new StringBuilder();
+		Random rnd = new Random();
+		int index;
+		// Select at least 1 digit
+		index = (int) (rnd.nextFloat() * digitCHARS.length());
+		salt.append(digitCHARS.charAt(index));
+		
+		// Select at least 1 uppercase alphabet
+		index = (int) (rnd.nextFloat() * alphaUpperCHARS.length());
+		salt.append(alphaUpperCHARS.charAt(index));
+		
+		// Select at least 1 lowercase alphabet
+		index = (int) (rnd.nextFloat() * alphaLowerCHARS.length());
+		salt.append(alphaLowerCHARS.charAt(index));
+		
+		// Select at least 1 symbol
+		index = (int) (rnd.nextFloat() * symbolCHARS.length());
+		salt.append(symbolCHARS.charAt(index));
+		
+		// Fill up to length
+		int len = 10;
+		while (salt.length() < 10) {
+			index = (int) (rnd.nextFloat() * saltCHARS.length());
+			salt.append(saltCHARS.charAt(index));
+		}
+		
+		String saltStr = salt.toString();
+        return saltStr;
 	}
 }

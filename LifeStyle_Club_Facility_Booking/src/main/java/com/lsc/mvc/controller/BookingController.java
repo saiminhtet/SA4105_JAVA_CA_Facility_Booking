@@ -563,10 +563,53 @@ public class BookingController {
 		else return "user/login";
 	}
 	
+	@RequestMapping(value = "/expire_facility/{facilityNum}", method = RequestMethod.GET)
+	public String expireFacility(@PathVariable("facilityNum") String facilityNum, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			Facility f;
+			try { f = fService.getFacility(facilityNum);
+			} catch (FacilityNotFound e) { return "booking/search_facility"; }
+			
+			// Load Data into Model
+			model.addAttribute("facility", f);
+			HttpSession session = req.getSession();
+			session.setAttribute("fRemove", f);
+			return "booking/expire_facility";
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("/remove-facility")
+	public String postRemoveFacility(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			HttpSession session = req.getSession();
+	        Facility f = (Facility) session.getAttribute("fRemove");
+	        try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+	        model.addAttribute("uNum", util.getUNum(req));
+	        model.addAttribute("fTypeList", fService.getFacilityTypes());
+			try {
+				fService.removeFacility(f.getFacilityNumber());
+				return "booking/search_facility";
+			} catch (FacilityNotFound e) {
+				return "booking/search_facility";
+			}
+		}
+		else return "user/login";
+	}
+	
 	@PostMapping("/remove-booking")
 	public String postRemoveBooking(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
+		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			HttpSession session = req.getSession();
@@ -591,8 +634,6 @@ public class BookingController {
 		}
 		else return "user/login";
 	}
-	
-	
 	
 	
 	
