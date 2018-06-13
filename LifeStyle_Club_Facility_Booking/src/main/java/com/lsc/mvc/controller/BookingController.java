@@ -298,6 +298,18 @@ public class BookingController {
 		else return "user/login";
 	}
 	
+	@RequestMapping(value = "/book_facility/{fType}", method = RequestMethod.GET)
+	public String bookFacilityWithType(@PathVariable("fType") String fType, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {			
+			// Load Data into Model
+			model.addAttribute("fShortList", fService.getFacilityListByType(fType));
+			return "booking/book_facility";
+		}
+		else return "user/login";
+	}
+	
 	@PostMapping("search-slots")
 	public String postSearchSlots(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
