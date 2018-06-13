@@ -41,7 +41,14 @@
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input  class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}" th:disabled="${acctType == 'Member'}">
+						<th:block th:switch="${acctType}">
+						  <div th:case="'Member'">
+						     <input class="form-control" type="text" name="tbx_uNum" style="height: 50px;" th:value="${uNum}" th:disabled=true>
+						  </div>
+						  <div th:case="'Admin'">
+						     <input class="form-control" type="text" name="tbx_uNum" style="height: 50px;" th:value="${uNum}">
+						  </div>
+						</th:block>
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
