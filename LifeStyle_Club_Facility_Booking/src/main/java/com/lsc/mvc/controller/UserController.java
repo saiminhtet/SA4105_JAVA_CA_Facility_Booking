@@ -168,7 +168,8 @@ public class UserController {
 			String userNumber = util.getUNum(req); // to check user is login or not
 			try {
 				user = usrService.getUser(userNumber); // throws UserNotFound
-				user.setPassword("Please enter a password");// set as a hidden field in profile view using to set existing password in post method 
+				user.setPassword("Please enter a password");// set as a hidden field in profile view using to set
+															// existing password in post method
 				// At this point, if no exception, userNumber is valid and user object is
 				// retrieved
 				// Check user to decide which profile page to redirect
@@ -192,7 +193,7 @@ public class UserController {
 		String authAdminResult = util.authenticateAdmin(req, model);
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
-		
+
 		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
 			// Retrieves userNumber from session
 			String userNumber = util.getUNum(req);// to check user session
@@ -243,14 +244,34 @@ public class UserController {
 				}
 			}
 		}
-		//return "user/profile"; // default redirection for guest/user to retry
+		// return "user/profile"; // default redirection for guest/user to retry
 		return "redirect:/";
 	}
 
 	@GetMapping("/changepassword")
 	public String changePassword(HttpServletRequest req, ModelMap model) {
 		String userNumber = util.getUNum(req);
-		return "user/changepassword";
+		// Setting up variable to set attributes in view
+		String authAdminResult = util.authenticateAdmin(req, model);
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
+
+		// get the session variable
+		HttpSession session = req.getSession();
+		if (authAdminResult.equals("OK")) {
+
+			return "user/changepassword";
+		}
+		if (authSuperAdminResult.equals("OK")) {
+
+			return "user/changepassword";
+		}
+		if (authMemberResult.equals("OK")) {
+
+			return "user/changepassword";
+		}
+		return "home/login";
+
 	}
 
 	@PostMapping("/changepassword")
@@ -276,24 +297,58 @@ public class UserController {
 				System.out.println(existinguser.toString());
 
 				existinguser = usrService.updatePassword(userNumber, newpassword);
-
+				
+				existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
+				eMailService.notifyChangePassword(existinguser); // sending email for new user
+				
 				User updateuser = usrService.getUser(userNumber);
 				System.out.println(updateuser.toString());
+				
+				
+				// Setting up variable to set attributes in view
+				String authAdminResult = util.authenticateAdmin(req, model);
+				String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+				String authMemberResult = util.authenticateMember(req, model);
 
-				return "user/profile";
-			} catch (UserNotFound e) {
+				// get the session variable
+				HttpSession session = req.getSession();
+				String loginUserName = (String) session.getAttribute("userName");
+				if (authAdminResult.equals("OK")) {
+					model.put("loginUserName", loginUserName);// to view user session name in home page
+					return "home/admin_home";
+				}
+				if (authSuperAdminResult.equals("OK")) {
+					model.put("loginUserName", loginUserName);// to view user session name in home page
+					return "home/super_admin_home";
+				}
+				if (authMemberResult.equals("OK")) {
+					model.put("loginUserName", loginUserName);// to view user session name in home page
+					return "home/member_home";
+				}
+			}
+			 catch (UserNotFound e) {
 				// This means that userNumber is invalid, thus return to login page
 				return "redirect:/login";
 			}
 		}
-
+		return "redirect:/login";
 	}
 
 	// get member list and bind data to manage member view
 	@GetMapping("searchmember")
-	public String getMembers(ModelMap model) {
+	public String getMembers(ModelMap model, HttpServletRequest req) {
+		String authAdminResult = util.authenticateAdmin(req, model);
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");
+		if (authAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "user/search_member";
+		}else
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return authAdminResult;
+		
 		// model.put("memberlist", usrService.getMList());
-		return "user/search_member";
+		
 	}
 
 	@PostMapping("searchmember")
