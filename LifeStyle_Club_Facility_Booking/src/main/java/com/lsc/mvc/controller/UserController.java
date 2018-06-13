@@ -26,6 +26,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.javabeans.AuthenticateUser;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.service.UserService;
 import com.lsc.mvc.validator.UserValidator;
@@ -37,41 +38,19 @@ public class UserController {
 	@Autowired
 	private UserService usrService;
 
+	
+	@Autowired
+	private AuthenticateUser util;
+	
 	@GetMapping
-	public String Get(HttpServletRequest req, ModelMap model) throws UserNotFound {
-
-		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req);
-
-		// Check if logged in
-		if (userNumber == null)
-			return "redirect:/login";
-		else {
-			// Check if userNumber valid
-			User user = new User();
-			try {
-				user = usrService.getUser(userNumber); // throws UserNotFound
-
-				// At this point, if no exception, userNumber is valid and user object is
-				// retrieved
-				// Check userType to decide which welcome page to redirect
-				String userType = usrService.getUserType(userNumber); // throws UserNotFound
-				switch (userType) {
-				case "Member":
-					return "redirect:/member";
-				case "Admin":
-					return "redirect:/admin";
-				case "SuperAdmin":
-					return "redirect:/superadmin";
-				default:
-					return "user/signup";
-				}
-			} catch (UserNotFound e) {
-				// This means that userNumber is invalid, thus return to login page
-				return "redirect:/login";
-
-			}
+	public String Get(HttpServletRequest req, ModelMap model){
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if(authResult.equals("OK")) {
+			return authResult;
 		}
+		else return authResult;
+		
 	}
 
 	@GetMapping("/signup")
