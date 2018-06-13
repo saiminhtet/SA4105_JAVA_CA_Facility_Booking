@@ -30,7 +30,7 @@
 		<div class="col-md-10 offset-sm-1">
 			<form class="custom-form" style="background-color: #f3f3f3; width: auto;">
 				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
-					Manage Booking
+					Search Booking
 				</h1>
 				<div class="offset-md-3">
 				<div class="form-row form-group">
@@ -41,8 +41,7 @@
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<div th:if="${acctType} == Member"><input class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}" disabled></div>
-						<div th:if="${acctType} == Admin"><input class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}"></div>
+						<input  class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}" th:disabled="${acctType == 'Member'}">
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
