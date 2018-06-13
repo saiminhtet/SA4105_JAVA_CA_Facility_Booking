@@ -38,9 +38,7 @@ public class HomeController {
 
 	@GetMapping
 	public String Home(ModelMap model, HttpServletRequest req) {
-		// model.addAttribute("message", "Hello Spring MVC");
-
-		// Setting up variable to set attributes in view
+	
 		String authAdminResult = util.authenticateAdmin(req, model);
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
@@ -94,21 +92,21 @@ public class HomeController {
 
 		User user = new User();
 		// Retrieves userNumber from session
-		String user_email = req.getParameter("email");
-		String user_password = req.getParameter("password");
+//		String user_email = req.getParameter("email");
+//		String user_password = req.getParameter("password");
 
 		// Setting the appropriate user data for the user object
 
-		try {
-			user = usrService.getUserByEmailPw(user_email, user_password);
-		} catch (ResourceDefinitionInvalid e) {
-			
-			model.put("error", "Login Failed!");
-			return "home/login";
-		}
+//		try {
+//			user = usrService.getUserByEmailPw(user_email, user_password);
+//		} catch (ResourceDefinitionInvalid e) {
+//			
+//			model.put("error", "Login Failed!");
+//			return "home/login";
+//		}
 		// set the user number to validate login
-		String login_userNumber = user.getUserNumber();
-		String login_password = user.getPassword();
+		String login_userNumber = req.getParameter("username");
+		String login_password = req.getParameter("password");
 
 		try {
 			user = usrService.validateLogin(login_userNumber, login_password);
