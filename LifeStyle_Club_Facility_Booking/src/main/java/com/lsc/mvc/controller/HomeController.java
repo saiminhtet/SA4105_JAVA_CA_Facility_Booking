@@ -41,21 +41,29 @@ public class HomeController {
 		// model.addAttribute("message", "Hello Spring MVC");
 
 		// Setting up variable to set attributes in view
-				String authAdminResult = util.authenticateAdmin(req, model);
-				String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
-				String authMemberResult = util.authenticateMember(req, model);
+		String authAdminResult = util.authenticateAdmin(req, model);
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
 
-				if (authAdminResult.equals("OK"))
-					
-					return "home/admin_home";
-				if (authSuperAdminResult.equals("OK"))
-					return "home/super_admin_home";
-				if (authMemberResult.equals("OK"))
-					return "home/member_home";
-				else return "home/login";
+		// get the session variable
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");
+		if (authAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/admin_home";
+		}
+		if (authSuperAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/super_admin_home";
+		}
+		if (authMemberResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/member_home";
+		}
+		return "home/login";
 	}
 
-	@GetMapping("login")
+	@GetMapping("/login")
 	public String Login(HttpServletRequest req, ModelMap model) {
 
 		// Setting up variable to set attributes in view
@@ -63,9 +71,9 @@ public class HomeController {
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
 
-		//get the session variable 
+		// get the session variable
 		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");		
+		String loginUserName = (String) session.getAttribute("userName");
 		if (authAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);
 			return "home/admin_home";
@@ -73,15 +81,15 @@ public class HomeController {
 		if (authSuperAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);
 			return "home/super_admin_home";
-		}	
-		if (authMemberResult.equals("OK")){
+		}
+		if (authMemberResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);
 			return "home/member_home";
 		}
 		return "home/login";
 	}
 
-	@PostMapping("login")
+	@PostMapping("/login")
 	public String vlaidate_Login(HttpServletRequest req, HttpSession session, ModelMap model) {
 
 		User user = new User();
@@ -94,7 +102,8 @@ public class HomeController {
 		try {
 			user = usrService.getUserByEmailPw(user_email, user_password);
 		} catch (ResourceDefinitionInvalid e) {
-			// need to show error message
+			
+			model.put("error", "Login Failed!");
 			return "home/login";
 		}
 		// set the user number to validate login
@@ -105,13 +114,14 @@ public class HomeController {
 			user = usrService.validateLogin(login_userNumber, login_password);
 
 		} catch (UserNotFound e) {
-			// need to show error message
+			
+			model.put("error", "Login Failed!");
 			return "home/login";
 		}
 
 		// Save user info in the session
 		String userNumber = user.getUserNumber();
-		String userName =  user.getFirstName() + " " + user.getMiddleName() +" "+ user.getLastName();
+		String userName = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
 		session.setAttribute("userNumber", userNumber);
 		session.setAttribute("userName", userName);
 
@@ -120,9 +130,11 @@ public class HomeController {
 		System.out.println(userName);
 		System.out.println(session.getAttribute("userNumber"));
 		System.out.println(session.getAttribute("userName"));
-		return "home/member_home";
-		// return "redirect:/user/profile"; // This means that login success // default
-		// redirection for guest/user to retry
+
+		String authencate_userlogin = util.authenticateUser(req, model);// redirection for user to retry
+		model.put("loginUserName", userName);
+		return authencate_userlogin; // This means that login success // default
+
 	}
 
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
@@ -138,21 +150,47 @@ public class HomeController {
 	@GetMapping("/member")
 	public String Member(ModelMap model, HttpServletRequest req) {
 		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");		
-		model.put("loginUserName", loginUserName);
-		return "home/member_home";
+		String loginUserName = (String) session.getAttribute("userName");// get the session userName
+		String authMemberResult = util.authenticateMember(req, model);
+		if (authMemberResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/member_home";
+		} else if (loginUserName.equals(null))
+			return "home/login";
+		else
+			model.put("loginUserName", loginUserName);
+		return authMemberResult;
 	}
 
-	@GetMapping("admin")
-	public String Admin(Model model) {
-		// model.addAttribute("message", "Hello Spring MVC");
-		return "home/admin_home";
+	@GetMapping("/admin")
+	public String Admin(ModelMap model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");// get the session userName
+		String authAdminResult = util.authenticateAdmin(req, model);
+		if (authAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/admin_home";
+		} else if (loginUserName.equals(null))
+			return "home/login";
+		else
+			model.put("loginUserName", loginUserName);
+		return authAdminResult;
 	}
 
-	@GetMapping("superadmin")
-	public String SuperAdmin(Model model) {
-		// model.addAttribute("message", "Hello Spring MVC");
-		return "home/super_admin_home";
+	@GetMapping("/superadmin")
+	public String SuperAdmin(ModelMap model, HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");// get the session userName
+		String authSupAdminResult = util.authenticateSuperAdmin(req, model);
+		if (authSupAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "home/super_admin_home";
+		} else if (loginUserName.equals(null))
+			return "home/login";
+		else
+			model.put("loginUserName", loginUserName);
+		return authSupAdminResult;
+
 	}
 
 	// // Checking User Session and Get User Number
@@ -168,35 +206,5 @@ public class HomeController {
 	// }
 	// return userNumber;
 	// }
-
-	@GetMapping("searchfacility")
-	public String search_facility(Model model) {
-		// model.addAttribute("message", "Hello Spring MVC");
-		return "facility/search_facility";
-	}
-
-	@GetMapping("managefacility")
-	public String book_facility(Model model) {
-		// model.addAttribute("message", "Hello Spring MVC");
-
-		return "facility/manage_facility";
-
-	}
-
-	@GetMapping("bookingsummary")
-	public String booking_summary(Model model) {
-		return "booking/booking_summary";
-
-	}
-
-	@GetMapping("managebooking")
-	public String manage_booking(Model model) {
-		return "booking/manage_booking";
-	}
-
-	@GetMapping("searchbooking")
-	public String search_booking(Model model) {
-		return "booking/search_booking";
-	}
 
 }

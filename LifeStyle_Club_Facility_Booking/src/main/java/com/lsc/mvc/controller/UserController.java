@@ -168,7 +168,7 @@ public class UserController {
 			String userNumber = util.getUNum(req); // to check user is login or not
 			try {
 				user = usrService.getUser(userNumber); // throws UserNotFound
-				user.setPassword("Please enter a password");
+				user.setPassword("Please enter a password");// set as a hidden field in profile view using to set existing password in post method 
 				// At this point, if no exception, userNumber is valid and user object is
 				// retrieved
 				// Check user to decide which profile page to redirect
