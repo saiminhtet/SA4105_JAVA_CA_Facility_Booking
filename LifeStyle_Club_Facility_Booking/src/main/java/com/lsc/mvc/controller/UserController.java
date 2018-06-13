@@ -296,15 +296,15 @@ public class UserController {
 				String loginUserName = (String) session.getAttribute("userName");
 				if (authAdminResult.equals("OK")) {
 					model.put("loginUserName", loginUserName);// to view user session name in home page
-					return "home/admin_home";
+					return "redirect:/admin";
 				}
 				if (authSuperAdminResult.equals("OK")) {
 					model.put("loginUserName", loginUserName);// to view user session name in home page
-					return "home/super_admin_home";
+					return "redirect:/superadmin";
 				}
 				if (authMemberResult.equals("OK")) {
 					model.put("loginUserName", loginUserName);// to view user session name in home page
-					return "home/member_home";
+					return "redirect:/member";
 				}
 			} catch (UserNotFound e) {
 				// This means that userNumber is invalid, thus return to login page
@@ -328,7 +328,8 @@ public class UserController {
 			user = usrService.getUser(usernumber);
 			if(user!=null) {
 				try {
-					user = usrService.updatePassword(user.getUserNumber(), "!@#$%&A1S2d3");
+					String autogeneratepassword = usrService.generateRandomPw();
+					user = usrService.updatePassword(user.getUserNumber(), autogeneratepassword);
 					eMailService.notifyResetPassword(user);
 					
 					return "redirect:/login";
