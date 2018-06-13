@@ -24,8 +24,8 @@ import com.lsc.mvc.validator.UserValidator;
 import com.lsc.mvc.javabeans.AuthenticateUser;
 
 @Controller
-@RequestMapping("/viewreports")
-public class ReportController {
+@RequestMapping("/issue")
+public class IssueController {
 
 	@Autowired
 	private UserService uService;
@@ -37,11 +37,11 @@ public class ReportController {
 	public String get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "report/main";
+		if (authResult.equals("OK")) return "report/_____";
 		else return authResult;
 	}
 
-	@GetMapping("/main")
+	@GetMapping("/_____")
 	public String Main(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
@@ -49,11 +49,6 @@ public class ReportController {
 		else return "user/login";
 	}
 	
-	@GetMapping("/facility-listing")
-	public String FacilityListing(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "report/facility_listing";
-		else return "user/login";
-	}
+	@ModelAttribute("user")
+	public User user() { return new User(); }
 }
