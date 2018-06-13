@@ -478,6 +478,14 @@ public class UserController {
 		model.put("memberlist", uList);
 		return "user/search_member";
 	}
+	
+	@GetMapping("/return_home")
+	public String ReturnHome(ModelMap model, HttpServletRequest req) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
+	}
 
 	@ModelAttribute("user")
 	public User user() {
