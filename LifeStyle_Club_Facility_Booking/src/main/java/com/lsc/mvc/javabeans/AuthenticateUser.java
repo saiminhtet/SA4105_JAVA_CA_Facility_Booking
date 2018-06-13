@@ -56,7 +56,7 @@ public class AuthenticateUser {
 				String uType = uService.getUserType(uNum); // throws UserNotFound
 				getMakeAcctType(uType, model);
 				switch (uType) {
-					case "Member": 		return "home/member_home"; }
+					case "Member": 		return "home/member_home"; 
 					case "Admin" : 		return "OK";
 					case "SuperAdmin": 	return "home/super_admin_home";
 					default: 			return "NG";
