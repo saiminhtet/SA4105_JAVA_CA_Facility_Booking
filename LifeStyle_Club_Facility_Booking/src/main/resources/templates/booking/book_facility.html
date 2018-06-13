@@ -44,27 +44,27 @@
 					<div class="col-sm-3 input-column">
 						<div class="dropdown">
 						<select name="facilityList" class="custom-select" id="facilityList" style="height: 50px;">
-							<option th:each="f : ${fShortList}" th:value="${f}" th:text="${f}">Choose Facility Type...</option>
+							<option th:each="f : ${fShortList}" th:value="${f.facilityNumber}" th:text="${f.facilityName}"}>Choose Facility Type...</option>
 						</select>
 						</div>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-2 label-column">
-						<label class="col-form-label" for="targetDate"
+						<label class="col-form-label" for="targetDate" th:value="${tDate}"
 							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
 							Target Date
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input type="date" class="form-control" id="date" placeholder="Select value" th:field="*{slotDate}" style="height: 50px;">
+						<input type="date" class="form-control" id="date" placeholder="Select value" name="targetDate" style="height: 50px;">
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
 							class="btn btn-primary submit-button button-hover"
 							type="submit"
 							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/booking/search-slots"
+							formaction="/booking/search-slots/"
 							formmethod="post">
 							Check
 						</button>
@@ -89,20 +89,20 @@
 							class="btn btn-light submit-button button-hover"
 							type="submit"
 							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/booking/search-facility-by-type"
+							formaction="/booking/booking-summary"
 							formmethod="post">
 							Book
 						</button>
 					</div>
 				</div>
 				</div>
+				<div style="text-align:center;"><h3>You have selected 
+					<div th:if="${bCurrent} != null" th:text="${bCurrent.facilityNumber}" style="display: inline;"></div> 
+					<div th:if="${bCurrent} != null" th:text="${fName}" style="display: inline;"></div> 
+					for <div th:if="${bCurrent} != null" th:text="${bCurrent.slotDate}" style="display: inline;"></div></h3></div>
 			</form>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

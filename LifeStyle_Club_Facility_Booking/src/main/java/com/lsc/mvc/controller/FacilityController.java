@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.javabeans.AuthenticateUser;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.service.FacilityService;
@@ -32,7 +33,21 @@ public class FacilityController {
 
 	@Autowired
 	private FacilityService facilityService;
+	
+	@Autowired
+	private AuthenticateUser util; 
 
+	@GetMapping
+	public String get(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			Facility f = new Facility();
+			model.addAttribute("facility", f);
+			return "home/admin_home";
+		}
+		else return authResult;
+	}
 	
 	@GetMapping("/add_facility")	
 	public String Addfacility(ModelMap model) {

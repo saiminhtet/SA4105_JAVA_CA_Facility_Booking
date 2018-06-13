@@ -3,97 +3,102 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MANAGE BOOKING</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
-
-
+<title>Facility Booking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
+<style type="text/css">
+	.resultsTable {
+		border-width: 2px !important;
+		border-style: solid !important;
+		border-style: outset;
+		border-color: rgba(0, 128, 255, 0.9) !important;
+		width: 90%;
+		padding-top: 1%;
+		margin: 0px auto;
+		float: none;
+	}
+</style>
 </head>
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-6 offset-md-3">
-			<form th:action="@{/booking/managebooking}" th:method="post"
-				th:object="${booking}" class="custom-form"
-				style="background-color: #f3f3f3; width: auto;">
-				<h1
-					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">MANAGE
-					BOOKING</h1>
+		<div class="col-md-10 offset-md-1">
+		<form class="custom-form" style="background-color: #f3f3f3; width: auto;"
+			th:action="@{/booking/bookfacility}" th:method="post" th:object="${booking}">
+				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
+					Book Facility
+				</h1>
+				<div class="offset-md-3">
 				<div class="form-row form-group">
-					<div class="col-sm-3  offset-sm-1 label-column">
-						<label class="col-form-label" for="slotdate"
-							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Desired
-							Booking Date </label>
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="facilityName"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Facility Name
+						</label>
+					</div>
+					<div class="col-sm-3 input-column"> 
+						<input class="form-control" type="text" name="facilityName" style="height: 50px;" disabled th:value="${fName}">
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="targetDate" th:value="${tDate}"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Target Date
+						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input type="date" class="form-control" id="date"
-							th:field="*{slotDate}" placeholder="Select value">
+						<input type="date" class="form-control" id="date" placeholder="Select value" name="targetDate" style="height: 50px;" th:value="${booking.slotDate}">
 					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="facilityname"
-							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-							Name </label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<div class="dropdown">
-
-							<select class="custom-select" id="facilityname"
-								th:field="*{facilityNumber}">
-								<option th:each="facname : ${facilityname}"
-									th:value="${facname}" th:text="${facname.facilityName}">Choose
-									Title...</option>
-							</select>
-						</div>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="starttime"
-							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Timeslot</label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<div class="dropdown">
-
-							<select class="custom-select" id="timelost">
-								<!-- th:field="*{slotTimeStart}" -->
-								<option th:each="startt : ${slotstarttime}" th:value="${startt}"
-									th:text="${startt}">Choose Title...</option>
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="height: 90px;"></div>
-					<div class="col-sm-4 input-column" style="height: 90px;">
-						<button
-							class="btn btn-light active submit-button cancel-btn-hover"
-							type="reset"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;">Cancel</button>
-					</div>
-					<div class="col-sm-4 input-column" style="height: 90px;">
-						<button class="btn btn-light submit-button button-hover"
+					<div class="col-sm-3 input-column">
+						<button 
+							class="btn btn-primary submit-button button-hover"
 							type="submit"
-							th:href="@{/booking}"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;">Update
+							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/search-slots-update"
+							formmethod="post">
+							Check
 						</button>
 					</div>
 				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="targetSlot"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Target Slot
+						</label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<div class="dropdown">
+						<select name="targetSlot" class="custom-select" id="targetSlot" style="height: 50px;">
+							<option th:each="s : ${slotList}" th:value="${s}" th:text="${s}">Choose ...</option>
+						</select>
+						</div>
+					</div>
+					<div class="col-sm-3 input-column">
+						<button 
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/booking-summary"
+							formmethod="post">
+							Book
+						</button>
+					</div>
+				</div>
+				</div>
+				<div style="text-align:center;"><h3>You have selected 
+					<div th:if="${booking} != null" th:text="${booking.facilityNumber}" style="display: inline;"></div> 
+					<div th:if="${booking} != null" th:text="${fName}" style="display: inline;"></div> 
+					for <div th:if="${booking} != null" th:text="${booking.slotDate}" style="display: inline;"></div></h3></div>
 			</form>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
