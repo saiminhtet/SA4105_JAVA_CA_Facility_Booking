@@ -212,30 +212,13 @@ public class UserController {
 		String userNumber = this.getUserNumber(req);// to check if sign-up is done by Guest, Admin or SuperAdmin
 		user.setPassword("Enter Password");
 		User existinguser = new User();
-<<<<<<< HEAD
-		existinguser = usrService.getUser(userNumber);
-		
-		existinguser.setEmailAddress(user.getEmailAddress());
-		existinguser.setPhoneNumber(user.getPhoneNumber());
-		// Validation Using UserValidator Class
-		System.out.println(existinguser.toString());
-		UserValidator uservalidate = new UserValidator();
-		DataBinder binder = new DataBinder(existinguser);
-		binder.setValidator(uservalidate);
-		binder.validate();
-		BindingResult results = binder.getBindingResult();
-		if (results.hasErrors()) {
-			throw new ResourceDefinitionInvalid();
-		} else {
-			
-			usrService.updateUser(existinguser);
-=======
+
 		// existinguser.setPassword("Enter");
 		try {
 			existinguser = usrService.getUser(userNumber);
 		} catch (UserNotFound e1) {
 
->>>>>>> refs/remotes/origin/master
+
 			return "user/profile";
 		}
 
