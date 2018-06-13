@@ -199,6 +199,7 @@ public class UserController {
 		}
 		User existinguser = new User();
 		existinguser = usrService.getUser(userNumber);
+		
 		existinguser.setEmailAddress(user.getEmailAddress());
 		existinguser.setPhoneNumber(user.getPhoneNumber());
 		// Validation Using UserValidator Class

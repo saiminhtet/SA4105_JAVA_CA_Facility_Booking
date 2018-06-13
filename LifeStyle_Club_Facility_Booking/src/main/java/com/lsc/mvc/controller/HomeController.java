@@ -70,10 +70,10 @@ public class HomeController {
 		return "facility/search_facility";
 	}
 	
-	@GetMapping("bookfacility")
+	@GetMapping("managefacility")
 	public String book_facility(Model model) {
 //		model.addAttribute("message", "Hello Spring MVC");
-		return "facility/book_facility";
+		return "facility/manage_facility";
 	}
 	
 	
