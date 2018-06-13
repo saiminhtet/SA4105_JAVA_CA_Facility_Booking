@@ -212,10 +212,12 @@ public class UserController {
 		String userNumber = this.getUserNumber(req);// to check if sign-up is done by Guest, Admin or SuperAdmin
 		user.setPassword("Enter Password");
 		User existinguser = new User();
+
 		// existinguser.setPassword("Enter");
 		try {
 			existinguser = usrService.getUser(userNumber);
 		} catch (UserNotFound e1) {
+
 
 			return "user/profile";
 		}

@@ -19,7 +19,8 @@
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
-			<form class="custom-form"
+			<form th:action="@{/facility/add_facility}" th:method="post"
+				th:object="${facility}" class="custom-form"
 				style="background-color: #f3f3f3; width: auto;">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">ADD FACILITY
@@ -32,13 +33,12 @@
 					</div>
 					<div class="col-sm-4 input-column">
 						<div class="dropdown">
-
-							<select class="custom-select" id="facilitytype">
-								<option selected>Choose...</option>
-								<option value="1">One</option>
-								<option value="2">Two</option>
-								<option value="3">Three</option>
+						
+							<select class="custom-select" id="facilityType" th:field="*{facilityType}">
+								<option th:each="ftype : ${facilityType}" th:value="${ftype}"
+									th:text="${ftype}">Choose Type...</option>
 							</select>
+							
 						</div>
 					</div>
 				</div>
@@ -48,10 +48,12 @@
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
 							Name </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					
+						<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" name="facilityname"
-							required="required">
+							th:field="*{facilityName}" required="required">
 					</div>
+					
 				</div>
 
 				<div class="form-row form-group">
@@ -60,10 +62,12 @@
 							style="padding-right: 37%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Capacity
 						</label>
 					</div>
+					
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="number" name="capacity"
-							required="required" min="0">
+							th:field="*{capacity}" required="required" min="0">
 					</div>
+					
 				</div>
 
 				<div class="form-row form-group">
@@ -75,7 +79,7 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<textarea class="form-control" rows="3" cols="20"
-							name="description">
+							name="description" th:field="*{facilityDescription}" required="required">
 						
 						</textarea>
 					</div>
