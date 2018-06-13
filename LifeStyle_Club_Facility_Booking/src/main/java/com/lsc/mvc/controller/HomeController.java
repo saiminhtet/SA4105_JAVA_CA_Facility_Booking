@@ -103,7 +103,7 @@ public class HomeController {
 			model.put("error", "Login Failed!");
 			return "home/login";
 		}
-
+		if (user == null) return "home/login";
 		// Save user info in the session
 		String userNumber = user.getUserNumber();
 		String userName = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
