@@ -210,10 +210,10 @@ public class UserServiceImpl implements UserService {
 		 * - At least 8 characters long
 		 * - Contains at least 1 digit
 		 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
-		 * - Contains at least 1 symbol
+		 * - Contains at least 1 symbol (@#$%^&+=!~*-,./?;:')
 		 * - Does not contain space or tab
 		 */
-		String regexPw = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+		String regexPw = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!~*-,./?;:'])(?=\\S+$).{8,}$";
 		return pw.matches(regexPw);
 	}
 }

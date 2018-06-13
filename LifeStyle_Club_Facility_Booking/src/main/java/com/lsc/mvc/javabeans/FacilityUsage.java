@@ -11,30 +11,14 @@ public class FacilityUsage {
 	private String facilityUsage;
 	
 	// Getters and Setters
-	public String getFacilityNumber() {
-		return facilityNumber;
-	}
-	public void setFacilityNumber(String facilityNumber) {
-		this.facilityNumber = facilityNumber;
-	}
-	public String getFacilityType() {
-		return facilityType;
-	}
-	public void setFacilityType(String facilityType) {
-		this.facilityType = facilityType;
-	}
-	public String getFacilityName() {
-		return facilityName;
-	}
-	public void setFacilityName(String facilityName) {
-		this.facilityName = facilityName;
-	}
-	public String getFacilityUsage() {
-		return facilityUsage;
-	}
-	public void setFacilityUsage(String facilityUsage) {
-		this.facilityUsage = facilityUsage;
-	}
+	public String getFacilityNumber() { return facilityNumber; }
+	public void setFacilityNumber(String facilityNumber) { this.facilityNumber = facilityNumber; }
+	public String getFacilityType() { return facilityType; }
+	public void setFacilityType(String facilityType) { this.facilityType = facilityType; }
+	public String getFacilityName() { return facilityName; }
+	public void setFacilityName(String facilityName) { this.facilityName = facilityName; }
+	public String getFacilityUsage() { return facilityUsage; }
+	public void setFacilityUsage(String facilityUsage) { this.facilityUsage = facilityUsage; }
 	
 	// Constructors
 	public FacilityUsage() { }
@@ -50,8 +34,7 @@ public class FacilityUsage {
 	// Methods
 	@Override
 	public String toString() {
-		DecimalFormat fmt = new DecimalFormat("0.00%");
 		return "FacilityUsage [facilityNumber=" + facilityNumber + ", facilityType=" + facilityType + ", facilityName="
-				+ facilityName + ", facilityUsage=" + fmt.format(facilityUsage) + "]";
+				+ facilityName + ", facilityUsage=" + facilityUsage + "]";
 	}
 }
