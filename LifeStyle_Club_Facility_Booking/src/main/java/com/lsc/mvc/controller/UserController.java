@@ -358,8 +358,7 @@ public class UserController {
 			model.put("title", usrService.getTitleList());
 			model.put("user", user);
 		} catch (UserNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return "user/search_member";
 		}
 
 		System.out.println(user);
