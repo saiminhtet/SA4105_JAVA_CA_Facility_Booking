@@ -47,5 +47,4 @@ public interface UserService {
 	
 	User getUser(Booking b) throws BookingNotFound, UserNotFound;
 	
-//	Boolean checkPwComplexity(String pw);
 }

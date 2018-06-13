@@ -37,6 +37,5 @@ public interface BookingService {
 	FacilityUsage getFacilityUsageByFNumAndDate(String fNum, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound;
 	
 	List<FacilityUsage> getFacilityUsageListByFacilityListAndDate(List<Facility> fList, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound;
-	
-//	Long getSlotNumBetweenDates(LocalDate dStart, LocalDate dEnd);
+
 }
