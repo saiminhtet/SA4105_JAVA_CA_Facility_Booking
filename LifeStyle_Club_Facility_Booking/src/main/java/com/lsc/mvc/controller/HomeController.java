@@ -88,24 +88,11 @@ public class HomeController {
 	}
 
 	@PostMapping("/login")
-	public String vlaidate_Login(HttpServletRequest req, HttpSession session, ModelMap model) {
+	public String validate_Login(HttpServletRequest req, HttpSession session, ModelMap model) {
 
 		User user = new User();
-		// Retrieves userNumber from session
-//		String user_email = req.getParameter("email");
-//		String user_password = req.getParameter("password");
 
-		// Setting the appropriate user data for the user object
-
-//		try {
-//			user = usrService.getUserByEmailPw(user_email, user_password);
-//		} catch (ResourceDefinitionInvalid e) {
-//			
-//			model.put("error", "Login Failed!");
-//			return "home/login";
-//		}
-		// set the user number to validate login
-		String login_userNumber = req.getParameter("username");
+		String login_userNumber = req.getParameter("usernumber");
 		String login_password = req.getParameter("password");
 
 		try {
@@ -191,18 +178,6 @@ public class HomeController {
 
 	}
 
-	// // Checking User Session and Get User Number
-	// public String getUserNumber(HttpServletRequest req) {
-	// HttpSession session = req.getSession();
-	// String userNumber = (String) session.getAttribute("userNumber");
-	//
-	// // Sets userNumber to default value if null
-	// if (userNumber == null) {
-	// // userNumber = "M0065";
-	// // session.setAttribute("userNumber", userNumber);
-	// // return "user/login";
-	// }
-	// return userNumber;
-	// }
+
 
 }

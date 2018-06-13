@@ -66,18 +66,6 @@ public class UserController {
 	@GetMapping("signup")
 	public String getSignUp(HttpServletRequest req, ModelMap model) {
 		util.checkMakeAcctType(req, model);
-		// After this point:
-		// SuperAdmin should have makeAcctType attribute as Admin
-		// Admin should have makeAcctType attribute as Member
-		// Guest should have makeAcctType attribute as Member
-
-		// try {
-		//
-		// model.addAttribute("acctType", usrService.getUserType(util.getUNum(req)));
-		//
-		// } catch (UserNotFound e) {
-		// // Take no action
-		// }
 		User user = new User();
 		user.setPassword("A1S2d3&!@#$%\r\n");
 		model.put("acctType", "Member");
@@ -200,6 +188,7 @@ public class UserController {
 			try {
 				existinguser = usrService.getUser(userNumber);
 				user.setPassword(existinguser.getPassword());
+				user.setUserId(existinguser.getUserId());
 				System.out.println(existinguser);
 			} catch (UserNotFound e1) {
 				// if user not found
@@ -208,7 +197,7 @@ public class UserController {
 			System.out.println(existinguser.toString());
 			// existinguser.setEmailAddress(user.getEmailAddress());
 			// existinguser.setPhoneNumber(user.getPhoneNumber());
-			user.setPassword(existinguser.getPassword());
+			//user.setPassword(existinguser.getPassword());
 			// Validation Using UserValidator Class
 			// Perform validation Using UserValidator Class
 			// Create UserValidator
@@ -233,8 +222,8 @@ public class UserController {
 				// This means that there is no validation error
 				try {
 					// throws UserNotFound : this is to catch is the user object passed to the
-					usrService.updateUser(existinguser);
-					eMailService.notifyUpdateProfile(existinguser); // sending email for new user
+					usrService.updateUser(user);
+					eMailService.notifyUpdateProfile(user); // sending email for new user
 					System.out.println(user.toString());
 					return "redirect:/"; // This means that sign-up success
 				} catch (UserNotFound e) {
@@ -295,14 +284,13 @@ public class UserController {
 				System.out.println(existinguser.toString());
 
 				existinguser = usrService.updatePassword(userNumber, newpassword);
-				
-				existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
+
+				//existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
 				eMailService.notifyChangePassword(existinguser); // sending email for new user
-				
+
 				User updateuser = usrService.getUser(userNumber);
 				System.out.println(updateuser.toString());
-				
-				
+
 				// Setting up variable to set attributes in view
 				String authAdminResult = util.authenticateAdmin(req, model);
 				String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
@@ -323,14 +311,46 @@ public class UserController {
 					model.put("loginUserName", loginUserName);// to view user session name in home page
 					return "home/member_home";
 				}
-			}
-			 catch (UserNotFound e) {
+			} catch (UserNotFound e) {
 				// This means that userNumber is invalid, thus return to login page
 				return "redirect:/login";
 			}
 		}
 		return "redirect:/login";
 	}
+	
+	@GetMapping("/resetpassword")
+	public String resetPassword(HttpServletRequest req, ModelMap model) {
+		return "user/resetpassword";
+
+	}
+	
+	@PostMapping("/resetpassword")
+	public String UpdateresetPassword(HttpServletRequest req, ModelMap model) {
+		String usernumber = req.getParameter("usernumber");
+		User user;
+		try {
+			user = usrService.getUser(usernumber);
+			if(user!=null) {
+				try {
+					user = usrService.updatePassword(user.getUserNumber(), "!@#$%&A1S2d3");
+					eMailService.notifyResetPassword(user);
+					
+					return "redirect:/login";
+				} catch (UserNotFound e) {
+					return "redirect:/login";
+				}
+				
+			}
+		} catch (UserNotFound e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return "redirect:/login";
+
+	}
+	
 
 	// get member list and bind data to manage member view
 	@GetMapping("searchmember")
@@ -341,24 +361,27 @@ public class UserController {
 		if (authAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "user/search_member";
-		}else
+		} else
 			model.put("loginUserName", loginUserName);// to view user session name in home page
-			return authAdminResult;
-		
+		return authAdminResult;
+
 		// model.put("memberlist", usrService.getMList());
-		
+
 	}
 
 	@PostMapping("searchmember")
 	public String searchMemer(HttpServletRequest req, ModelMap model) {
 		String userNumber = req.getParameter("membernumber");
 		String userName = req.getParameter("membername");
-
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");
+		
 		if (userNumber != null) {
 			List<User> uList;
 			try {
 				uList = usrService.getUserListByUserNum(userNumber);
 				model.put("memberlist", uList);
+				model.put("loginUserName", loginUserName);// to view user session name in home page
 				return "user/search_member";
 			} catch (UserNotFound e) {
 				// TODO Auto-generated catch block
@@ -371,6 +394,7 @@ public class UserController {
 			try {
 				uList = usrService.getMListByName(userName);
 				model.put("memberlist", uList);
+				model.put("loginUserName", loginUserName);// to view user session name in home page
 				return "user/search_member";
 			} catch (ResourceDefinitionInvalid e) {
 				// TODO Auto-generated catch block
@@ -378,24 +402,33 @@ public class UserController {
 			}
 
 		}
+		model.put("loginUserName", loginUserName);// to view user session name in home page
 		return "user/search_member";
 	}
 
 	@RequestMapping(value = "/managemember/{memberNum}", method = RequestMethod.GET)
-	public String updateMember(@PathVariable("memberNum") String memberNum, ModelMap model) {
-		User user = new User();
-		user.setPassword("Please enter a password");
-		try {
-			user = usrService.getUser(memberNum);
+	public String updateMember(@PathVariable("memberNum") String memberNum, ModelMap model, HttpServletRequest req) {
+		
+		String authAdminResult = util.authenticateAdmin(req, model);
+		HttpSession session = req.getSession();
+		String loginUserName = (String) session.getAttribute("userName");
+		if (authAdminResult.equals("OK")) {
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			User user = new User();
 			user.setPassword("Please enter a password");
-			model.put("title", usrService.getTitleList());
-			model.put("user", user);
-		} catch (UserNotFound e) {
-			return "user/search_member";
-		}
-
-		System.out.println(user);
-		return "user/managemember";
+			try {
+				user = usrService.getUser(memberNum);
+				user.setPassword("Please enter a password");
+				model.put("title", usrService.getTitleList());
+				model.put("user", user);
+				model.put("loginUserName", loginUserName);// to view user session name in home page
+				return "user/managemember";
+			} catch (UserNotFound e) {
+				return "user/search_member";
+			}
+		} else
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+		return authAdminResult;	
 	}
 
 	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
