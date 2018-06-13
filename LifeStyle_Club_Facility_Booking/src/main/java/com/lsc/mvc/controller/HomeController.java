@@ -181,11 +181,7 @@ public class HomeController {
 		return "facility/manage_facility";
 
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> refs/remotes/origin/master
-	
 	@GetMapping("bookingsummary")
 	public String booking_summary(Model model) {
 		return "booking/booking_summary";
@@ -202,8 +198,4 @@ public class HomeController {
 		return "booking/search_booking";
 	}
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/master
 }
