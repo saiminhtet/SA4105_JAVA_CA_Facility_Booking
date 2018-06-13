@@ -123,22 +123,71 @@ public class BookingController {
 		else return "user/login";
 	}
 	
-//	@RequestMapping(value = "/book_facility/{facilityNum}", method = RequestMethod.GET)
-//	public String bookFacility(@PathVariable("facilityNum") String facilityNum, ModelMap model) {
-//		User user = new User();
-//		user.setPassword("Please enter a password");
-//		try {
-//			user = usrService.getUser(memberNum);
-//			user.setPassword("Please enter a password");
-//			model.put("title", usrService.getTitleList());
-//			model.put("user", user);
-//		} catch (UserNotFound e) {
-//			return "user/search_member";
-//		}
-//
-//		System.out.println(user);
-//		return "user/managemember";
-//	}
+	@RequestMapping(value = "/book_facility/{facilityNum}", method = RequestMethod.GET)
+	public String bookFacility(@PathVariable("facilityNum") String facilityNum, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			Facility f;
+			try {
+				f = fService.getFacility(facilityNum);
+			} catch (FacilityNotFound e) {
+				return "booking/search_facility";
+			}
+			
+			// Load Data into Model
+			Booking b = new Booking();
+			model.addAttribute("booking", b);
+			model.addAttribute("fNum", facilityNum);
+			model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
+			
+			return "booking/book_facility";
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("search-slots")
+	public String postSearchSlots(HttpServletRequest req, ModelMap model, Booking b) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			String fNum = req.getParameter("facilityList");
+			Facility f;
+			try {
+				f = fService.getFacility(fNum);
+			} catch (FacilityNotFound e0) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e1) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+			String tDate = req.getParameter("targetDate");
+			LocalDate targetDate = LocalDate.of(Integer.parseInt(tDate.substring(0, 4)), Integer.parseInt(tDate.substring(5, 7)), Integer.parseInt(tDate.substring(8, 10)));
+
+			// Load Data into Model
+			try {
+				model.addAttribute("booking", b);
+				model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
+				model.addAttribute("slotList", bService.getAvailableSlots(targetDate, fNum));
+				model.addAttribute("tDate", tDate);
+				model.put("fList", fService.getFacilityListByNumber(fNum));
+				return "booking/book_facility";
+			} catch (FacilityNotFound e0) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e1) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+		}
+		else return "user/login";
+	}
 
 //	@GetMapping("/managebooking")
 //	public String managebooking(ModelMap model) throws FacilityNotFound, ResourceDefinitionInvalid {

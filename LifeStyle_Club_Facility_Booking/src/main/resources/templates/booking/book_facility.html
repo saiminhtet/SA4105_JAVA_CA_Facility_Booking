@@ -44,20 +44,20 @@
 					<div class="col-sm-3 input-column">
 						<div class="dropdown">
 						<select name="facilityList" class="custom-select" id="facilityList" style="height: 50px;">
-							<option th:each="f : ${fShortList}" th:value="${f}" th:text="${f}">Choose Facility Type...</option>
+							<option th:each="f : ${fShortList}" th:value="${f.facilityNumber}" th:text="${f.facilityName}">Choose Facility Type...</option>
 						</select>
 						</div>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-2 label-column">
-						<label class="col-form-label" for="targetDate"
+						<label class="col-form-label" for="targetDate" th:value="${tDate}"
 							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
 							Target Date
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input type="date" class="form-control" id="date" placeholder="Select value" th:field="*{slotDate}" style="height: 50px;">
+						<input type="date" class="form-control" id="date" placeholder="Select value" name="targetDate" style="height: 50px;">
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
