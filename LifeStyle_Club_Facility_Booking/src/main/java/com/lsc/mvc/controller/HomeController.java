@@ -75,7 +75,4 @@ public class HomeController {
 //		model.addAttribute("message", "Hello Spring MVC");
 		return "facility/book_facility";
 	}
-	
-	
-
 }
