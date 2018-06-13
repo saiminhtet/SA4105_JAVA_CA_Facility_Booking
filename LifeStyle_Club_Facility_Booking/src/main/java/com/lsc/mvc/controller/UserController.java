@@ -124,9 +124,6 @@ public class UserController {
 		if (results.hasErrors()) {
 			// Provide feedback to user that an error has occurred and what are the actions
 			// that can be taken
-
-			// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO
-			// NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
 			return "user/signup"; // default redirection for guest/user to retry
 		} else {
 			// This means that there is no validation error
@@ -215,8 +212,6 @@ public class UserController {
 			if (results.hasErrors()) {
 				// Provide feedback to user that an error has occurred and what are the actions
 				// that can be taken
-				// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO
-				// NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
 				return "redirect:/"; // default redirection for guest/user to retry
 			} else {
 				// This means that there is no validation error
@@ -474,9 +469,6 @@ public class UserController {
 		if (results.hasErrors()) {
 			// Provide feedback to user that an error has occurred and what are the actions
 			// that can be taken
-
-			// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO
-			// NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
 			return "user/managemember"; // default redirection for guest/user to retry
 		} else {
 			// This means that there is no validation error

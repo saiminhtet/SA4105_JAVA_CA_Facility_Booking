@@ -16,17 +16,17 @@ public class IssueModelAndRepoTests {
 	@Autowired
 	private IssueRepository iRepo;
 	
-//	@Test
-//	public void whenGetIssueIdMax_thenReturnInteger() {
-//		Integer maxId = iRepo.getIssueIdMax();
-//		outputStringToConsole(maxId.toString());
-//	}
+	@Test
+	public void whenGetIssueIdMax_thenReturnInteger() {
+		Integer maxId = iRepo.getIssueIdMax();
+		outputStringToConsole(maxId.toString());
+	}
 	
-//	@Test
-//	public void whenGetIssueByIssueNumber_thenReturnIssue() {
-//		Issue i = iRepo.getIssueByIssueNumber("I0020");
-//		outputStringToConsole(i.toString());
-//	}
+	@Test
+	public void whenGetIssueByIssueNumber_thenReturnIssue() {
+		Issue i = iRepo.getIssueByIssueNumber("I0020");
+		outputStringToConsole(i.toString());
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {

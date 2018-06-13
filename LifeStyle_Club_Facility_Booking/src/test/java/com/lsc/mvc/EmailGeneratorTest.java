@@ -19,12 +19,4 @@ public class EmailGeneratorTest {
 		EmailGenerator eg  = new EmailGenerator();
 		eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 	}
-//	
-//	// Utility Methods
-//	public void outputStringToConsole(String msg) {
-//		System.out.println("\n*********************************************************\n");
-//		System.out.println(msg.toString());
-//		System.out.println("\n*********************************************************\n");
-//	}
-
 }

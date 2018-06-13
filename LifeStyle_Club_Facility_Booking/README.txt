@@ -24,13 +24,13 @@ http://localhost:8080/
 
 For Super Admin Role
 
-Use user name 'M0001' password 'Ss123456!'
+Use user name 'A0001' password 'Ss123456!'
 
 
 
 For Admin Role
 
-Use user name 'M0002' password 'Aa123456!'
+Use user name 'A0002' password 'Aa123456!'
 
 
 
