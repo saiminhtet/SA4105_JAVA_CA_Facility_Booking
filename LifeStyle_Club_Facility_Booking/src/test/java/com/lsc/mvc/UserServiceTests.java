@@ -347,6 +347,14 @@ public class UserServiceTests {
 		}
 	}
 	
+	@Test
+	public void whenGenerateRandomPw_thenReturnString() {
+		for (int i = 0; i < 10; i ++) {
+			String s = uService.generateRandomPw();
+			System.out.println(s);
+		}
+	}
+	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");

@@ -17,94 +17,62 @@
 	<div class="row register-form">
 		<div class="col-md-10 offset-md-1">
 			<form th:action="@{/booking/bookingsummary}" th:method="post"
-				th:object="${booking}" class="custom-form"
+				th:object="${facility}" class="custom-form"
 				style="background-color: #f3f3f3; width: 100%;">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">BOOKING SUMMARY
 				</h1>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="bookingnumber"
+						<label class="col-form-label" for="facilityNumber"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
 					</div>
 					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="facilityname"
-							required="required"  th:field="*{bookingNumber}" disabled>
+						<input class="form-control" type="text" name="facilityNumber"
+							required="required"  th:field="*{facilityNumber}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="membernumber"
+						<label class="col-form-label" for="facilityType"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
 					</div>
 					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="membernumber"
-							required="required" th:field="*{userNumber}" disabled>
+						<input class="form-control" type="text" name="facilityType"
+							required="required" th:field="*{facilityType}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="fullname"
+						<label class="col-form-label" for="facilityName"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
 					</div>
 					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="fullname"
-							required="required" th:value="${fullName}" disabled>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="facilitynumber"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number </label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="facilitynumber"
-							required="required" th:field="*{facilityNumber}" disabled>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="facilityname"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-							Name </label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="facilityname"
-							required="required" th:value="${fName}" disabled>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="bookingdate"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Date </label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="bookingdate"
-							required="required" th:field="*{slotDate}" disabled>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="bookingtime"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Time </label>
-					</div>
-					<div class="col-sm-4 input-column">
-						<input class="form-control" type="text" name="bookingtime"
-							required="required" th:value="${timeSlot}" disabled>
+						<input class="form-control" type="text" name="facilityName"
+							required="required" th:value="*{facilityName}" disabled>
 					</div>
 				</div>
 
-
+				<h3>Are you sure you want to expire this facility?</h3>
 				<div class="form-row form-group">
-					<div class="col-md-8 input-column" style="height: 90px;">
+					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="submit"
 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
 							formaction="/booking"
 							formmethod="post">
-							Home
+							Cancel
 							</button>
+					</div>
+					<div class="col-sm-4 input-column" style="height: 90px;">
+						<button class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/remove-facility"
+							formmethod="post">
+							Proceed
+						</button>
 					</div>
 				</div>
 			</form>

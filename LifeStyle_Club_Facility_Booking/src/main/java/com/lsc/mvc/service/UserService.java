@@ -47,4 +47,5 @@ public interface UserService {
 	
 	User getUser(Booking b) throws BookingNotFound, UserNotFound;
 	
+	String generateRandomPw();
 }
