@@ -11,8 +11,10 @@ import com.lsc.mvc.model.Issue;
 
 public class IssueValidator implements Validator {
 
+	// [A####]
 	private static final Pattern VALID_ADMIN_NUMBER_REGEX = 
 		    Pattern.compile("[A][0-9]{4}");
+	// [F###]
 	private static final Pattern VALID_FACILITY_NUMBER_REGEX = 
 		    Pattern.compile("[F][0-9]{3}");
 	

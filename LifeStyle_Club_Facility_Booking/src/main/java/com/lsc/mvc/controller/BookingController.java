@@ -253,12 +253,6 @@ public class BookingController {
 	        model.addAttribute("booking", b);
 	        try {
 				bService.addBooking(b);
-				
-				// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
-				// -------------------------------------------------- START SECTION --------------------------------------------------
-				u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-				// -------------------------------------------------- END SECTION --------------------------------------------------
-				
 				try {
 					eService.notifyBookingSummary(b);
 				} catch (UserNotFound e) {
@@ -505,12 +499,6 @@ public class BookingController {
 	        model.addAttribute("booking", b);
 	        try {
 				bService.addBooking(b);
-				
-				// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
-				// -------------------------------------------------- START SECTION --------------------------------------------------
-				u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-				// -------------------------------------------------- END SECTION --------------------------------------------------
-				
 				try {
 					eService.notifyBookingSummary(b);
 				} catch (UserNotFound e) {

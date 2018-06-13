@@ -182,7 +182,6 @@ public class IssueController {
 				else {
 					try {
 						iService.addIssue(issue);
-//						System.out.println(issue.toString());
 						model.addAttribute("message", "Issue added successfully");
 					} catch (IssueNotFound e) {
 						System.out.println(e.toString());
@@ -225,7 +224,6 @@ public class IssueController {
 						try {
 							iService.updateIssue(issue);
 							model.addAttribute("message", "Issue updated successfully");
-//							System.out.println(issue.toString());
 						} catch (IssueNotFound e) {
 							System.out.println(e.toString());
 						}

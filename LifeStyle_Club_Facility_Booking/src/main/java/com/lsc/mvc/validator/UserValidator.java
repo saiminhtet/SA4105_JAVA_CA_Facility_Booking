@@ -13,9 +13,10 @@ import com.lsc.mvc.model.User;
 @Component
 public class UserValidator implements Validator {
 	
-	
+	// string@string.string(contain letter(s))
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 			.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+	// 65########
 	private static final Pattern VALID_PHONE_NUMBER_REGEX = Pattern.compile("^65+(6|8|9)+\\d{7}");
 	
 	/*
