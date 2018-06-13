@@ -134,6 +134,7 @@ public class BookingController {
 			} catch (FacilityNotFound e) {
 				return "booking/search_facility";
 			}
+			util.storeSessionVar(req, model, "fSelected", f);
 			
 			// Load Data into Model
 			Booking b = new Booking();

@@ -44,7 +44,7 @@
 					<div class="col-sm-3 input-column">
 						<div class="dropdown">
 						<select name="facilityList" class="custom-select" id="facilityList" style="height: 50px;">
-							<option th:each="f : ${fShortList}" th:value="${f.facilityNumber}" th:text="${f.facilityName}">Choose Facility Type...</option>
+							<option th:each="f : ${fShortList}" th:value="${f.facilityNumber}" th:text="${f.facilityName}" ${f == fSelected ? 'selected':''}>Choose Facility Type...</option>
 						</select>
 						</div>
 					</div>
