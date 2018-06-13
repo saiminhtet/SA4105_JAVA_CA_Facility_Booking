@@ -35,13 +35,13 @@
 				<div class="offset-md-3">
 				<div class="form-row form-group">
 					<div class="col-sm-2 label-column">
-						<label class="col-form-label" for="memberNumber"
+						<label class="col-form-label" for="userNumber"
 							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
-							Member Number
+							User Number
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input class="form-control" type="text" name="memberNumber" style="height: 50px;">
+						<input class="form-control" type="text" name="userNumber" style="height: 50px;">
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
@@ -50,49 +50,41 @@
 							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
 							formaction="/booking/search-booking-all"
 							formmethod="post">
-							Search
+							Search All
 						</button>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-2 label-column">
-						<label class="col-form-label" for="facilityNumber"
+						<label class="col-form-label" for="startDate"
 							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
-							Facility Number
+							Start Date
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input class="form-control" type="text" name="facilityNumber" style="height: 50px;">
+						<input class="form-control" type="text" name="startDate" style="height: 50px;" placeholder="yyyy-MM-dd">
+					</div>
+					<div class="col-sm-3 input-column">
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="endDate"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							End Date
+						</label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<input class="form-control" type="text" name="endDate" style="height: 50px;" placeholder="yyyy-MM-dd">
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
 							class="btn btn-light submit-button button-hover"
 							type="submit"
 							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/booking/search-facility-by-number"
+							formaction="/booking/search-booking-by-name-and-date"
 							formmethod="post">
-							Search
-						</button>
-					</div>
-				</div>
-				<div class="form-row form-group">
-					<div class="col-sm-2 label-column">
-						<label class="col-form-label" for="facilityName"
-							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
-							Facility Name
-						</label>
-					</div>
-					<div class="col-sm-3 input-column">
-						<input class="form-control" type="text" name="facilityName" style="height: 50px;">
-					</div>
-					<div class="col-sm-3 input-column">
-						<button 
-							class="btn btn-light submit-button button-hover"
-							type="submit"
-							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/booking/search-facility-by-name"
-							formmethod="post">
-							Search
+							Search Within Dates
 						</button>
 					</div>
 				</div>
@@ -103,22 +95,26 @@
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th>Booking Number</th>
 							<th>Facility Number</th>
-							<th>Type</th>
-							<th>Name</th>
-							<th>Capacity</th>
-							<th></th>
+							<th>User Number</th>
+							<th>Booked On</th>
+							<th>Booking Date</th>
+							<th>Start Time</th>
+							<th>End Time</th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr th:each="f : ${fList}">								
-							<th th:text="${f.facilityNumber}"></th>
-							<td th:text="${f.facilityType}"></td>
-							<td th:text="${f.facilityName}"></td>
-							<td th:text="${f.capacity}"></td>					
-							<td><a th:href="@{'/booking/book_facility/' + ${f.facilityNumber}}" class="btn btn-success">Book</a></td>
-							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/booking/manage_facility/' + ${f.facilityNumber}}" class="btn btn-primary">Update</a></div></td>
-							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/booking/expire_facility/' + ${f.facilityNumber}}" class="btn btn-danger">Expire</a></div></td>
+						<tr th:each="b : ${bList}">								
+							<th th:text="${b.bookingNumber}"></th>
+							<td th:text="${b.facilityNumber}"></td>
+							<td th:text="${b.userNumber}"></td>
+							<td th:text="${b.transDateTime}"></td>	
+							<td th:text="${b.slotDate}"></td>	
+							<td th:text="${b.slotTimeStart}"></td>
+							<td th:text="${b.slotTimeEnd}"></td>						
+							<td><a th:href="@{'/booking/update_booking/' + ${b.bookingNumber}}" class="btn btn-primary">Update</a></td>
+							<td><a th:href="@{'/booking/expire_booking/' + ${b.bookingNumber}}" class="btn btn-danger">Expire</a></td>
 						</tr>
 					</tbody>
 				</table>

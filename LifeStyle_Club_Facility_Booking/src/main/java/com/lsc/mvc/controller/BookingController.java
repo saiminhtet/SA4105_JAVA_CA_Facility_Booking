@@ -54,7 +54,7 @@ public class BookingController {
 	@GetMapping("search-facility")
 	public String getSearchFacility(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateMember(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			try {
 				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
@@ -63,6 +63,16 @@ public class BookingController {
 			} catch (UserNotFound e) {
 				return "user/login";
 			}
+		}
+		else return "user/login";
+	}
+	
+	@GetMapping("search-booking")
+	public String getSearchBooking(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			return "booking/search_booking";
 		}
 		else return "user/login";
 	}
@@ -80,7 +90,7 @@ public class BookingController {
 	@PostMapping("search-facility-by-type")
 	public String postSearchFacilityByType(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateMember(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			String fType = req.getParameter("facilityType");
@@ -101,7 +111,7 @@ public class BookingController {
 	@PostMapping("search-facility-by-number")
 	public String postSearchFacilityByNumber(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			String fNum = req.getParameter("facilityNumber");
@@ -121,7 +131,7 @@ public class BookingController {
 	@PostMapping("search-facility-by-name")
 	public String postSearchFacilityByNuame(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			String fName = req.getParameter("facilityName");
@@ -139,10 +149,50 @@ public class BookingController {
 		else return "user/login";
 	}
 	
+	@PostMapping("search-booking-all")
+	public String postSearchBookingAll(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			String uNum = req.getParameter("userNumber");
+			
+			// Load Data into Model
+			try {
+				model.addAttribute("bList", bService.getBookingListByUserNum(uNum));
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				return "user/login";
+			}
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("search-booking-by-name-and-date")
+	public String postSearchBookingByNameAndDate(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			String uNum = req.getParameter("userNumber");
+			LocalDate dateStart = LocalDate.parse(req.getParameter("startDate"));
+			LocalDate dateEnd = LocalDate.parse(req.getParameter("endDate"));
+			
+			// Load Data into Model
+			try {
+				model.addAttribute("bList", bService.getBookingListByUserNumAndDate(uNum, dateStart, dateEnd));
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				return "user/login";
+			}
+		}
+		else return "user/login";
+	}
+	
 	@RequestMapping(value = "/book_facility/{facilityNum}", method = RequestMethod.GET)
 	public String bookFacility(@PathVariable("facilityNum") String facilityNum, HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			Facility f;
 			try { f = fService.getFacility(facilityNum);
@@ -158,7 +208,7 @@ public class BookingController {
 	@PostMapping("search-slots")
 	public String postSearchSlots(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			String fNum = req.getParameter("facilityList");
@@ -208,7 +258,7 @@ public class BookingController {
 	@PostMapping("booking-summary")
 	public String postBookingSummary(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Slot Date
 			String slotStart = req.getParameter("targetSlot");

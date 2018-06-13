@@ -54,7 +54,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
-				getMakeAcctType(uType, model);
+				setMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "home/member_home";
 					case "Admin" : 		return "OK";
@@ -105,7 +105,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
-				getMakeAcctType(uType, model);
+				setMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "home/member_home";
 					case "Admin" : 		return "home/admin_home";
@@ -156,7 +156,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
-				getMakeAcctType(uType, model);
+				setMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "OK";
 					case "Admin" : 		return "home/admin_home";
@@ -208,7 +208,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
-				getMakeAcctType(uType, model);
+				setMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "home/member_home";
 					case "Admin" : 		return "home/admin_home";
@@ -235,7 +235,7 @@ public class AuthenticateUser {
 		if (uNum == null) model.addAttribute("makeAcctType", "Member"); 
 	}
 	
-	public void getMakeAcctType(String uType, ModelMap model) {
+	public void setMakeAcctType(String uType, ModelMap model) {
 		String makeAcctType = "";
 		switch (uType) {
 			case "Member": 		makeAcctType = "";
@@ -259,8 +259,8 @@ public class AuthenticateUser {
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
 //		uNum = "A0001"; session.setAttribute("userNumber", uNum);
-		uNum = "A0002"; session.setAttribute("userNumber", uNum);
-//		uNum = "M0006"; session.setAttribute("userNumber", uNum);
+//		uNum = "A0002"; session.setAttribute("userNumber", uNum);
+		uNum = "M0006"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
 		
 		
@@ -282,7 +282,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
-				getMakeAcctType(uType, model);
+				setMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "OK";
 					case "Admin" : 		return "OK";
