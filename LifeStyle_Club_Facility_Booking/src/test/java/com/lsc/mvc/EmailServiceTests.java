@@ -55,7 +55,7 @@ public class EmailServiceTests {
 			// -------------------------------------------------- END SECTION --------------------------------------------------
 			
 			
-			eService.notifyResetPassword(u, u.getPassword());
+			eService.notifyResetPassword(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
 			outputStringToConsole(e.getMessage());

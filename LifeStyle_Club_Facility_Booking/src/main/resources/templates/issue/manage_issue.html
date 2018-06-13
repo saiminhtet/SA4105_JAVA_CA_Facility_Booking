@@ -65,7 +65,9 @@
 							<select class="custom-select" id="status">
 								<option selected>Choose...</option>
 								<option value="1">Open</option>
-								<option value="2">Close</option>
+								<option value="2">Closed</option>
+								<option value="3">Ongoing</option>
+								<option value="4">Cancelled</option>
 							</select>
 						</div>
 					</div>
@@ -76,6 +78,7 @@
 					<div class="col-sm-4 label-column" style="height: 90px;"></div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button
+							formaction="/issue/issue-cancel"
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="reset"
 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
