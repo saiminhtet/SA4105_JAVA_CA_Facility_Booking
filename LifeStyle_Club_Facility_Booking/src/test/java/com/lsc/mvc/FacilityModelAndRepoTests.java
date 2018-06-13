@@ -16,17 +16,17 @@ public class FacilityModelAndRepoTests {
 	@Autowired
 	private FacilityRepository fRepo;
 	
-//	@Test
-//	public void whenGetFacilityByFacilityNumber_thenReturnFacility() {
-//		Facility f = fRepo.getFacilityByFacilityNumber("F010");
-//		outputStringToConsole(f.toString());
-//	}
+	@Test
+	public void whenGetFacilityByFacilityNumber_thenReturnFacility() {
+		Facility f = fRepo.getFacilityByFacilityNumber("F010");
+		outputStringToConsole(f.toString());
+	}
 	
-//	@Test
-//	public void whenGetFacIdMax_thenReturnInteger() {
-//		Integer maxId = fRepo.getFacIdMax();
-//		outputStringToConsole(maxId.toString());
-//	}
+	@Test
+	public void whenGetFacIdMax_thenReturnInteger() {
+		Integer maxId = fRepo.getFacIdMax();
+		outputStringToConsole(maxId.toString());
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
