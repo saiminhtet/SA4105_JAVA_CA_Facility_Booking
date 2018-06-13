@@ -15,8 +15,7 @@ import com.lsc.mvc.repository.UserRepository;
 @SpringBootTest
 public class LifeStyleClubFacilityBookingApplicationTests {
 	
-	@Autowired
-	private UserRepository uRepo;
+
 	
 	
 	

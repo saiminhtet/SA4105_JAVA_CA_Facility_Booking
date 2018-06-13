@@ -16,17 +16,17 @@ public class BookingModelAndRepoTests {
 	@Autowired
 	private BookingRepository bRepo;
 	
-//	@Test
-//	public void whenGetBookingIdMax_thenReturnInteger() {
-//		Integer maxId = bRepo.getBookingIdMax();
-//		outputStringToConsole(maxId.toString());
-//	}
+	@Test
+	public void whenGetBookingIdMax_thenReturnInteger() {
+		Integer maxId = bRepo.getBookingIdMax();
+		outputStringToConsole(maxId.toString());
+	}
 	
-//	@Test
-//	public void whenGetBookingByBookingNumber_thenReturnBooking() {
-//		Booking b = bRepo.getBookingByBookingNumber("B001000");
-//		outputStringToConsole(b.toString());
-//	}
+	@Test
+	public void whenGetBookingByBookingNumber_thenReturnBooking() {
+		Booking b = bRepo.getBookingByBookingNumber("B001000");
+		outputStringToConsole(b.toString());
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {

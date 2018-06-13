@@ -24,156 +24,184 @@ public class UserServiceTests {
 	@Autowired
 	private UserRepository uRepo;
 	
-//	@Test
-//	public void whenGetUser_thenReturnUser() {
-//		User u = uService.getUser("M0054");
-//		outputStringToConsole(u.toString());
-//	}
+	@Test
+	public void whenGetUser_thenReturnUser() {
+		User u;
+		try {
+			u = uService.getUser("M0054");
+			outputStringToConsole(u.toString());
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+		
+	}
 	
-//	@Test
-//	public void whenAddUser_thenReturnUser() {
-//		User u = new User("Mr", "Buenos", "Amigos", "Sayonara", 
-//				"Aa123!@#", "ba@ba.com", "6512345678");
-//		try {
-//			uService.setNewUserNum(u, "Member");
-//			
-//			outputStringToConsole(u.toString());
-//			
-//			// Adding To Database
-//			uService.addUser(u);
-//			
-//			for (User usr:uRepo.findAll()) {
-//				System.out.println(usr.toString());
-//			}
-//		} catch (UserNotFound e) {
-//			outputStringToConsole(e.getMessage());
-//		}
-//		
-//		
-//	}
+	@Test
+	public void whenAddUser_thenReturnUser() {
+		User u = new User("Mr", "Buenos", "Amigos", "Sayonara", 
+				"Aa123!@#", "ba@ba.com", "6512345678");
+		try {
+			uService.setNewUserNum(u, "Member");
+			
+			outputStringToConsole(u.toString());
+			
+			// Adding To Database
+			uService.addUser(u);
+			
+			for (User usr:uRepo.findAll()) {
+				System.out.println(usr.toString());
+			}
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenUpdateUser_thenReturnUser() {
-//		// Retrieving Existing User Object
-//		User u = uService.getUser("M0055");
-//		
-//		// Modifying Details
-//		u.setTitle("Dr");
-//		u.setFirstName("McDonalds");
-//		u.setLastName("Ronald");
-//		u.setMiddleName("");
-//		u.setPassword("qwe123");
-//		u.setEmailAddress("ronald@yahoo.com");
-//		u.setPhoneNumber("6599999999");
-//		
-//		outputStringToConsole(u.toString());
-//		
-//		// Updating To Database
-//		uService.updateUser(u);
-//		
-//		for (User usr:uRepo.findAll()) {
-//			System.out.println(usr.toString());
-//		}
-//	}
+	@Test
+	public void whenUpdateUser_thenReturnUser() {
+		// Retrieving Existing User Object
+		User u;
+		try {
+			u = uService.getUser("M0055");
+			
+			// Modifying Details
+			u.setTitle("Dr");
+			u.setFirstName("McDonalds");
+			u.setLastName("Ronald");
+			u.setMiddleName("");
+			u.setPassword("qwe123");
+			u.setEmailAddress("ronald@yahoo.com");
+			u.setPhoneNumber("6599999999");
+			
+			outputStringToConsole(u.toString());
+			
+			// Updating To Database
+			uService.updateUser(u);
+			
+			for (User usr:uRepo.findAll()) {
+				System.out.println(usr.toString());
+			}
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenRemoveUser_thenReturnVoid() {
-//		// Removing From Database
-//		uService.removeUser("M0057");
-//		
-//		for (User usr:uRepo.findAll()) {
-//			System.out.println(usr.toString());
-//		}
-//	}
+	@Test
+	public void whenRemoveUser_thenReturnVoid() {
+		// Removing From Database
+		try {
+			uService.removeUser("M0057");
+			for (User usr:uRepo.findAll()) {
+				System.out.println(usr.toString());
+			}
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenGetMemberListByName_thenReturnArrayList() {
-//		// Retrieving ArrayList
-//		ArrayList<User> mList;
-//		try {
-//			mList = uService.getMListByName("ra");
-//			
-//			outputStringToConsole(String.valueOf(mList.size()));
-//			
-//			for (User usr:mList) {
-//				System.out.println(usr.toString());
-//			}
-//		} catch (ResourceDefinitionInvalid e) {
-//			outputStringToConsole(e.getMessage());
-//		}
-//		try {
-//			mList = uService.getMListByName("");
-//			
-//			outputStringToConsole(String.valueOf(mList.size()));
-//			
-//			for (User usr:mList) {
-//				System.out.println(usr.toString());
-//			}
-//		} catch (ResourceDefinitionInvalid e) {
-//			outputStringToConsole(e.getMessage());
-//		}
-//	}
+	@Test
+	public void whenGetMemberListByName_thenReturnArrayList() {
+		// Retrieving ArrayList
+		ArrayList<User> mList;
+		try {
+			mList = uService.getMListByName("ra");
+			
+			outputStringToConsole(String.valueOf(mList.size()));
+			
+			for (User usr:mList) {
+				System.out.println(usr.toString());
+			}
+		} catch (ResourceDefinitionInvalid e) {
+			outputStringToConsole(e.getMessage());
+		}
+		try {
+			mList = uService.getMListByName("");
+			
+			outputStringToConsole(String.valueOf(mList.size()));
+			
+			for (User usr:mList) {
+				System.out.println(usr.toString());
+			}
+		} catch (ResourceDefinitionInvalid e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenGetAdminListByName_thenReturnArrayList() {
-//		// Retrieving ArrayList
-//		ArrayList<User> aList = uService.getAListByName("ra");
-//		
-//		outputStringToConsole(String.valueOf(aList.size()));
-//		
-//		for (User usr:aList) {
-//			System.out.println(usr.toString());
-//		}
-//	}
+	@Test
+	public void whenGetAdminListByName_thenReturnArrayList() {
+		// Retrieving ArrayList
+		ArrayList<User> aList;
+		try {
+			aList = uService.getAListByName("ra");
+			outputStringToConsole(String.valueOf(aList.size()));
+			
+			for (User usr:aList) {
+				System.out.println(usr.toString());
+			}
+		} catch (ResourceDefinitionInvalid e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenGetUserByEmailPw_thenReturnUser() {
-//		User u = uService.getUserByEmailPw("ba@ba.com", "Aa123!@#");
-//		
-//		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("no matching record");
-//	}
+	@Test
+	public void whenGetUserByEmailPw_thenReturnUser() {
+		User u;
+		try {
+			u = uService.getUserByEmailPw("ba@ba.com", "Aa123!@#");
+			if (u != null) outputStringToConsole(u.toString());
+			else outputStringToConsole("no matching record");
+		} catch (ResourceDefinitionInvalid e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenValidateLogin_thenReturnUser() {
-//		outputStringToConsole("Valid Login Scenario");
-//		User u = uService.validateLogin("A0004", "T0WtDJm7!");
-//		
-//		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("Invalid credentials");
-//		
-//		outputStringToConsole("Invalid Login Scenario");
-//		u = uService.validateLogin("A0003", "T0WtDJm7!");
-//		
-//		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("Invalid credentials");
-//	}
+	@Test
+	public void whenValidateLogin_thenReturnUser() {
+		User u;
+		try {
+			outputStringToConsole("Valid Login Scenario");
+			u = uService.validateLogin("A0004", "T0WtDJm7!");
+			if (u != null) outputStringToConsole(u.toString());
+			else outputStringToConsole("Invalid credentials");
+			
+			outputStringToConsole("Invalid Login Scenario");
+			u = uService.validateLogin("A0003", "T0WtDJm7!");
+			
+			if (u != null) outputStringToConsole(u.toString());
+			else outputStringToConsole("Invalid credentials");
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenValidateByEmail_thenReturnUser() {
-//		User u = uService.validateEmail("Jasper.Herrod@gmail.com");
-//		
-//		if (u != null) outputStringToConsole(u.toString());
-//		else outputStringToConsole("no matching record");
-//	}
+	@Test
+	public void whenValidateByEmail_thenReturnUser() {
+		User u = uService.validateEmail("Jasper.Herrod@gmail.com");
+		
+		if (u != null) outputStringToConsole(u.toString());
+		else outputStringToConsole("no matching record");
+	}
 	
-//	@Test
-//	public void whenGetUserType_thenReturnUser() {
-//		String s = uService.getUserType("M0039");
-//		
-//		if (s != "") outputStringToConsole(s.toString());
-//		else outputStringToConsole("no matching record");
-//		
-//		s = uService.getUserType("A0001");
-//		
-//		if (s != "") outputStringToConsole(s.toString());
-//		else outputStringToConsole("no matching record");
-//		
-//		s = uService.getUserType("A0050");
-//		
-//		if (s != "") outputStringToConsole(s.toString());
-//		else outputStringToConsole("no matching record");
-//	}
+	@Test
+	public void whenGetUserType_thenReturnUser() {
+		String s;
+		try {
+			s = uService.getUserType("M0039");
+			if (s != "") outputStringToConsole(s.toString());
+			else outputStringToConsole("no matching record");
+			
+			s = uService.getUserType("A0001");
+			
+			if (s != "") outputStringToConsole(s.toString());
+			else outputStringToConsole("no matching record");
+			
+			s = uService.getUserType("A0050");
+			
+			if (s != "") outputStringToConsole(s.toString());
+			else outputStringToConsole("no matching record");
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
 //	@Test
 //	public void whenCheckPwComplexity_thenReturnBoolean() {
@@ -219,85 +247,105 @@ public class UserServiceTests {
 //		outputStringToConsole(String.valueOf(uService.checkPwComplexity(s)));
 //	}
 	
-//	@Test
-//	public void whenValidatePasswordChange_thenReturnBoolean() {
-//		String uNum, oldPw, newPw, confirmPw;
-//		
-//		System.out.println("Checking for Blank: Expect false");
-//		uNum = "M0054";
-//		oldPw = "KJ8ew2rg!";
-//		newPw = "Aa123!@#";
-//		confirmPw = "";
-//		outputStringToConsole(
-//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
-//		);
-//		
-//		System.out.println("Checking that oldPw valid: Expect false");
-//		uNum = "M0054";
-//		oldPw = "KJ8ew2rg!123";
-//		newPw = "Aa123!@#";
-//		confirmPw = newPw;
-//		outputStringToConsole(
-//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
-//		);
-//		
-//		System.out.println("Checking that newPw equals confirmPw: Expect false");
-//		uNum = "M0054";
-//		oldPw = "KJ8ew2rg!";
-//		newPw = "Aa123!@#";
-//		confirmPw = newPw + "123";
-//		outputStringToConsole(
-//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
-//		);
-//		
-//		System.out.println("Checking that newPw complex: Expect false");
-//		uNum = "M0054";
-//		oldPw = "KJ8ew2rg!";
-//		newPw = "AA123!@#";
-//		confirmPw = newPw;
-//		outputStringToConsole(
-//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
-//		);
-//		
-//		System.out.println("Checking ideal: Expect true");
-//		uNum = "M0054";
-//		oldPw = "KJ8ew2rg!";
-//		newPw = "Aa123!@#";
-//		confirmPw = newPw;
-//		outputStringToConsole(
-//			String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
-//		);
-//	}
+	@Test
+	public void whenValidatePasswordChange_thenReturnBoolean() {
+		String uNum, oldPw, newPw, confirmPw;
+		
+		System.out.println("Checking for Blank: Expect false");
+		uNum = "M0054";
+		oldPw = "KJ8ew2rg!";
+		newPw = "Aa123!@#";
+		confirmPw = "";
+		try {
+			outputStringToConsole(
+				String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+			);
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+		
+		System.out.println("Checking that oldPw valid: Expect false");
+		uNum = "M0054";
+		oldPw = "KJ8ew2rg!123";
+		newPw = "Aa123!@#";
+		confirmPw = newPw;
+		try {
+			outputStringToConsole(
+				String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+			);
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+		
+		System.out.println("Checking that newPw equals confirmPw: Expect false");
+		uNum = "M0054";
+		oldPw = "KJ8ew2rg!";
+		newPw = "Aa123!@#";
+		confirmPw = newPw + "123";
+		try {
+			outputStringToConsole(
+				String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+			);
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+		
+		System.out.println("Checking that newPw complex: Expect false");
+		uNum = "M0054";
+		oldPw = "KJ8ew2rg!";
+		newPw = "AA123!@#";
+		confirmPw = newPw;
+		try {
+			outputStringToConsole(
+				String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+			);
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+		
+		System.out.println("Checking ideal: Expect true");
+		uNum = "M0054";
+		oldPw = "KJ8ew2rg!";
+		newPw = "Aa123!@#";
+		confirmPw = newPw;
+		try {
+			outputStringToConsole(
+				String.valueOf(uService.validatePasswordChange(uNum, oldPw, newPw, confirmPw))
+			);
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
-//	@Test
-//	public void whenGetTitleList_thenReturnList () {
-//		List<String> tList = uService.getTitleList();
-//		for (String t:tList) {
-//			System.out.println(t.toString());
-//		}
-//	}
+	@Test
+	public void whenGetTitleList_thenReturnList () {
+		List<String> tList = uService.getTitleList();
+		for (String t:tList) {
+			System.out.println(t.toString());
+		}
+	}
 	
-//	@Test
-//	public void whenGetMList_thenReturnList () {
-//		List<User> uList = uService.getMList();
-//		
-//		System.out.println(String.valueOf(uList.size()));
-//		
-//		for (User u:uList) {
-//			System.out.println(u.toString());
-//		}
-//	}
-//	
-//	@Test
-//	public void whenGetAList_thenReturnList () {
-//		List<User> uList = uService.getAList();
-//		
-//		System.out.println(String.valueOf(uList.size()));
-//		
-//		for (User u:uList) {
-//			System.out.println(u.toString());
-//		}
-//	}
+	@Test
+	public void whenGetMList_thenReturnList () {
+		List<User> uList = uService.getMList();
+		
+		System.out.println(String.valueOf(uList.size()));
+		
+		for (User u:uList) {
+			System.out.println(u.toString());
+		}
+	}
+	
+	@Test
+	public void whenGetAList_thenReturnList () {
+		List<User> uList = uService.getAList();
+		
+		System.out.println(String.valueOf(uList.size()));
+		
+		for (User u:uList) {
+			System.out.println(u.toString());
+		}
+	}
 	
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
