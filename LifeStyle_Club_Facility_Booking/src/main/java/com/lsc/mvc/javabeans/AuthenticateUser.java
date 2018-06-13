@@ -245,9 +245,4 @@ public class AuthenticateUser {
 		}
 		model.addAttribute("makeAcctType", makeAcctType);
 	}
-	
-	public void storeSessionVar(HttpServletRequest req, ModelMap model, String key, Object obj) {
-		HttpSession session = req.getSession();
-		session.setAttribute(key, obj);
-	}
 }

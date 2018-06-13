@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -48,7 +49,7 @@ public class BookingController {
 	@GetMapping("search-facility")
 	public String getSearchFacility(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateMember(req, model);
 		if (authResult.equals("OK")) {
 			try {
 				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
@@ -64,7 +65,7 @@ public class BookingController {
 	@PostMapping("search-facility-by-type")
 	public String postSearchFacilityByType(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateAdmin(req, model);
+		String authResult = util.authenticateMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
 			String fType = req.getParameter("facilityType");
@@ -129,26 +130,18 @@ public class BookingController {
 		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
 			Facility f;
-			try {
-				f = fService.getFacility(facilityNum);
-			} catch (FacilityNotFound e) {
-				return "booking/search_facility";
-			}
-			util.storeSessionVar(req, model, "fSelected", f);
+			try { f = fService.getFacility(facilityNum);
+			} catch (FacilityNotFound e) { return "booking/search_facility"; }
 			
 			// Load Data into Model
-			Booking b = new Booking();
-			model.addAttribute("booking", b);
-			model.addAttribute("fNum", facilityNum);
 			model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
-			
 			return "booking/book_facility";
 		}
 		else return "user/login";
 	}
 	
 	@PostMapping("search-slots")
-	public String postSearchSlots(HttpServletRequest req, ModelMap model, Booking b) {
+	public String postSearchSlots(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
@@ -168,14 +161,19 @@ public class BookingController {
 			}
 			String tDate = req.getParameter("targetDate");
 			LocalDate targetDate = LocalDate.of(Integer.parseInt(tDate.substring(0, 4)), Integer.parseInt(tDate.substring(5, 7)), Integer.parseInt(tDate.substring(8, 10)));
-
+			
+			Booking b = new Booking();
+	        b.setFacilityNumber(f.getFacilityNumber());
+	        b.setUserNumber(util.getUNum(req));
+	        b.setSlotDate(targetDate);
+	        
+	        HttpSession session = req.getSession();
+	        session.setAttribute("bCurrent", b);
+	        
 			// Load Data into Model
 			try {
-				model.addAttribute("booking", b);
 				model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
 				model.addAttribute("slotList", bService.getAvailableSlots(targetDate, fNum));
-				model.addAttribute("tDate", tDate);
-				model.put("fList", fService.getFacilityListByNumber(fNum));
 				return "booking/book_facility";
 			} catch (FacilityNotFound e0) {
 				try {
