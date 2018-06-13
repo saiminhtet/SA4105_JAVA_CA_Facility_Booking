@@ -10,9 +10,11 @@
 	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
-
-
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
@@ -28,27 +30,33 @@
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="facilitynumber"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Issue
 							Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilitynumber"
-							required="required">
+						<input class="form-control" type="text" name="issueNumber" th:value="${iNumber}" readonly="true">
 					</div>
 				</div>
 				
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="
-							description"
+						<label class="col-form-label" for="facilitynumber"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
+							Number </label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="fnumber" th:value="${fNumber}">
+					</div>
+				</div>
+				
+				<div class="form-row form-group">
+					<div class="col-sm-4 label-column">
+						<label class="col-form-label" for="description"
 							style="padding-right: 29%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Description
 						</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<textarea class="form-control" rows="3" cols="20"
-							name="description">
-						
-						</textarea>
+						<input class="form-control" type="text" name="idescription" th:value="${iDesc}">
 					</div>
 				</div>
 				
@@ -57,12 +65,11 @@
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="status"
 							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Status
-							 </label>
+						</label>
 					</div>
 					<div class="col-sm-4 input-column">
 						<div class="dropdown">
-
-							<select class="custom-select" id="status">
+							<select name="iStatus" class="custom-select" id="status">
 								<option selected>Choose...</option>
 								<option value="1">Open</option>
 								<option value="2">Closed</option>
@@ -72,31 +79,30 @@
 						</div>
 					</div>
 				</div>
-				
-				
+						
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="height: 90px;"></div>
-					<div class="col-sm-4 input-column" style="height: 90px;">
+					<div class="col-sm-4 offset-md-3 input-column" style="height: 90px;">
 						<button
-							formaction="/issue/issue-cancel"
+							formaction="/issue"
 							class="btn btn-light active submit-button cancel-btn-hover"
-							type="reset"
+							type="submit"
 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
 							type="submit"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Submit
+							formaction ="/issue/add-issue"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Submit
 						</button>
 					</div>
+				</div>
+				
+				<div>
+				<label th:text="${message}"></label>
 				</div>
 			</form>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

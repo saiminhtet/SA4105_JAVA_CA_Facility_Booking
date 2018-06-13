@@ -10,6 +10,10 @@
 	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+<script		
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
 
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
@@ -42,11 +46,19 @@
 					<div class="form-row form-group">
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="facilitynumber"
-								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
+								style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">Facility
 								Number </label>
 						</div>
-						<div class="col-sm-3 input-column">
-							<input class="form-control" type="text" name="facilitynumber">
+						<div class="col-sm-3 input-column" style="height: 50px;">
+							<input class="form-control" type="text" name="facilitynumber" style="height: 50px;">
+						</div>
+						<div class="col-sm-4 input-column" style="height: 60px;">
+								<button
+									class="btn btn-light submit-button button-hover"
+									type="submit"
+									formaction="/issue/search-by-facilitynumber"
+									style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 30%;">
+									Search</button>
 						</div>
 					</div>
 					
@@ -54,98 +66,67 @@
 					<div class="form-row form-group">
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="issuenumber"
-								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Issue
+								style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">Issue
 								Number </label>
 						</div>
 						<div class="col-sm-3 input-column">
-							<input class="form-control" type="text" name="issuenumber">
+							<input class="form-control" type="text" name="issuenumber" style="height: 50px;">
+						</div>
+						<div class="col-sm-4 input-column" style="height: 60px;">
+								<button
+									class="btn btn-light submit-button button-hover"
+									type="submit"
+									formaction="/issue/search-by-issuenumber"
+									style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 30%;">
+									Search
+								</button>
 						</div>
 					</div>
 
 
-					<div class="offset-sm-2">
+					<div class="col-md-10 offset-md-1">
+					<div></div>
+					<div></div>
 						<div class="form-row form-group">
-							<div class="col-sm-4 input-column" style="height: 90px;">
+							<div class="col-sm-3 offset-md-4 input-column" style="height: 90px;">
 								<button
 									class="btn btn-light active submit-button cancel-btn-hover"
-									type="reset"
-									formaction="/issue/issue-cancel"
-									style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
-							</div>
-							
-							<div class="col-sm-4 input-column" style="height: 90px;">
-								<button class="btn btn-light submit-button button-hover"
 									type="submit"
-									style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Search
-								</button>
+									formaction="/issue"
+									style="margin-right: 100px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
 							</div>
 						</div>
 					</div>
 				</div>
 			</form>
-
+			
 			<div class="table-responsive col-md-10 offset-md-1">
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th scope="col">ID</th>
-							<th scope="col">Admin</th>
-							<th scope="col">Facility</th>
-							<th scope="col">Open Date</th>
-							<th scope="col">Description</th>
-							<th scope="col">Status</th>
+							<th>Issue Number</th>
+							<th>Admin Number</th>
+							<th>Facility Number</th>
+							<th>Report Date Time</th>
+					    	<th>Issue Status</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr>
-							<th scope="row">I0166</th>
-							<td>A02</td>
-							<td>F23</td>
-							<td>01 Jan 2018</td>
-							<td>2018-01-01 0900: During scheduled morning cleaning, Janitor Fichard Fergurson reported that one of the ceiling lights...</td>
-							<td>Closed</td>
-							<td><button type="button" class="btn btn-success">Update</button></td>
-							<td><button type="button" class="btn btn-success">Remove</button></td>
-						</tr>
-						<tr>
-							<th scope="row">I0182</th>
-							<td>A02</td>
-							<td>F23</td>
-							<td>02 Feb 2018</td>
-							<td>2018-01-01 0900: During scheduled morning cleaning, Janitor Fichard Fergurson reported that one of the ceiling lights...</td>
-							<td>Cancelled</td>
-							<td><button type="button" class="btn btn-success">Update</button></td>
-							<td><button type="button" class="btn btn-success">Remove</button></td>
-						</tr>
-						<tr>
-							<th scope="row">I0184</th>
-							<td>A04</td>
-							<td>F23</td>
-							<td>03 Mar 2018</td>
-							<td>2018-01-01 0900: During scheduled morning cleaning, Janitor Fichard Fergurson reported that one of the ceiling lights...</td>
-							<td>Closed</td>
-							<td><button type="button" class="btn btn-success">Update</button></td>
-							<td><button type="button" class="btn btn-success">Remove</button></td>
-						</tr>
-						<tr>
-							<th scope="row">I0196</th>
-							<td>A02</td>
-							<td>F23</td>
-							<td>04 Apr 2018</td>
-							<td>2018-01-01 0900: During scheduled morning cleaning, Janitor Fichard Fergurson reported that one of the ceiling lights...</td>
-							<td>Open</td>
-							<td><button type="button" class="btn btn-success">Update</button></td>
-							<td><button type="button" class="btn btn-success">Remove</button></td>
-						</tr>
+				    <tbody th:each="issue : ${issueListing}" th:remove="tag">
+					      <tr>
+					         <td th:text="${issue.issueNumber}">...</td>
+					         <td th:text="${issue.adminNumber}">...</td>
+					         <td th:text="${issue.facilityNumber}">...</td>
+					         <td th:text="${issue.reportDateTime}">...</td>
+					         <td th:text="${issue.issueStatus}">...</td>
+					         <td><a th:href="@{'/issue/update-issue/' + ${issue.issueNumber}}" class="btn btn-primary">Update</a></td>
+							 <td><a th:href="@{'/issue/remove-issue/' + ${issue.issueNumber}}" class="btn btn-danger">Remove</a></td>
+					      </tr>
 					</tbody>
 				</table>
 			</div>
+
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
