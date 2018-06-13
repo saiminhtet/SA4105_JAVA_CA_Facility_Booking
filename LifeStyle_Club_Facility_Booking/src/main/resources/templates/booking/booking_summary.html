@@ -19,8 +19,8 @@
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
-			<form th:action="@{/booking/booksummary}" th:method="post"
-				th:object="${bookingsummary}" class="custom-form"
+			<form th:action="@{/booking/bookingsummary}" th:method="post"
+				th:object="${booking}" class="custom-form"
 				style="background-color: #f3f3f3; width: 100%;">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">BOOKING SUMMARY
@@ -52,7 +52,7 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" name="fullname"
-							required="required" th:field="*{userName}" disabled>
+							required="required" th:field="*{userNumber}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -73,7 +73,7 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" name="facilityname"
-							required="required" th:field="*{facilityName}" disabled>
+							required="required" th:field="*{userNumber}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -93,7 +93,7 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" name="bookingtime"
-							required="required" th:field="*{slotTime}" disabled>
+							required="required" th:field="*{slotTimeStart}" disabled>
 					</div>
 				</div>
 

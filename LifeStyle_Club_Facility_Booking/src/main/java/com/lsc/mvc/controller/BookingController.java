@@ -90,13 +90,13 @@ public class BookingController {
 
 
 	@GetMapping("/bookingsummary")
-	public String Bookingsummary(ModelMap model) throws FacilityNotFound, BookingNotFound {
+	public String Bookingsummary(ModelMap model) throws BookingNotFound{
 		
 		Booking bookingsummary = new Booking();
 		String bookingNumber = "B000001";
 		bookingsummary = bservice.getBooking(bookingNumber);
 		model.put("booking", bookingsummary);
 		
-		return "booking/book_summary";
+		return "booking/booking_summary";
 	}
 }

@@ -179,7 +179,6 @@ public class HomeController {
 //		model.addAttribute("message", "Hello Spring MVC");
 		return "booking/book_facility";
 	}
-<<<<<<< HEAD
 	
 	@GetMapping("bookingsummary")
 	public String booking_summary(Model model) {
@@ -196,6 +195,4 @@ public class HomeController {
 		return "booking/search_booking";
 	}
 
-=======
->>>>>>> refs/remotes/origin/master
 }
