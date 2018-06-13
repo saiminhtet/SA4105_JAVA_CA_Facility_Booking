@@ -54,8 +54,9 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
+				getMakeAcctType(uType, model);
 				switch (uType) {
-					case "Member": 		return "home/member_home";
+					case "Member": 		return "home/member_home"; }
 					case "Admin" : 		return "OK";
 					case "SuperAdmin": 	return "home/super_admin_home";
 					default: 			return "NG";
@@ -104,6 +105,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
+				getMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "home/member_home";
 					case "Admin" : 		return "home/admin_home";
@@ -154,6 +156,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
+				getMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "OK";
 					case "Admin" : 		return "home/admin_home";
@@ -189,7 +192,7 @@ public class AuthenticateUser {
 		
 		
 		// Check if logged in
-		if (uNum == null) return "user/login";
+		if (uNum == null) { return "user/login"; }
 		else {
 			try {
 				// Check if uNum valid
@@ -205,6 +208,7 @@ public class AuthenticateUser {
 				// all others are redirected to respective home pages
 				
 				String uType = uService.getUserType(uNum); // throws UserNotFound
+				getMakeAcctType(uType, model);
 				switch (uType) {
 					case "Member": 		return "home/member_home";
 					case "Admin" : 		return "home/admin_home";
@@ -223,5 +227,22 @@ public class AuthenticateUser {
 		HttpSession session = req.getSession();
 		String uNum = (String) session.getAttribute("userNumber");
 		return uNum;
+	}
+	
+	public String checkMakeAcctType(HttpServletRequest req, ModelMap model) {
+		HttpSession session = req.getSession();
+		String uNum = (String) session.getAttribute("userNumber");
+		if (uNum == null) model.addAttribute("makeAcctType", "Member"); 
+	}
+	
+	public String getMakeAcctType(String uType, ModelMap model) {
+		String makeAcctType = "";
+		switch (uType) {
+			case "Member": 		makeAcctType = "";
+			case "Admin" : 		makeAcctType = "Member";
+			case "SuperAdmin": 	makeAcctType = "Admin";
+			default: 			makeAcctType = "Member";
+		}
+		model.addAttribute("makeAcctType", makeAcctType);
 	}
 }
