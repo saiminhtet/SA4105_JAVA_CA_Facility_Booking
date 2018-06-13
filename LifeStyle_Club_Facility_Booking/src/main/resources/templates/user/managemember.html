@@ -5,25 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profile</title>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+	integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+<link rel="stylesheet" th:href="@{/css/admin.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
 
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
 
 </head>
 
-<body style="background-color: #f3f3f3;">
-	<div class="row register-form">
+<body >
+<div th:replace="layouts/admin_header :: header">&nbsp;</div>
+	<div class="row register-form" style="background-color: #f3f3f3;">
 		<div class="col-md-6 offset-md-3">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/updateMember}" th:method="post" th:object="${user}">
+				style="background-color: #f3f3f3; width: auto;"
+				th:action="@{/user/updateMember}" th:method="post"
+				th:object="${user}">
 				<h1
-					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">Update Member
-				</h1>
+					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">Update
+					Member</h1>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="membernumber"
@@ -33,9 +48,9 @@
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="text" readonly="readonly"
 							name="membernumber" th:field="*{userNumber}">
-<!-- 							th:value="${user.userNumber}" -->
+						<!-- 							th:value="${user.userNumber}" -->
 					</div>
-				</div>				
+				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
@@ -55,37 +70,37 @@
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
-							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">First Name
-						</label>
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">First
+							Name </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" 
-							name="name"  th:field="*{firstName}">
-<!-- 							th:value="${user.firstName}" -->
+						<input class="form-control" type="text" name="name"
+							th:field="*{firstName}">
+						<!-- 							th:value="${user.firstName}" -->
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
-							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Last Name
-						</label>
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Last
+							Name </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" 
-							name="name"  th:field="*{lastName}">
-<!-- 							th:value="${user.lastName}" -->
+						<input class="form-control" type="text" name="name"
+							th:field="*{lastName}">
+						<!-- 							th:value="${user.lastName}" -->
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column">
 						<label class="col-form-label" for="name"
-							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Middle Name
-						</label>
+							style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Middle
+							Name </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" 
-							name="name"  th:field="*{middleName}">
-<!-- 							th:value="${user.middleName}" -->
+						<input class="form-control" type="text" name="name"
+							th:field="*{middleName}">
+						<!-- 							th:value="${user.middleName}" -->
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -96,8 +111,9 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<input class="form-control" type="email" name="email"
-							required="required" placeholder="example@domain.com" th:field="*{emailAddress}">
-<!-- 							 th:value="${user.emailAddress}" -->
+							required="required" placeholder="example@domain.com"
+							th:field="*{emailAddress}">
+						<!-- 							 th:value="${user.emailAddress}" -->
 					</div>
 				</div>
 
@@ -108,8 +124,9 @@
 							Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="phone"  th:field="*{phoneNumber}">
-<!-- 						th:value="${user.phoneNumber}" -->
+						<input class="form-control" type="text" name="phone"
+							th:field="*{phoneNumber}">
+						<!-- 						th:value="${user.phoneNumber}" -->
 					</div>
 				</div>
 
@@ -119,12 +136,12 @@
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<a class="btn btn-light active submit-button cancel-btn-hover"
 							th:href="@{/user}"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</a>
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</a>
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
 							type="submit" value="Update"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Update
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Update
 						</button>
 					</div>
 				</div>
@@ -134,7 +151,7 @@
 		</div>
 
 	</div>
-	
+	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script

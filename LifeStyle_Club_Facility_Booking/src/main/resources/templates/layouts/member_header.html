@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+<link rel="stylesheet" th:href="@{/css/admin.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+	<link href="https://fonts.googleapis.com/css?family=Julius+Sans+One" rel="stylesheet">
+</head>
+<body>
+	<div>
+		<div class="header-dark"
+			style="background-color:#003062; height: 0%;"th:fragment="header">  
+			<nav
+				class="navbar navbar-dark navbar-expand-md navigation-clean-search">
+				<div class="container">					
+					<button class="navbar-toggler" data-toggle="collapse"
+						data-target="#navcol-1">
+						<span class="sr-only">Toggle navigation</span><span
+							class="navbar-toggler-icon"></span>
+					</button>
+					<div class="collapse navbar-collapse" id="navcol-1">
+						<ul class="nav navbar-nav">							
+							<li class="dropdown"><a
+								class=" nav-link "
+								data-toggle="dropdown" aria-expanded="false" href="#" style="color: #FFFFFF;"><i class="fas fa-3x fa-bars"></i>
+							</a>
+								 <div class="dropdown-menu" role="menu">
+									<a class="dropdown-item" role="presentation" href="/booking/search_facility">Make New Booking</a>
+									<a class="dropdown-item" role="presentation" href="/booking/manage_booking">Manage Booking</a>
+								</div>								
+								</li>
+						</ul>
+						<a class="navbar-brand" style="font-size:40px; padding-left: 30%; font-family: 'Julius Sans One', sans-serif;" href="#">LIFESTYLE CLUB</a>
+						<form class="form-inline mr-auto" target="_self">
+							<div class="form-group">
+							
+<!-- 								<label for="search-field"><i class="fa fa-search"></i></label><input -->
+<!-- 									class="form-control search-field" type="search" name="search" -->
+<!-- 									id="search-field"> -->
+							</div>
+						</form>
+						<ul class="nav navbar-nav">							
+							<li class="dropdown"><a
+								class=" nav-link "
+								data-toggle="dropdown" aria-expanded="false" href="#" style="color: #FFFFFF;"><i class="fa fa-3x fa-user-circle"></i>
+							</a>
+								 <div class="dropdown-menu" role="menu">
+									<a class="dropdown-item" role="presentation" href="/user/profile">Profile</a>
+									<a class="dropdown-item" role="presentation" href="/user/changepassword">Change Password</a>
+									<a class="dropdown-item" role="presentation" href="/logout">Logout</a>								
+								</div>								
+								</li>
+						</ul>						
+					</div>
+				</div>
+			</nav>			
+		</div>
+	</div>
+</body>
+</html>
