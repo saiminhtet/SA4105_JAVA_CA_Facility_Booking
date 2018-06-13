@@ -99,6 +99,8 @@ public class ReportController {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
+			model.addAttribute("startDate", LocalDate.now().minusDays(6));
+			model.addAttribute("endDate", LocalDate.now());
 			try {
 				model.addAttribute("fUsageListing", bService.getFacilityUsageListByFacilityListAndDate(fService.getFacilityList(), LocalDate.now().minusDays(6), LocalDate.now()));
 				return "report/facility_usage";

@@ -218,4 +218,10 @@ public class AuthenticateUser {
 			}
 		}
 	}
+	
+	public String getUNum(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String uNum = (String) session.getAttribute("userNumber");
+		return uNum;
+	}
 }

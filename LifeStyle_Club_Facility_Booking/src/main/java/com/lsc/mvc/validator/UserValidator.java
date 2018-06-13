@@ -17,6 +17,15 @@ public class UserValidator implements Validator {
 	private static final Pattern VALID_EMAIL_ADDRESS_REGEX = Pattern
 			.compile("^[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
 	private static final Pattern VALID_PHONE_NUMBER_REGEX = Pattern.compile("^65+(6|8|9)+\\d{7}");
+	
+	/*
+	 * Criteria:
+	 * - At least 8 characters long
+	 * - Contains at least 1 digit
+	 * - Contains at least 1 lowercase alphabet and 1 uppercase alphabet
+	 * - Contains at least 1 symbol (@#$%^&+=!~*-,./?;:')
+	 * - Does not contain space or tab
+	 */
 	private static final Pattern VALID_PASSWORD_REGEX = Pattern
 			.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=!~*-,./?;:'])(?=\\S+$).{8,}$");
 

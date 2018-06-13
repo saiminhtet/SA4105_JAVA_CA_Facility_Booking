@@ -3,141 +3,133 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADD FACILITY</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
-
-
+<title>Facility Booking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+
 <style type="text/css">
-.resultsTable {
-/* 	border-radius: 25px !important; */
-	border-width: 2px !important;
-	border-style: solid !important;
-	border-style: outset;
-	border-color: rgba(0, 128, 255, 0.9) !important;
-	width: 90%; /*Tested and working as expected: */
-	padding-top: 1%;
-	margin: 0px auto;
-	float: none;
-}
+	.resultsTable {
+		border-width: 2px !important;
+		border-style: solid !important;
+		border-style: outset;
+		border-color: rgba(0, 128, 255, 0.9) !important;
+		width: 90%;
+		padding-top: 1%;
+		margin: 0px auto;
+		float: none;
+	}
 </style>
 </head>
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-10 offset-md-1">
-			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;">
-				<h1
-					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">SEARCH
-					FACILITY</h1>
-				<div class="offset-sm-2">
-
-					<div class="form-row form-group">
-						<div class="col-sm-2  offset-sm-2 label-column">
-							<label class="col-form-label" for="facilitytype"
-								style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-								Type </label>
-						</div>
-						<div class="col-sm-3 input-column">
-							<div class="dropdown">
-
-								<select class="custom-select" id="facilitytype">
-									<option selected>Choose...</option>
-									<option value="1">One</option>
-									<option value="2">Two</option>
-									<option value="3">Three</option>
-								</select>
-							</div>
+		<div class="col-md-10 offset-sm-1">
+			<form class="custom-form" style="background-color: #f3f3f3; width: auto;">
+				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
+					Search Facility
+				</h1>
+				<div class="offset-md-3">
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="facilityType"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Facility Type
+						</label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<div class="dropdown">
+						<select name="facilityType" class="custom-select" id="facilityType" style="height: 50px;">
+							<option th:each="f : ${fTypeList}" th:value="${f}" th:text="${f}">Choose Facility Type...</option>
+						</select>
 						</div>
 					</div>
-					<div class="form-row form-group">
-						<div class="col-sm-2  offset-sm-2 label-column">
-							<label class="col-form-label" for="facilitynumber"
-								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-								Number </label>
-						</div>
-						<div class="col-sm-3 input-column">
-							<input class="form-control" type="text" name="facilitynumber">
-						</div>
-					</div>
-					<div class="form-row form-group">
-						<div class="col-sm-2  offset-sm-2 label-column">
-							<label class="col-form-label" for="facilityname"
-								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-								Name </label>
-						</div>
-						<div class="col-sm-3 input-column">
-							<input class="form-control" type="text" name="facilityname">
-						</div>
-					</div>
-
-
-					<div class="offset-sm-2">
-						<div class="form-row form-group">
-							<div class="col-sm-4 input-column" style="height: 90px;">
-								<button
-									class="btn btn-light active submit-button cancel-btn-hover"
-									type="reset"
-									style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 70%;">Cancel</button>
-							</div>
-							<div class="col-sm-4 input-column" style="height: 90px;">
-								<button class="btn btn-light submit-button button-hover"
-									type="submit"
-									style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Search
-								</button>
-							</div>
-						</div>
+					<div class="col-sm-3 input-column">
+						<button 
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/search-facility-by-type"
+							formmethod="post">
+							Search
+						</button>
 					</div>
 				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="facilityNumber"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Facility Number
+						</label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<input class="form-control" type="text" name="facilityNumber" style="height: 50px;">
+					</div>
+					<div class="col-sm-3 input-column">
+						<button 
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/search-facility-by-number"
+							formmethod="post">
+							Search
+						</button>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-2 label-column">
+						<label class="col-form-label" for="facilityName"
+							style="line-height:35px; padding-right: 10%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px; height: 50px;">
+							Facility Name
+						</label>
+					</div>
+					<div class="col-sm-3 input-column">
+						<input class="form-control" type="text" name="facilityName" style="height: 50px;">
+					</div>
+					<div class="col-sm-3 input-column">
+						<button 
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/booking/search-facility-by-name"
+							formmethod="post">
+							Search
+						</button>
+					</div>
+				</div>
+				</div>
 			</form>
-
+			
 			<div class="table-responsive col-md-10 offset-md-1">
 				<table class="table table-hover">
 					<thead>
 						<tr>
-							<th scope="col">ID</th>
-							<th scope="col">Type</th>
-							<th scope="col">Name</th>
-							<th scope="col">Capacity</th>
+							<th>Facility Number</th>
+							<th>Type</th>
+							<th>Name</th>
+							<th>Capacity</th>
+							<th></th>
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
-							<th scope="row">F01</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
-						</tr>
-						<tr>
-							<th scope="row">F02</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
-						</tr>
-						<tr>
-							<th scope="row">F03</th>
-							<td>Meeting Room</td>
-							<td>Opal Room</td>
-							<td>4</td>
-							<td><button type="button" class="btn btn-success">Book</button></td>
+						<tr th:each="f : ${fList}">								
+							<th th:text="${f.facilityNumber}"></th>
+							<td th:text="${f.facilityType}"></td>
+							<td th:text="${f.facilityName}"></td>
+							<td th:text="${f.capacity}"></td>					
+							<td><a th:href="@{'/booking/book_facility/' + ${f.facilityNumber}}" class="btn btn-success">Book</a></td>
+							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/booking/manage_facility/' + ${f.facilityNumber}}" class="btn btn-primary">Update</a></div></td>
+							<td th:switch="${acctType}"><div th:case="'Admin'"><a  th:href="@{'/booking/expire_facility/' + ${f.facilityNumber}}" class="btn btn-danger">Expire</a></div></td>
 						</tr>
 					</tbody>
 				</table>
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+	
 </body>
 
 </html>
