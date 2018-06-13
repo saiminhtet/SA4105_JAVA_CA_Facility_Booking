@@ -56,6 +56,7 @@ public class IssueServiceTests {
 			}
 		} catch (FacilityNotFound e) {
 			outputStringToConsole(e.getMessage());
+		}
 	}
 	
 	// Utility Methods
