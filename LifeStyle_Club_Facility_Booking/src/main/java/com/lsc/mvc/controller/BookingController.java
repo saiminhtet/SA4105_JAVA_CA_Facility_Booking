@@ -579,8 +579,13 @@ public class BookingController {
 	        model.addAttribute("uNum", util.getUNum(req));
 			try {
 				bService.removeBooking(b.getBookingNumber());
+				eService.notifyRemoveBooking(b);
 				return "booking/search_booking";
 			} catch (BookingNotFound e) {
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				return "booking/search_booking";
+			} catch (FacilityNotFound e) {
 				return "booking/search_booking";
 			}
 		}
