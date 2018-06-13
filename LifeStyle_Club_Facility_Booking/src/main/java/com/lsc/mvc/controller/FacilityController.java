@@ -44,7 +44,7 @@ public class FacilityController {
 		if (authResult.equals("OK")) {
 			Facility f = new Facility();
 			model.addAttribute("facility", f);
-			return "facility/manage_facility";
+			return "home/admin_home";
 		}
 		else return authResult;
 	}
