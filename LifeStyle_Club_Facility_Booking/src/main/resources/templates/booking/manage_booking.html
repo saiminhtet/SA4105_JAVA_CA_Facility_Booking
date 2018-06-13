@@ -96,6 +96,16 @@
 					<div th:if="${booking} != null" th:text="${booking.facilityNumber}" style="display: inline;"></div> 
 					<div th:if="${booking} != null" th:text="${fName}" style="display: inline;"></div> 
 					for <div th:if="${booking} != null" th:text="${booking.slotDate}" style="display: inline;"></div></h3></div>
+				<div class="col-md-12 input-column" style="height: 90px;">
+					<button
+						class="btn btn-light active submit-button cancel-btn-hover"
+						type="submit"
+						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
+						formaction="/booking"
+						formmethod="post">
+						Home
+					</button>
+				</div>
 			</form>
 		</div>
 	</div>

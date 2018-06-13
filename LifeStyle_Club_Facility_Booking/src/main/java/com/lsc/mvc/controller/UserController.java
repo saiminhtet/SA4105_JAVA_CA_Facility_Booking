@@ -62,6 +62,14 @@ public class UserController {
 		else
 			return "user/signup";
 	}
+	
+	@PostMapping
+	public String postUserPage(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
+	}
 
 	@GetMapping("signup")
 	public String getSignUp(HttpServletRequest req, ModelMap model) {
