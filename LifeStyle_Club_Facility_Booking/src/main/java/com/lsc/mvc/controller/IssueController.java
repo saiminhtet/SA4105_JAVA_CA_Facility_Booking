@@ -27,28 +27,41 @@ import com.lsc.mvc.javabeans.AuthenticateUser;
 @RequestMapping("/issue")
 public class IssueController {
 
-	@Autowired
-	private UserService uService;
-	
-	@Autowired
+@Autowired
 	private AuthenticateUser util; 
 
 	@GetMapping
 	public String get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "report/_____";
+		if (authResult.equals("OK")) return "home/admin_home";
 		else return authResult;
 	}
 
-	@GetMapping("/_____")
-	public String Main(HttpServletRequest req, ModelMap model) {
+	@GetMapping("/manage-issue")
+	public String ManageIssue(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "report/main";
+		if (authResult.equals("OK")) return "issue/manage_issue";
 		else return "user/login";
 	}
 	
-	@ModelAttribute("user")
-	public User user() { return new User(); }
+	@GetMapping("/search-issue")
+	public String IssueSearch(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) return "issue/search_issue";
+		else return "user/login";
+	}
+	
+	@PostMapping("/issue-cancel")
+	public String IssueCancel(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) return "home/admin_home";
+		else return "user/login";
+	}
+	
+//	@ModelAttribute("user")
+//	public User user() { return new User(); }
 }

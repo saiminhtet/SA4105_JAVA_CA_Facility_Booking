@@ -37,14 +37,14 @@ public class EmailServiceImpl implements EmailService {
 	}
 
 	@Override
-	public void notifyResetPassword(User u, String newPassword) throws UserNotFound {
+	public void notifyResetPassword(User u) throws UserNotFound {
 		
 		if (u == null) throw new UserNotFound("User object provided cannot be null");
 		else {
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Reset Password";
 			String bodyText = "You have required to reset your password.\n" + 
-						"Your new password is \"" + newPassword + "\", please use this password and your User Number to login to your account.\n" +
+						"Your new password is \"" + u.getPassword() + "\", please use this password and your User Number to login to your account.\n" +
 					"You are strongly advised to change your password immediately.\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}

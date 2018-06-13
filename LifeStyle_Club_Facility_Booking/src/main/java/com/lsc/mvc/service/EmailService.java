@@ -12,7 +12,7 @@ public interface EmailService {
 	void notifyNewUserSignup (User u) throws UserNotFound;
 	// notify user after request to reset password
 	// need to feed the random generated password
-	void notifyResetPassword (User u, String newPassword) throws UserNotFound;
+	void notifyResetPassword (User u) throws UserNotFound;
 	// notify user after profile update
 	void notifyUpdateProfile (User u) throws UserNotFound;
 	// notify user afterchange password
