@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.UserRepository;
 
@@ -192,6 +193,14 @@ public class UserServiceImpl implements UserService {
 		tList.add("Mrs"); tList.add("Ms");
 		
 		return tList;
+	}
+	
+	@Override
+	public User getUser(Booking b) throws BookingNotFound, UserNotFound {
+		if (b == null) throw new BookingNotFound("Booking object provided cannot be null");
+		User u = getUser(b.getUserNumber());
+		if (u == null) throw new UserNotFound("Unable to find User object based on UserNumber in Booking object");
+		return u;
 	}
 	
 	// Utility Methods

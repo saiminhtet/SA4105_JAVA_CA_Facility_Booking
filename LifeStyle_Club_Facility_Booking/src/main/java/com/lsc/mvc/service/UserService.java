@@ -3,8 +3,10 @@ package com.lsc.mvc.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.User;
 
 public interface UserService {
@@ -42,6 +44,8 @@ public interface UserService {
 	Boolean validatePasswordChange(String uNum, String oldPw, String newPw, String confirmPw) throws UserNotFound;
 	
 	List<String> getTitleList();
+	
+	User getUser(Booking b) throws BookingNotFound, UserNotFound;
 	
 //	Boolean checkPwComplexity(String pw);
 }

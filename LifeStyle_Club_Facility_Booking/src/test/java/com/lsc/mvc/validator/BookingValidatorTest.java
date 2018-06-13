@@ -23,17 +23,39 @@ public class BookingValidatorTest {
 	private BookingService bService;
 	
 	@Test
-	public void testBookingValidator() throws ResourceDefinitionInvalid {
+	public void testBookingValidatorSuccess() throws ResourceDefinitionInvalid {
 		// create validator
 		BookingValidator bv = new BookingValidator();
 		// create data to validate
 		Booking b = new Booking("M0055", "F023", LocalDate.of(2018,6,15), "1000", "1200");
-//		Booking b = new Booking("", "B023", LocalDate.of(2018,6,10), "1300", "1200");
 		try {
 			bService.setNewBookingNum(b);
 		} catch (BookingNotFound e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			outputStringToConsole(e.getMessage());
+		}
+		// create databinder to bind data and validator
+		DataBinder binder = new DataBinder(b);
+		binder.setValidator(bv);
+		// validate data
+		binder.validate();
+		BindingResult results = binder.getBindingResult();
+//		outputStringToConsole(results.toString());
+		// check results
+		if (results.hasErrors()) {
+			throw new ResourceDefinitionInvalid();
+		}
+	}
+	
+	@Test
+	public void testBookingValidatorFailure() throws ResourceDefinitionInvalid {
+		// create validator
+		BookingValidator bv = new BookingValidator();
+		// create data to validate
+		Booking b = new Booking("", "B023", LocalDate.of(2018,6,10), "1300", "1200");
+		try {
+			bService.setNewBookingNum(b);
+		} catch (BookingNotFound e) {
+			outputStringToConsole(e.getMessage());
 		}
 		// create databinder to bind data and validator
 		DataBinder binder = new DataBinder(b);

@@ -21,52 +21,62 @@ public class UserValidatorTest {
 	private UserService uService;
 	
 	@Test
-	public void testUserValidator() throws ResourceDefinitionInvalid {
+	public void testUserValidatorSuccess() throws ResourceDefinitionInvalid {
 		// create validator
 		UserValidator uv = new UserValidator();
 		
-		// validation test expect pass
-			// create data to validate
-			User u1 = new User("Dr", "Strange", "Love", "Who", "Aa123456!", "1@1.com", "6592345678");
-			try {
-				uService.setNewUserNum(u1, "Member");
-			} catch (UserNotFound e) {
-				outputStringToConsole(e.getMessage());
-			}
+		// create data to validate
+		User u = new User("Dr", "Strange", "Love", "Who", "Aa123456!", "1@1.com", "6592345678");
+		try {
+			uService.setNewUserNum(u, "Member");
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
 			
-			// create databinder to bind data and validator
-			DataBinder binder1 = new DataBinder(u1);
-			binder1.setValidator(uv);
+		// create databinder to bind data and validator
+		DataBinder binder = new DataBinder(u);
+		binder.setValidator(uv);
 			
-			// validate data
-			binder1.validate();
+		// validate data
+		binder.validate();
 			
-			// check results
-			BindingResult results1 = binder1.getBindingResult();
-			outputStringToConsole(results1.toString());
+		// check results
+		BindingResult results = binder.getBindingResult();
+//		outputStringToConsole(results.toString());
 			
-			if (results1.hasErrors()) {
-				throw new ResourceDefinitionInvalid();
-			}
+		if (results.hasErrors()) {
+			throw new ResourceDefinitionInvalid();
+		}		
+	}
+	
+	@Test
+	public void testUserValidatorFailure() throws ResourceDefinitionInvalid {
 		
-		// validation test expect fail
-			// create data to validate	
-			User u2 = new User("Mr", "Strange", "Love", "Who", "Aa123456", "1@1", "6592345678");
-		
-			// create databinder to bind data and validator
-			DataBinder binder2 = new DataBinder(u2);
-			binder2.setValidator(uv);
-		
-			// validate data
-			binder2.validate();
+		// create validator
+		UserValidator uv = new UserValidator();
+				
+		// create data to validate	
+		User u = new User("Drs", "Strange", "Love", "Who", "Aa123456", "1@1", "6512345678");
+		try {
+			uService.setNewUserNum(u, "Member");
+		} catch (UserNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
 			
-			// check results
-			BindingResult results2 = binder2.getBindingResult();
-			outputStringToConsole(results2.toString());
+		// create databinder to bind data and validator
+		DataBinder binder = new DataBinder(u);
+		binder.setValidator(uv);
 			
-			if (results2.hasErrors()) {
-				throw new ResourceDefinitionInvalid();
-			}
+		// validate data
+		binder.validate();
+				
+		// check results
+		BindingResult results = binder.getBindingResult();
+//		outputStringToConsole(results.toString());
+				
+		if (results.hasErrors()) {
+			throw new ResourceDefinitionInvalid();
+		}
 	}
 	
 	// Utility Methods

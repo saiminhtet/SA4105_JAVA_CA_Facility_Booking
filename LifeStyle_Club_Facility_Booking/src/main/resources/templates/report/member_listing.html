@@ -1,0 +1,98 @@
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>View Reports</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+<link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<style>
+	table > thead > tr > th, table > tbody > tr > td {
+		padding: 12px;
+	}
+</style>
+</head>
+
+<body style="background-color: #f3f3f3;">
+	<div class="row register-form">
+		<div class="col-md-10 offset-sm-1">
+			<form class="custom-form" style="background-color: #f3f3f3; width: auto;">
+				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
+					Member Listing
+				</h1>
+				<div class="form-row form-group">
+					<div class="col-sm-6 label-column" style="height: 90px; min-width: 100px;">
+						<button
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;"
+							formaction="/view-reports">
+							View Other Reports 
+						</button>
+					</div>
+					<div class="col-sm-6 input-column" style="height: 90px; min-width: 100px;">
+						<button
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;"
+							formaction="/">
+							Back to Home
+						</button>
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<table style="margin-left:auto; margin-right:auto; text-align:center;">
+						<thead>
+							<tr>
+								<th>Member Number</th>
+								<th>Title</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Middle Name</th>
+								<th>Email Address</th>
+								<th>Phone Number</th>
+							</tr>
+						</thead>
+					   <tbody th:each="user : ${memberListing}" th:remove="tag">
+					      <tr>
+					         <td th:text="${user.userNumber}">...</td>
+					         <td th:text="${user.title}">...</td>
+					         <td th:text="${user.firstName}">...</td>
+					         <td th:text="${user.lastName}">...</td>
+					         <td th:text="${user.middleName}">...</td>
+					         <td th:text="${user.emailAddress}">...</td>
+					         <td th:text="${user.phoneNumber}">...</td>
+					      </tr>
+					   </tbody>
+					</table>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-6 label-column" style="height: 90px; min-width: 100px;">
+						<button
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;"
+							formaction="/view-reports">
+							View Other Reports 
+						</button>
+					</div>
+					<div class="col-sm-6 input-column" style="height: 90px; min-width: 100px;">
+						<button
+							class="btn btn-light submit-button button-hover"
+							type="submit"
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;"
+							formaction="/">
+							Back to Home
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+
+</html>
