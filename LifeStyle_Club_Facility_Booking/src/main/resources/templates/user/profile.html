@@ -20,7 +20,7 @@
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/profile}" th:method="post" th:object="${user}">
+				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/updateprofile}" th:method="post" th:object="${user}">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">PROFILE
 				</h1>
@@ -108,7 +108,7 @@
 <!-- 						th:value="${user.phoneNumber}" -->
 					</div>
 				</div>
-
+				<input type="hidden" th:field="*{password}" th:text="${password}"/>
 
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column" style="height: 90px;"></div>

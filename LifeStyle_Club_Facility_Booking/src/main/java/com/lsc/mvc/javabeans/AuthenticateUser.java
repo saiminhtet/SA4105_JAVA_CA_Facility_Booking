@@ -32,7 +32,7 @@ public class AuthenticateUser {
 		
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
-		uNum = "A0002"; session.setAttribute("userNumber", uNum);
+		//uNum = "A0002"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
 		
 		
@@ -56,7 +56,9 @@ public class AuthenticateUser {
 				String uType = uService.getUserType(uNum); // throws UserNotFound
 				setMakeAcctType(uType, model);
 				switch (uType) {
+
 					case "Member": 		return "home/member_home";
+
 					case "Admin" : 		return "OK";
 					case "SuperAdmin": 	return "home/super_admin_home";
 					default: 			return "NG";
@@ -83,7 +85,7 @@ public class AuthenticateUser {
 		
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
-		uNum = "A0001"; session.setAttribute("userNumber", uNum);
+		//uNum = "A0001"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
 		
 		
@@ -134,7 +136,7 @@ public class AuthenticateUser {
 		
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
-		uNum = "M0006"; session.setAttribute("userNumber", uNum);
+		//uNum = "M0006"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
 		
 		
@@ -184,7 +186,9 @@ public class AuthenticateUser {
 		
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
-//		uNum = "A0001"; session.setAttribute("userNumber", uNum);
+
+		//uNum = "A0001"; session.setAttribute("userNumber", uNum);
+
 //		uNum = "A0002"; session.setAttribute("userNumber", uNum);
 //		uNum = "M0006"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
