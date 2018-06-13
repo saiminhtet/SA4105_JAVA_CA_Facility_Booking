@@ -184,7 +184,7 @@ public class AuthenticateUser {
 		
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
-		uNum = "A0001"; session.setAttribute("userNumber", uNum);
+//		uNum = "A0001"; session.setAttribute("userNumber", uNum);
 //		uNum = "A0002"; session.setAttribute("userNumber", uNum);
 //		uNum = "M0006"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
@@ -244,5 +244,56 @@ public class AuthenticateUser {
 			default: 			makeAcctType = "Member";
 		}
 		model.addAttribute("makeAcctType", makeAcctType);
+	}
+	
+	public String authenticateAdminOrMember(HttpServletRequest req, ModelMap model) {
+		// This method checks if user is Admin or Member
+		// If not Admin or Member, return to login page
+		// Default, return "NG"
+		
+		HttpSession session = req.getSession();
+		String uNum = (String) session.getAttribute("userNumber");
+		
+		
+		
+		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
+		// -------------------------------------------------- START SECTION --------------------------------------------------
+//		uNum = "A0001"; session.setAttribute("userNumber", uNum);
+		uNum = "A0002"; session.setAttribute("userNumber", uNum);
+//		uNum = "M0006"; session.setAttribute("userNumber", uNum);
+		// -------------------------------------------------- END SECTION --------------------------------------------------
+		
+		
+		
+		// Check if logged in
+		if (uNum == null) { return "user/login"; }
+		else {
+			try {
+				// Check if uNum valid
+				User u = uService.getUser(uNum); // throws UserNotFound
+				
+				// At this point, if no exception, 
+				// uNum is valid and user object is retrieved
+				
+				// Add User object to model
+				model.addAttribute("user", uService.getUser(uNum));
+				
+				// This section of pages should only be accessible by Admin, 
+				// all others are redirected to respective home pages
+				
+				String uType = uService.getUserType(uNum); // throws UserNotFound
+				getMakeAcctType(uType, model);
+				switch (uType) {
+					case "Member": 		return "OK";
+					case "Admin" : 		return "OK";
+					case "SuperAdmin": 	return "home/super_admin_home";
+					default: 			return "NG";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, 
+				// thus return to login page
+				return "user/login";
+			}
+		}
 	}
 }

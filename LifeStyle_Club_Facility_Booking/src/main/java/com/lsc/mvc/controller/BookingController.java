@@ -67,6 +67,16 @@ public class BookingController {
 		else return "user/login";
 	}
 	
+	@PostMapping("return-home")
+	public String sendUserHome(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) {
+			return "user/login";
+		}
+		else return authResult;
+	}
+	
 	@PostMapping("search-facility-by-type")
 	public String postSearchFacilityByType(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
