@@ -30,10 +30,6 @@ public class EmailServiceTests {
 	public void testNotifyNewUserSignup() {
 		try {
 			User u = uService.getUser("M0015");	
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
 			eService.notifyNewUserSignup(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -45,16 +41,6 @@ public class EmailServiceTests {
 	public void testNotifyResetPassword() {
 		try {
 			User u = uService.getUser("M0015");	
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			
-			
-			// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
-			// -------------------------------------------------- START SECTION --------------------------------------------------
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			// -------------------------------------------------- END SECTION --------------------------------------------------
-			
-			
 			eService.notifyResetPassword(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -66,10 +52,6 @@ public class EmailServiceTests {
 	public void testNotifyUpdateProfile() {
 		try {
 			User u = uService.getUser("M0015");	
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
 			eService.notifyUpdateProfile(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -80,11 +62,7 @@ public class EmailServiceTests {
 	@Test
 	public void testNotifyChangePassword() {
 		try {
-			User u = uService.getUser("M0015");	
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
+			User u = uService.getUser("M0015");			
 			eService.notifyChangePassword(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -96,12 +74,7 @@ public class EmailServiceTests {
 	public void testNotifyBookingSummary() throws BookingNotFound, FacilityNotFound {
 		try {
 			Booking b = bService.getBooking("B000018");
-			
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			User u = uService.getUser(b);
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
+			User u = uService.getUser(b);			
 			eService.notifyBookingSummary(b);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -113,12 +86,7 @@ public class EmailServiceTests {
 	public void testNotifyRemoveBooking() throws BookingNotFound, FacilityNotFound {
 		try {
 			Booking b = bService.getBooking("B000018");
-			
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			User u = uService.getUser(b);
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
+			User u = uService.getUser(b);		
 			eService.notifyRemoveBooking(b);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
@@ -129,11 +97,7 @@ public class EmailServiceTests {
 	@Test
 	public void testNotifyExpireUser() {
 		try {
-			User u = uService.getUser("M0015");	
-			// In order to verify success and not randomly send emails to others
-			// This is not for production implementation
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
-			
+			User u = uService.getUser("M0015");			
 			eService.notifyExpireUser(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {

@@ -144,7 +144,6 @@ public class UserController {
 			// This means that there is no validation error
 			try {
 				usrService.addUser(user); // throws UserNotFound : this is to catch is the user object passed to the
-				user.setEmailAddress("lifestyleclub.singapore@gmail.com");
 				eMailService.notifyNewUserSignup(user); // sending email for new user
 				System.out.println(user.toString());// addUser method is null
 				return "redirect:/login"; // This means that sign-up success
@@ -235,7 +234,6 @@ public class UserController {
 				try {
 					// throws UserNotFound : this is to catch is the user object passed to the
 					usrService.updateUser(existinguser);
-					existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
 					eMailService.notifyUpdateProfile(existinguser); // sending email for new user
 					System.out.println(user.toString());
 					return "redirect:/"; // This means that sign-up success

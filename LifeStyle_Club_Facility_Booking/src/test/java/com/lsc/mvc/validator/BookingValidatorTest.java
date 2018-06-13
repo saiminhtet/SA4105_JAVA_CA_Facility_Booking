@@ -39,7 +39,6 @@ public class BookingValidatorTest {
 		// validate data
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
-//		outputStringToConsole(results.toString());
 		// check results
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
@@ -63,7 +62,6 @@ public class BookingValidatorTest {
 		// validate data
 		binder.validate();
 		BindingResult results = binder.getBindingResult();
-//		outputStringToConsole(results.toString());
 		// check results
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
@@ -71,7 +69,7 @@ public class BookingValidatorTest {
 	}
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");
-		System.out.println(msg.toString());
+		System.out.println(msg);
 		System.out.println("\n*********************************************************\n");
 	}
 

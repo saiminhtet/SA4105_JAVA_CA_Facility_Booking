@@ -42,8 +42,6 @@ public class UserValidatorTest {
 			
 		// check results
 		BindingResult results = binder.getBindingResult();
-//		outputStringToConsole(results.toString());
-			
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
 		}		
@@ -71,9 +69,7 @@ public class UserValidatorTest {
 		binder.validate();
 				
 		// check results
-		BindingResult results = binder.getBindingResult();
-//		outputStringToConsole(results.toString());
-				
+		BindingResult results = binder.getBindingResult();				
 		if (results.hasErrors()) {
 			throw new ResourceDefinitionInvalid();
 		}
@@ -82,7 +78,7 @@ public class UserValidatorTest {
 	// Utility Methods
 	public void outputStringToConsole(String msg) {
 		System.out.println("\n*********************************************************\n");
-		System.out.println(msg.toString());
+		System.out.println(msg);
 		System.out.println("\n*********************************************************\n");
 	}
 }
