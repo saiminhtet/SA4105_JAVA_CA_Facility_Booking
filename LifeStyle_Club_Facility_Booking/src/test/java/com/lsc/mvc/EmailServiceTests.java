@@ -49,7 +49,7 @@ public class EmailServiceTests {
 			// This is not for production implementation
 			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
 			
-			eService.notifyResetPassword(u, "1fF!3sdsg");
+			eService.notifyResetPassword(u);
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
 			outputStringToConsole(e.getMessage());
