@@ -3,22 +3,19 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BOOKING SUMMARY</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
-
-
+<title>Facility Booking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-6 offset-md-3">
+		<div class="col-md-10 offset-md-1">
 			<form th:action="@{/booking/bookingsummary}" th:method="post"
 				th:object="${booking}" class="custom-form"
 				style="background-color: #f3f3f3; width: 100%;">
@@ -30,7 +27,7 @@
 						<label class="col-form-label" for="bookingnumber"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="facilityname"
 							required="required"  th:field="*{bookingNumber}" disabled>
 					</div>
@@ -40,7 +37,7 @@
 						<label class="col-form-label" for="membernumber"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="membernumber"
 							required="required" th:field="*{userNumber}" disabled>
 					</div>
@@ -50,9 +47,9 @@
 						<label class="col-form-label" for="fullname"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="fullname"
-							required="required" th:field="*{userNumber}" disabled>
+							required="required" th:value="${fullName}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -60,7 +57,7 @@
 						<label class="col-form-label" for="facilitynumber"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="facilitynumber"
 							required="required" th:field="*{facilityNumber}" disabled>
 					</div>
@@ -71,9 +68,9 @@
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
 							Name </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="facilityname"
-							required="required" th:field="*{userNumber}" disabled>
+							required="required" th:value="${fName}" disabled>
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -81,7 +78,7 @@
 						<label class="col-form-label" for="bookingdate"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Date </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="bookingdate"
 							required="required" th:field="*{slotDate}" disabled>
 					</div>
@@ -91,35 +88,37 @@
 						<label class="col-form-label" for="bookingtime"
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Time </label>
 					</div>
-					<div class="col-sm-6 input-column">
+					<div class="col-sm-4 input-column">
 						<input class="form-control" type="text" name="bookingtime"
-							required="required" th:field="*{slotTimeStart}" disabled>
+							required="required" th:value="${timeSlot}" disabled>
 					</div>
 				</div>
 
 
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="height: 90px;"></div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button
 							class="btn btn-light active submit-button cancel-btn-hover"
-							type="reset"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;">Home</button>
+							type="submit"
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
+							formaction="/"
+							formmethod="post">
+							Home
+							</button>
 					</div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
 							type="submit"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;">Print
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/"
+							formmethod="post">
+							Print
 						</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

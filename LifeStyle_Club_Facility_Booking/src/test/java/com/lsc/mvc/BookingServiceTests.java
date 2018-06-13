@@ -37,21 +37,25 @@ public class BookingServiceTests {
 //		outputStringToConsole(b.toString());
 //	}
 	
-//	@Test
-//	public void whenAddBooking_thenReturnBooking() {
-//		Booking b = new Booking("M0055", "F023", 
-//				LocalDate.of(2018,6,10), "1000", "1200");
-//		bService.setNewBookingNum(b);
-//		
-//		outputStringToConsole(b.toString());
-//		
-//		// Adding To Database
-//		bService.addBooking(b);
-//		
-//		for (Booking bk:bRepo.findAll()) {
-//			System.out.println(bk.toString());
-//		}
-//	}
+	@Test
+	public void whenAddBooking_thenReturnBooking() {
+		Booking b = new Booking("M0055", "F023", 
+				LocalDate.of(2018,6,10), "1000", "1200");
+		try {
+			bService.setNewBookingNum(b);
+			
+			outputStringToConsole(b.toString());
+			
+			// Adding To Database
+			bService.addBooking(b);
+			
+			for (Booking bk:bRepo.findAll()) {
+				System.out.println(bk.toString());
+			}
+		} catch (BookingNotFound e) {
+			outputStringToConsole(e.getMessage());
+		}
+	}
 	
 //	@Test
 //	public void whenUpdateBooking_thenReturnBooking() {

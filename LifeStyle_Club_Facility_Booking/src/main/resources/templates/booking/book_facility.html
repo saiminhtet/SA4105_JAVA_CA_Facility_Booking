@@ -89,13 +89,17 @@
 							class="btn btn-light submit-button button-hover"
 							type="submit"
 							style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/booking/search-facility-by-type"
+							formaction="/booking/booking-summary"
 							formmethod="post">
 							Book
 						</button>
 					</div>
 				</div>
 				</div>
+				<div style="text-align:center;"><h3>You have selected 
+					<div th:if="${bCurrent} != null" th:text="${bCurrent.facilityNumber}" style="display: inline;"></div> 
+					<div th:if="${bCurrent} != null" th:text="${fName}" style="display: inline;"></div> 
+					for <div th:if="${bCurrent} != null" th:text="${bCurrent.slotDate}" style="display: inline;"></div></h3></div>
 			</form>
 		</div>
 	</div>

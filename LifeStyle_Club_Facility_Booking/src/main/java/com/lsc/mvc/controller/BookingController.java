@@ -1,5 +1,6 @@
 package com.lsc.mvc.controller;
 
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -172,6 +173,8 @@ public class BookingController {
 	        
 			// Load Data into Model
 			try {
+				model.addAttribute("bCurrent", b);
+				model.addAttribute("fName", f.getFacilityName());
 				model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
 				model.addAttribute("slotList", bService.getAvailableSlots(targetDate, fNum));
 				return "booking/book_facility";
@@ -184,6 +187,71 @@ public class BookingController {
 				model.addAttribute("fTypeList", fService.getFacilityTypes());
 				return "booking/search_facility";
 			}
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("booking-summary")
+	public String postBookingSummary(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdmin(req, model);
+		if (authResult.equals("OK")) {
+			// Get Slot Date
+			String slotStart = req.getParameter("targetSlot");
+			String slotTimeStart = slotStart;
+			DecimalFormat fmt = new DecimalFormat("0000");
+			String slotTimeEnd = fmt.format(Integer.parseInt(slotStart) + 100);
+			
+			// Get Current Booking
+			HttpSession session = req.getSession();
+	        Booking b = (Booking) session.getAttribute("bCurrent");
+	        b.setSlotTimeEnd(slotTimeEnd);
+	        b.setSlotTimeStart(slotTimeStart);
+	        b.setTransDateTime(LocalDateTime.now());
+	        try {
+				bService.setNewBookingNum(b);
+			} catch (BookingNotFound e1) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e2) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+	        System.out.println(b.toString());
+	        session.setAttribute("bCurrent", b);
+	        
+	        User u = new User();
+			try {
+				u = uService.getUser(util.getUNum(req));
+			} catch (UserNotFound e3) {
+				System.out.println(e3.getMessage());
+			}
+	        String fullName = u.getTitle() + " " + u.getFirstName() + " " + u.getLastName() + ", " + u.getMiddleName();
+	        Facility f = new Facility();
+			try {
+				f = fService.getFacility(b.getFacilityNumber());
+			} catch (FacilityNotFound e) {
+				System.out.println(e.getMessage());
+			}
+			
+			model.addAttribute("timeSlot", slotTimeStart + " to " + slotTimeEnd);
+	        model.addAttribute("fName", f.getFacilityName());
+	        model.addAttribute("fullName", fullName);
+	        model.addAttribute("booking", b);
+	        try {
+				bService.addBooking(b);
+			} catch (BookingNotFound e1) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e2) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+			return "booking/booking_summary";
 		}
 		else return "user/login";
 	}
