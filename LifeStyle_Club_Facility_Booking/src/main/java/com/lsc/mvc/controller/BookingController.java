@@ -51,7 +51,23 @@ public class BookingController {
 	@Autowired
 	private EmailService eService;
 	
-	@GetMapping("search-facility")
+	@GetMapping
+	public String getBookingPage(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
+	}
+	
+	@PostMapping
+	public String postBookingPage(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
+	}
+	
+	@GetMapping("/search_facility")
 	public String getSearchFacility(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 
@@ -67,27 +83,6 @@ public class BookingController {
 			}
 		}
 		else return "user/login";
-	}
-	
-	@GetMapping("search-booking")
-	public String getSearchBooking(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			model.addAttribute("uNum", util.getUNum(req));
-			return "booking/search_booking";
-		}
-		else return "user/login";
-	}
-	
-	@PostMapping("return-home")
-	public String sendUserHome(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateUser(req, model);
-		if (authResult.equals("NG")) {
-			return "user/login";
-		}
-		else return authResult;
 	}
 	
 	@PostMapping("search-facility-by-type")
@@ -158,166 +153,6 @@ public class BookingController {
 		else return "user/login";
 	}
 	
-	@PostMapping("search-booking-all")
-	public String postSearchBookingAll(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			// Get Search Term
-			String uNum = req.getParameter("userNumber");
-			
-			// Load Data into Model
-			try {
-				model.addAttribute("bList", bService.getBookingListByUserNum(uNum));
-				return "booking/search_booking";
-			} catch (UserNotFound e) {
-				return "user/login";
-			}
-		}
-		else return "user/login";
-	}
-	
-	@PostMapping("search-booking-by-name-and-date")
-	public String postSearchBookingByNameAndDate(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			// Get Search Term
-			String uNum = req.getParameter("userNumber");
-			LocalDate dateStart = LocalDate.parse(req.getParameter("startDate"));
-			LocalDate dateEnd = LocalDate.parse(req.getParameter("endDate"));
-			
-			// Load Data into Model
-			try {
-				model.addAttribute("bList", bService.getBookingListByUserNumAndDate(uNum, dateStart, dateEnd));
-				return "booking/search_booking";
-			} catch (UserNotFound e) {
-				return "user/login";
-			}
-		}
-		else return "user/login";
-	}
-	
-	@RequestMapping(value = "/update_booking/{bNum}", method = RequestMethod.GET)
-	public String getUpdateBooking(@PathVariable("bNum") String bNum, HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			Booking b;
-			try { b = bService.getBooking(bNum);
-			} catch (BookingNotFound e) { return "booking/search_booking"; }
-			
-			Facility f;
-			try {
-				f = fService.getFacility(b);
-			} catch (BookingNotFound e) {
-				try {
-					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-				} catch (UserNotFound e1) {
-					return "user/login";
-				}
-				return "booking/search_booking";
-			} catch (FacilityNotFound e) {
-				try {
-					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-				} catch (UserNotFound e1) {
-					return "user/login";
-				}
-				return "booking/search_booking";
-			}
-			
-			HttpSession session = req.getSession();
-			session.setAttribute("facilityNumber", f.getFacilityNumber());
-			session.setAttribute("bUpdate", b);
-			
-			// Load Data into Model
-			model.addAttribute("booking", b);
-			model.addAttribute("fName", f.getFacilityName());
-			try {
-				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-			} catch (UserNotFound e1) {
-				return "user/login";
-			}
-			return "booking/manage_booking";
-		}
-		else return "user/login";
-	}
-	
-	@RequestMapping(value = "/expire_booking/{bNum}", method = RequestMethod.GET)
-	public String getExpireBooking(@PathVariable("bNum") String bNum, HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			Booking b = new Booking();
-			try {
-				b = bService.getBooking(bNum);
-			} catch (BookingNotFound e) {
-				try {
-					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-				} catch (UserNotFound e1) {
-					return "user/login";
-				}
-				return "booking/search_booking";
-			}
-			User u = new User();
-			try {
-				u = uService.getUser(b);
-			} catch (UserNotFound e3) {
-				System.out.println(e3.getMessage());
-			} catch (BookingNotFound e) {
-				try {
-					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-				} catch (UserNotFound e1) {
-					return "user/login";
-				}
-				return "booking/search_booking";
-			}
-	        String fullName = u.getTitle() + " " + u.getFirstName() + " " + u.getLastName() + ", " + u.getMiddleName();
-	        Facility f = new Facility();
-			try {
-				f = fService.getFacility(b.getFacilityNumber());
-			} catch (FacilityNotFound e) {
-				System.out.println(e.getMessage());
-			}
-			
-			// Load Data into Model
-			model.addAttribute("timeSlot", b.getSlotTimeStart() + " to " + b.getSlotTimeEnd());
-	        model.addAttribute("fName", f.getFacilityName());
-	        model.addAttribute("fullName", fullName);
-	        model.addAttribute("booking", b);
-			return "booking/expire_booking";
-		}
-		else return "user/login";
-	}
-	
-	@RequestMapping(value = "/book_facility/{facilityNum}", method = RequestMethod.GET)
-	public String bookFacility(@PathVariable("facilityNum") String facilityNum, HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {
-			Facility f;
-			try { f = fService.getFacility(facilityNum);
-			} catch (FacilityNotFound e) { return "booking/search_facility"; }
-			
-			// Load Data into Model
-			model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
-			return "booking/book_facility";
-		}
-		else return "user/login";
-	}
-	
-	@RequestMapping(value = "/book_facility/{fType}", method = RequestMethod.GET)
-	public String bookFacilityWithType(@PathVariable("fType") String fType, HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateAdminOrMember(req, model);
-		if (authResult.equals("OK")) {			
-			// Load Data into Model
-			model.addAttribute("fShortList", fService.getFacilityListByType(fType));
-			return "booking/book_facility";
-		}
-		else return "user/login";
-	}
-	
 	@PostMapping("search-slots")
 	public String postSearchSlots(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
@@ -368,18 +203,205 @@ public class BookingController {
 		else return "user/login";
 	}
 	
-	@PostMapping("search-slots-update")
-	public String postSearchSlotsUpdate(HttpServletRequest req, ModelMap model) {
+	@PostMapping("/booking-summary")
+	public String postBookingSummary(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Slot Date
+			String slotStart = req.getParameter("targetSlot");
+			String slotTimeStart = slotStart;
+			DecimalFormat fmt = new DecimalFormat("0000");
+			String slotTimeEnd = fmt.format(Integer.parseInt(slotStart) + 100);
+			
+			// Get Current Booking
+			HttpSession session = req.getSession();
+	        Booking b = (Booking) session.getAttribute("bCurrent");
+	        b.setSlotTimeEnd(slotTimeEnd);
+	        b.setSlotTimeStart(slotTimeStart);
+	        b.setTransDateTime(LocalDateTime.now());
+        	try {
+				bService.setNewBookingNum(b);
+			} catch (BookingNotFound e1) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e2) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+	        session.setAttribute("bCurrent", b);
+	        
+	        User u = new User();
+			try {
+				u = uService.getUser(util.getUNum(req));
+			} catch (UserNotFound e3) {
+				System.out.println(e3.getMessage());
+			}
+	        String fullName = u.getTitle() + " " + u.getFirstName() + " " + u.getLastName() + ", " + u.getMiddleName();
+	        Facility f = new Facility();
+			try {
+				f = fService.getFacility(b.getFacilityNumber());
+			} catch (FacilityNotFound e) {
+				System.out.println(e.getMessage());
+			}
+			
+			model.addAttribute("timeSlot", slotTimeStart + " to " + slotTimeEnd);
+	        model.addAttribute("fName", f.getFacilityName());
+	        model.addAttribute("fullName", fullName);
+	        model.addAttribute("booking", b);
+	        try {
+				bService.addBooking(b);
+				
+				// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
+				// -------------------------------------------------- START SECTION --------------------------------------------------
+				u.setEmailAddress("lifestyleclub.singapore@gmail.com");
+				// -------------------------------------------------- END SECTION --------------------------------------------------
+				
+				try {
+					eService.notifyBookingSummary(b);
+				} catch (UserNotFound e) {
+					
+				} catch (FacilityNotFound e) {
+					System.out.println(e.getMessage());
+				}
+			} catch (BookingNotFound e1) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e2) {
+					return "user/login";
+				}
+				model.addAttribute("fTypeList", fService.getFacilityTypes());
+				return "booking/search_facility";
+			}
+			return "booking/booking_summary";
+		}
+		else return "user/login";
+	}
+	
+	@RequestMapping(value = "/book_facility_by_num/{facilityNum}", method = RequestMethod.GET)
+	public String bookFacility(@PathVariable("facilityNum") String facilityNum, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			Facility f;
+			try { f = fService.getFacility(facilityNum);
+			} catch (FacilityNotFound e) { return "booking/search_facility"; }
+			
+			// Load Data into Model
+			model.addAttribute("fShortList", fService.getFacilityListByType(f.getFacilityType()));
+			return "booking/book_facility";
+		}
+		else return "user/login";
+	}
+	
+	@RequestMapping(value = "/book_facility/{fType}", method = RequestMethod.GET)
+	public String bookFacilityWithType(@PathVariable("fType") String fType, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {			
+			// Load Data into Model
+			model.addAttribute("fShortList", fService.getFacilityListByType(fType));
+			return "booking/book_facility";
+		}
+		else return "user/login";
+	}
+	
+	@GetMapping("/search_booking")
+	public String getSearchBooking(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			model.addAttribute("uNum", util.getUNum(req));
+			try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				return "user/login";
+			}
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("/search-booking-all")
+	public String postSearchBookingAll(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
 			// Get Search Term
-			HttpSession session = req.getSession();
-			String fNum = (String) session.getAttribute("facilityNumber");
+			String uNum = util.getUNum(req);
+			
+			try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e) {
+				return "user/login";
+			}
+			try {
+				model.addAttribute("bList", bService.getBookingListByUserNum(uNum));
+				model.addAttribute("uNum", uNum);
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				model.addAttribute("uNum", uNum);
+				return "booking/search_booking";
+			}
+		}
+		
+		else return "user/login";
+	}
+	
+	@PostMapping("/search-booking-by-name-and-date")
+	public String postSearchBookingByNameAndDate(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			String acctType;
+			try {
+				acctType = uService.getUserType(util.getUNum(req));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+			model.addAttribute("acctType", acctType);
+			// Get Search Term
+			String uNum;
+			if (acctType == "Member") uNum = util.getUNum(req);
+			else uNum = req.getParameter("tbx_uNum");
+			model.addAttribute("uNum", uNum);
+			
+			LocalDate dateStart = LocalDate.parse(req.getParameter("startDate"));
+			LocalDate dateEnd = LocalDate.parse(req.getParameter("endDate"));
+			
+			// Load Data into Model
+			try {
+				model.addAttribute("bList", bService.getBookingListByUserNumAndDate(uNum, dateStart, dateEnd));
+				return "booking/search_booking";
+			} catch (UserNotFound e) {
+				return "booking/search_booking";
+			}
+		}
+		else return "booking/search_booking";
+	}
+	
+	@RequestMapping(value = "/update_booking/{bNum}", method = RequestMethod.GET)
+	public String getUpdateBooking(@PathVariable("bNum") String bNum, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			Booking b;
+			try { b = bService.getBooking(bNum);
+			} catch (BookingNotFound e) { return "booking/search_booking"; }
+			
 			Facility f;
 			try {
-				f = fService.getFacility(fNum);
-			} catch (FacilityNotFound e0) {
+				f = fService.getFacility(b);
+			} catch (BookingNotFound e) {
+				try {
+					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+				} catch (UserNotFound e1) {
+					return "user/login";
+				}
+				return "booking/search_booking";
+			} catch (FacilityNotFound e) {
 				try {
 					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
 				} catch (UserNotFound e1) {
@@ -387,10 +409,47 @@ public class BookingController {
 				}
 				return "booking/search_booking";
 			}
+			
+			HttpSession session = req.getSession();
+			session.setAttribute("facilityNumber", f.getFacilityNumber());
+			session.setAttribute("bUpdate", b);
+			
+			// Load Data into Model
+			model.addAttribute("booking", b);
+			model.addAttribute("fName", f.getFacilityName());
+			try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+			return "booking/manage_booking";
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("search-slots-update")
+	public String postSearchSlotsUpdate(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+			
+			HttpSession session = req.getSession();
+			Booking b = (Booking) session.getAttribute("bUpdate");
+			String fNum = b.getFacilityNumber();
+			Facility f;
+			try {
+				f = fService.getFacility(fNum);
+			} catch (FacilityNotFound e0) {
+				return "booking/search_booking";
+			}
 			String tDate = req.getParameter("targetDate");
 			LocalDate targetDate = LocalDate.of(Integer.parseInt(tDate.substring(0, 4)), Integer.parseInt(tDate.substring(5, 7)), Integer.parseInt(tDate.substring(8, 10)));
-			
-			Booking b = (Booking) session.getAttribute("bUpdate");
 	        b.setSlotDate(targetDate);
 	        
 			// Load Data into Model
@@ -398,21 +457,17 @@ public class BookingController {
 				model.addAttribute("bUpdate", b);
 				model.addAttribute("fName", f.getFacilityName());
 				model.addAttribute("slotList", bService.getAvailableSlots(targetDate, fNum));
+				model.addAttribute("booking", b);
 				return "booking/manage_booking";
 			} catch (FacilityNotFound e0) {
-				try {
-					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-				} catch (UserNotFound e1) {
-					return "user/login";
-				}
 				return "booking/search_booking";
 			}
 		}
 		else return "user/login";
 	}
 	
-	@PostMapping("booking-summary")
-	public String postBookingSummary(HttpServletRequest req, ModelMap model) {
+	@PostMapping("/booking-summary-update")
+	public String postBookingSummaryUpdate(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdminOrMember(req, model);
 		if (authResult.equals("OK")) {
@@ -428,18 +483,6 @@ public class BookingController {
 	        b.setSlotTimeEnd(slotTimeEnd);
 	        b.setSlotTimeStart(slotTimeStart);
 	        b.setTransDateTime(LocalDateTime.now());
-	        if (b.getBookingNumber() == null) {
-	        	try {
-					bService.setNewBookingNum(b);
-				} catch (BookingNotFound e1) {
-					try {
-						model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
-					} catch (UserNotFound e2) {
-						return "user/login";
-					}
-					return "booking/search_booking";
-				}
-	        }
 	        session.setAttribute("bUpdate", b);
 	        
 	        User u = new User();
@@ -487,4 +530,78 @@ public class BookingController {
 		}
 		else return "user/login";
 	}
+	
+	@RequestMapping(value = "/expire_booking/{bNum}", method = RequestMethod.GET)
+	public String getExpireBooking(@PathVariable("bNum") String bNum, HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			Booking b = new Booking();
+			try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+			try {
+				b = bService.getBooking(bNum);
+			} catch (BookingNotFound e) {
+				return "booking/search_booking";
+			}
+			User u = new User();
+			try {
+				u = uService.getUser(b);
+			} catch (UserNotFound e3) {
+				System.out.println(e3.getMessage());
+			} catch (BookingNotFound e) {
+				return "booking/search_booking";
+			}
+	        String fullName = u.getTitle() + " " + u.getFirstName() + " " + u.getLastName() + ", " + u.getMiddleName();
+	        Facility f = new Facility();
+			try {
+				f = fService.getFacility(b.getFacilityNumber());
+			} catch (FacilityNotFound e) {
+				System.out.println(e.getMessage());
+			}
+			
+			// Load Data into Model
+			model.addAttribute("timeSlot", b.getSlotTimeStart() + " to " + b.getSlotTimeEnd());
+	        model.addAttribute("fName", f.getFacilityName());
+	        model.addAttribute("fullName", fullName);
+	        model.addAttribute("booking", b);
+	        HttpSession session = req.getSession();
+	        session.setAttribute("bRemove", b);
+			return "booking/expire_booking";
+		}
+		else return "user/login";
+	}
+	
+	@PostMapping("/remove-booking")
+	public String postRemoveBooking(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateAdminOrMember(req, model);
+		if (authResult.equals("OK")) {
+			// Get Search Term
+			HttpSession session = req.getSession();
+	        Booking b = (Booking) session.getAttribute("bRemove");
+	        try {
+				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
+			} catch (UserNotFound e1) {
+				return "user/login";
+			}
+	        model.addAttribute("uNum", util.getUNum(req));
+			try {
+				bService.removeBooking(b.getBookingNumber());
+				return "booking/search_booking";
+			} catch (BookingNotFound e) {
+				return "booking/search_booking";
+			}
+		}
+		else return "user/login";
+	}
+	
+	
+	
+	
+	
+	
 }

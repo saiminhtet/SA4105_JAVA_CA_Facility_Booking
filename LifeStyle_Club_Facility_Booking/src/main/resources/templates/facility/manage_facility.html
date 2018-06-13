@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Facility Booking</title>
+<title>Manage Facility</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
@@ -22,44 +22,48 @@
 					Manage Facility
 				</h1>
 				<div class="form-row form-group">
-					<div class="col-md-5 label-column">
-						<label class="col-form-label" for="facilityType"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
+					<div class="col-sm-5 label-column">
+						<label class="col-form-label" for="facilityName"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityType"
-							required="required"  th:field="*{facilityType}" >
+						<input class="form-control" type="text" name="fNumber" th:value="${facilityNumber}" readonly="true">
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-md-5 label-column">
+						<label class="col-form-label" for="facilityType"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Type</label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="fType" th:value="${facilityType}" readonly="true">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="facilityName"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Name</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityName"
-							required="required" th:field="*{facilityName}" >
+						<input class="form-control" type="text" name="fName" th:value="${facilityName}">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="capacity"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Capacity</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="capacity"
-							required="required" th:value="${capacity}" >
+						<input class="form-control" type="text" name="capacity" th:value="${facilityCapacity}">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="*{facilityDescription}"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Description</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<textarea class="form-control" rows="3" cols="20"
-							name="*{facilityDescription}" th:field="*{facilityDescription}" required="required">
-						</textarea>
+						<input class="form-control" type="text" name="fDesc" th:value="${facilityDescription}">
 					</div>
 				</div>
 				
@@ -69,8 +73,8 @@
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="submit"
 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-							formaction="/"
-							formmethod="post">
+							formaction="/facility"
+							formmethod="get">
 							Cancel
 							</button>
 					</div>
@@ -78,11 +82,14 @@
 						<button class="btn btn-light submit-button button-hover"
 							type="submit"
 							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/"
-							formmethod="post">
+							formaction="/facility/facility-update"
+							formmethod="get">
 							Submit
 						</button>
 					</div>
+				</div>
+				<div>
+				<label th:text="${message}"></label>
 				</div>
 			</form>
 		</div>

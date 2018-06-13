@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Facility Booking</title>
+<title>Add Facility</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
@@ -24,43 +24,47 @@
 				<div class="form-row form-group">
 					<div class="col-md-5 label-column">
 						<label class="col-form-label" for="facilityType"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Type</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<select class="custom-select" id="facilityType" th:field="*{facilityType}">
-								<option th:each="ftype : ${facilityType}" th:value="${ftype}"
-									th:text="${ftype}">Choose Type...</option>
-						</select>	
+						<select name="fType" class="custom-select" id="status">
+								<option selected>Choose...</option>
+								<option value="1">Conference Room</option>
+								<option value="2">Meeting Room</option>
+								<option value="3">Karaoke Room</option>
+								<option value="4">Function Room</option>
+								<option value="5">Badminton Court</option>
+								<option value="6">Squash Court</option>
+								<option value="7">Tennis Court</option>
+								<option value="8">Basketball Court</option>
+							</select>
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="facilityName"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Name</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityName"
-							required="required" th:field="*{facilityName}" >
+						<input class="form-control" type="text" name="fName">
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="capacity"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Capacity</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="capacity"
-							required="required" th:value="${capacity}" >
+						<input class="form-control" type="text" name="capacity" th:value="${capacity}" >
 					</div>
 				</div>
 				<div class="form-row form-group">
 					<div class="col-sm-5 label-column">
 						<label class="col-form-label" for="*{facilityDescription}"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number </label>
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Description</label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<textarea class="form-control" rows="3" cols="20"
-							name="*{facilityDescription}" th:field="*{facilityDescription}" required="required">
+						<textarea class="form-control" rows="3" cols="20" name="fDesc">
 						</textarea>
 					</div>
 				</div>
@@ -68,23 +72,26 @@
 				<div class="form-row form-group">
 					<div class="col-sm-5 input-column" style="height: 90px;">
 						<button
+							formaction="/facility"
+							formmethod="get"
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="submit"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-							formaction="/"
-							formmethod="post">
-							Cancel
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;">
+							Back
 							</button>
 					</div>
 					<div class="col-sm-6 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
+							formaction="/facility/facility-add"
 							type="submit"
 							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
-							formaction="/"
-							formmethod="post">
+							formmethod="get">
 							Submit
 						</button>
 					</div>
+				</div>
+				<div>
+				<label th:text="${message}"></label>
 				</div>
 			</form>
 		</div>

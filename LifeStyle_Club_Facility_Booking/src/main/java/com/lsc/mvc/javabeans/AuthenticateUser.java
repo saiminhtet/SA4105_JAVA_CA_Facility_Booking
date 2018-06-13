@@ -263,8 +263,8 @@ public class AuthenticateUser {
 		// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
 		// -------------------------------------------------- START SECTION --------------------------------------------------
 //		uNum = "A0001"; session.setAttribute("userNumber", uNum);
-//		uNum = "A0002"; session.setAttribute("userNumber", uNum);
-		uNum = "M0006"; session.setAttribute("userNumber", uNum);
+		uNum = "A0002"; session.setAttribute("userNumber", uNum);
+//		uNum = "M0006"; session.setAttribute("userNumber", uNum);
 		// -------------------------------------------------- END SECTION --------------------------------------------------
 		
 		
