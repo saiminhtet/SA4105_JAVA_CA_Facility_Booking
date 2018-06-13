@@ -41,7 +41,8 @@
 						</label>
 					</div>
 					<div class="col-sm-3 input-column">
-						<input class="form-control" type="text" name="userNumber" style="height: 50px;">
+						<div th:if="${acctType} == Member"><input class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}" disabled></div>
+						<div th:if="${acctType} == Admin"><input class="form-control" type="text" name="userNumber" style="height: 50px;" th:value="${uNum}"></div>
 					</div>
 					<div class="col-sm-3 input-column">
 						<button 
@@ -121,7 +122,6 @@
 			</div>
 		</div>
 	</div>
-	
 </body>
 
 </html>
