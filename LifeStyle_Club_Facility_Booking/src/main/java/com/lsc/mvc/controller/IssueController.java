@@ -96,13 +96,14 @@ public class IssueController {
 			try {
 				iService.removeIssue(issueNumber);
 			} catch (IssueNotFound e) {
-				e.printStackTrace();
+				model.addAttribute("message", "Issue not found");
 			}
 			try {
 				model.addAttribute("issueListing", iService.getIssueListByIssueNumber(issueNumber));
 			} catch (IssueNotFound e) {
-				e.printStackTrace();
+				model.addAttribute("message", "Issue not found");
 			}
+			model.addAttribute("message", "Issue deleted successfully");
 			return "issue/search_issue";	
 		}
 		else return "user/login";
