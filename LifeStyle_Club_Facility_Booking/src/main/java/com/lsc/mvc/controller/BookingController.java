@@ -11,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
@@ -120,6 +122,23 @@ public class BookingController {
 		}
 		else return "user/login";
 	}
+	
+//	@RequestMapping(value = "/book_facility/{facilityNum}", method = RequestMethod.GET)
+//	public String bookFacility(@PathVariable("facilityNum") String facilityNum, ModelMap model) {
+//		User user = new User();
+//		user.setPassword("Please enter a password");
+//		try {
+//			user = usrService.getUser(memberNum);
+//			user.setPassword("Please enter a password");
+//			model.put("title", usrService.getTitleList());
+//			model.put("user", user);
+//		} catch (UserNotFound e) {
+//			return "user/search_member";
+//		}
+//
+//		System.out.println(user);
+//		return "user/managemember";
+//	}
 
 //	@GetMapping("/managebooking")
 //	public String managebooking(ModelMap model) throws FacilityNotFound, ResourceDefinitionInvalid {
