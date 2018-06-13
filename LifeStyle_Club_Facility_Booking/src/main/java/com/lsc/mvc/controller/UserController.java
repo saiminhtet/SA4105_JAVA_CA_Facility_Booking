@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.hibernate.boot.model.relational.Database;
+import org.hibernate.usertype.UserType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -28,6 +29,7 @@ import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.javabeans.AuthenticateUser;
 import com.lsc.mvc.model.User;
+import com.lsc.mvc.service.EmailService;
 import com.lsc.mvc.service.UserService;
 import com.lsc.mvc.validator.UserValidator;
 
@@ -38,71 +40,62 @@ public class UserController {
 	@Autowired
 	private UserService usrService;
 
-	
 	@Autowired
 	private AuthenticateUser util;
-	
+
+	@Autowired
+	private EmailService eMailService;
+
 	@GetMapping
-	public String Get(HttpServletRequest req, ModelMap model){
+	public String Get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		String authResult = util.authenticateUser(req, model);
-		if(authResult.equals("OK")) {
-			return authResult;
-		}
-		else return authResult;
-		
+		// Set the variables to authenticate user
+		String authAdminResult = util.authenticateAdmin(req, model);
+
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
+
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK")))
+			return "user/signup";
+		else if (authMemberResult.equals("OK"))
+			return "redirect:/member";
+		else
+			return "user/signup";
 	}
 
-	@GetMapping("/signup")
-	public ModelAndView Signup(HttpServletRequest req, ModelMap model) {
+	@GetMapping("signup")
+	public String getSignUp(HttpServletRequest req, ModelMap model) {
+		util.checkMakeAcctType(req, model);
+		// After this point:
+		// SuperAdmin should have makeAcctType attribute as Admin
+		// Admin should have makeAcctType attribute as Member
+		// Guest should have makeAcctType attribute as Member
 
-		// Allowed for Guests (Non-user to sign up as member), Admin (to sign up for
-		// member), SuperAdmin (to sign up for admin)
-		// Hence, no need to retrieve and check userNumber from session
-		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req); // to check if sign-up is done by Guest, Admin or SuperAdmin
-
-		// Determining the accountType for the signup
-		String acctType;
-		try {
-			String userType = usrService.getUserType(userNumber); // throws UserNotFound
-			switch (userType) {
-			case "Member":
-				return new ModelAndView("redirect:/member"); // Member is not supposed to be able to sign up for other
-																// accounts
-			case "Admin":
-				acctType = "Member"; // Admin is allowed to sign up for member, e.g. guest request counter staff to
-										// sign up for them
-			case "SuperAdmin":
-				acctType = "Admin"; // SuperAdmin is allowed to sign up for admin
-			default:
-				acctType = "Member"; // Guests are allowed to sign up member accounts
-			}
-		} catch (UserNotFound e) {
-			// This means that userNumber is invalid, thus default
-			acctType = "Member";
-		}
-
+		// try {
+		//
+		// model.addAttribute("acctType", usrService.getUserType(util.getUNum(req)));
+		//
+		// } catch (UserNotFound e) {
+		// // Take no action
+		// }
 		User user = new User();
-		user.setPassword("Please enter a password");
-		model.put("title", usrService.getTitleList()); // Retrieves title list to populate dropdownlist in signup form
-		model.put("user", user); // Passes blank user object to fill up in signup form
-		return new ModelAndView("user/signup");
+		user.setPassword("A1S2d3&!@#$%\r\n");
+		model.put("acctType", "Member");
+		model.put("title", usrService.getTitleList());
+		model.put("user", user);
+		return "user/signup";
 	}
 
 	@PostMapping("/signup")
 	public String addNewUser(HttpServletRequest req, User user) {
 
-		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req); // to check if sign-up is done by Guest, Admin or SuperAdmin
-
 		// Determining the accountType for the signup
 		String acctType;
 		try {
-			String userType = usrService.getUserType(userNumber); // throws UserNotFound
+			String userType = usrService.getUserType(util.getUNum(req)); // throws UserNotFound
 			switch (userType) {
 			case "Member":
-				return "redirect:home/member_home"; // Member is not supposed to be able to sign up for other accounts
+				return "redirect:/member"; // Member is not supposed to be able to sign up for other accounts
 			case "Admin":
 				acctType = "Member"; // Admin is allowed to sign up for member, e.g. guest request counter staff to
 										// sign up for them
@@ -151,8 +144,9 @@ public class UserController {
 			// This means that there is no validation error
 			try {
 				usrService.addUser(user); // throws UserNotFound : this is to catch is the user object passed to the
-											// addUser method is null
-				System.out.println(user.toString());
+				user.setEmailAddress("lifestyleclub.singapore@gmail.com");
+				eMailService.notifyNewUserSignup(user); // sending email for new user
+				System.out.println(user.toString());// addUser method is null
 				return "redirect:/login"; // This means that sign-up success
 			} catch (UserNotFound e) {
 				System.out.println(e.getMessage());
@@ -162,100 +156,107 @@ public class UserController {
 	}
 
 	@GetMapping("/profile")
-	public String userProfile(HttpServletRequest req, ModelMap model) {
+	public String userProfile(HttpServletRequest req, ModelMap model, User user) {
+		// Authenticate User
+		// Set the variables to authenticate user
+		String authAdminResult = util.authenticateAdmin(req, model);
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
 
-		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req); // to check user is login or not
-		User user = new User();
-		user.setPassword("Please enter a password");
-		try {
-			user = usrService.getUser(userNumber); // throws UserNotFound
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
 
-			// At this point, if no exception, userNumber is valid and user object is
-			// retrieved
-			// Check userType to decide which welcome page to redirect
-			if (user != null) {
-				model.addAttribute("user", user);
-				return "user/profile";
+			String userNumber = util.getUNum(req); // to check user is login or not
+			try {
+				user = usrService.getUser(userNumber); // throws UserNotFound
+				user.setPassword("Please enter a password");
+				// At this point, if no exception, userNumber is valid and user object is
+				// retrieved
+				// Check user to decide which profile page to redirect
+				if (user != null) {
+					model.addAttribute("user", user);
+					return "user/profile";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, thus return to login page
+				return "redirect:/login";
 			}
-		} catch (UserNotFound e) {
-			// This means that userNumber is invalid, thus return to login page
-			return "redirect:/login";
 		}
 		return "redirect:/login";
+
 	}
 
-	@PostMapping("/profile")
-	public String updateProfile(HttpServletRequest req, HttpServletResponse res, User user) {
-		// Retrieves userNumber from session
-		String userNumber = this.getUserNumber(req);// to check if sign-up is done by Guest, Admin or SuperAdmin
-		user.setPassword("Enter Password");
-		User existinguser = new User();
-
-		// existinguser.setPassword("Enter");
-		try {
-			existinguser = usrService.getUser(userNumber);
-		} catch (UserNotFound e1) {
-
-
-			return "user/profile";
-		}
-
-		System.out.println(existinguser.toString());
-
-		existinguser.setEmailAddress(user.getEmailAddress());
-
-		existinguser.setPhoneNumber(user.getPhoneNumber());
-
-		// Validation Using UserValidator Class
-		// Perform validation Using UserValidator Class
-		// Create UserValidator
-		UserValidator uservalidator = new UserValidator();
-
-		// Create DataBinder to Bind UserValidator
-		DataBinder binder = new DataBinder(existinguser);
-		binder.setValidator(uservalidator);
-
-		// Validate the Data
-		binder.validate();
-
-		// Check Results
-		System.out.println(existinguser.toString());
-		BindingResult results = binder.getBindingResult();
-		System.out.println(user.toString());
-		System.out.println(results.toString());
-		if (results.hasErrors()) {
-			// Provide feedback to user that an error has occurred and what are the actions
-			// that can be taken
-
-			// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO
-			// NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
-			return "user/profile"; // default redirection for guest/user to retry
-		} else {
-			// This means that there is no validation error
+	@PostMapping("/updateprofile")
+	public String updateProfile(HttpServletRequest req, ModelMap model, User user) {
+		// Authenticate User
+		// Set the variables to authenticate user
+		String authAdminResult = util.authenticateAdmin(req, model);
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
+		
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
+			// Retrieves userNumber from session
+			String userNumber = util.getUNum(req);// to check user session
+			User existinguser = new User();
 			try {
-				// throws UserNotFound : this is to catch is the user object passed to the
-				usrService.updateUser(existinguser);
-				// addUser method is null
-				System.out.println(user.toString());
-				return "redirect:/"; // This means that sign-up success
-			} catch (UserNotFound e) {
-				System.out.println(e.getMessage());
+				existinguser = usrService.getUser(userNumber);
+				user.setPassword(existinguser.getPassword());
+				System.out.println(existinguser);
+			} catch (UserNotFound e1) {
+				// if user not found
+				return "redirect:/";
+			}
+			System.out.println(existinguser.toString());
+			// existinguser.setEmailAddress(user.getEmailAddress());
+			// existinguser.setPhoneNumber(user.getPhoneNumber());
+			user.setPassword(existinguser.getPassword());
+			// Validation Using UserValidator Class
+			// Perform validation Using UserValidator Class
+			// Create UserValidator
+			UserValidator uservalidator = new UserValidator();
+			// Create DataBinder to Bind UserValidator
+			DataBinder binder = new DataBinder(user);
+			binder.setValidator(uservalidator);
+			// Validate the Data
+			binder.validate();
+			// Check Results
+			System.out.println(user.toString());
+			BindingResult results = binder.getBindingResult();
+			System.out.println(user.toString());
+			System.out.println(results.toString());
+			if (results.hasErrors()) {
+				// Provide feedback to user that an error has occurred and what are the actions
+				// that can be taken
+				// <!-- SAI PLEASE REPLACE THIS COMMENT WITH YOUR CODE FOR ERROR HANDLING. DO
+				// NOT THROW EXCEPTION. YOU ARE THE HIGHEST LEVEL. NO ONE HIGHER TO CATCH -->
+				return "redirect:/"; // default redirection for guest/user to retry
+			} else {
+				// This means that there is no validation error
+				try {
+					// throws UserNotFound : this is to catch is the user object passed to the
+					usrService.updateUser(existinguser);
+					existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
+					eMailService.notifyUpdateProfile(existinguser); // sending email for new user
+					System.out.println(user.toString());
+					return "redirect:/"; // This means that sign-up success
+				} catch (UserNotFound e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		}
-		return "user/profile"; // default redirection for guest/user to retry
+		//return "user/profile"; // default redirection for guest/user to retry
+		return "redirect:/";
 	}
 
 	@GetMapping("/changepassword")
 	public String changePassword(HttpServletRequest req, ModelMap model) {
-		String userNumber = this.getUserNumber(req);
+		String userNumber = util.getUNum(req);
 		return "user/changepassword";
 	}
 
 	@PostMapping("/changepassword")
 	public String updatePassword(HttpServletRequest req, ModelMap model) {
 
-		String userNumber = this.getUserNumber(req);
+		String userNumber = util.getUNum(req);
 
 		if (userNumber == null) {
 			return "user/login";
@@ -416,47 +417,21 @@ public class UserController {
 		User user = new User();
 		List<User> uList = null;
 		try {
-			
+
 			user = usrService.getUser(memberNum);
-			String username = user.getFirstName();			
+			String username = user.getFirstName();
 			usrService.removeUser(memberNum);
-			
-			uList =usrService.getMListByName(user.getFirstName());
-			
+
+			uList = usrService.getMListByName(user.getFirstName());
+
 		} catch (UserNotFound e) {
-			
+
 		} catch (ResourceDefinitionInvalid e) {
 			// TODO Auto-generated catch block
 			return "user/search_member";
 		}
 		model.put("memberlist", uList);
 		return "user/search_member";
-	}
-
-	// Checking User Session and Get User Number
-	public String getUserNumber(HttpServletRequest req) {
-		// Retrieves userNumber from session
-		HttpSession session = req.getSession();
-		String userNumber = (String) session.getAttribute("userNumber");
-
-		// Check if logged in
-		if (userNumber == null)
-			return "redirect:/login";
-		else {
-			// Check if userNumber valid
-			User user = new User();
-			try {
-				user = usrService.getUser(userNumber); // throws UserNotFound
-				userNumber = user.getUserNumber();
-			} catch (UserNotFound e) {
-				// This means that userNumber is invalid, thus return to login page
-				return "redirect:/login";
-
-			}
-		}
-
-		return userNumber;
-
 	}
 
 	@ModelAttribute("user")

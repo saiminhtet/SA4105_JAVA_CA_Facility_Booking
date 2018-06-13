@@ -49,7 +49,8 @@ public class BookingController {
 	public String getSearchFacility(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) {
+		String userauthResult = util.authenticateMember(req, model);
+		if (authResult.equals("OK") || userauthResult.equals("OK")) {
 			try {
 				model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
 				model.addAttribute("fTypeList", fService.getFacilityTypes());
@@ -65,7 +66,8 @@ public class BookingController {
 	public String postSearchFacilityByType(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) {
+		String userauthResult = util.authenticateMember(req, model);
+		if (authResult.equals("OK") || userauthResult.equals("OK")) {
 			// Get Search Term
 			String fType = req.getParameter("facilityType");
 			
@@ -86,7 +88,8 @@ public class BookingController {
 	public String postSearchFacilityByNumber(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) {
+		String userauthResult = util.authenticateMember(req, model);
+		if (authResult.equals("OK") || userauthResult.equals("OK")) {
 			// Get Search Term
 			String fNum = req.getParameter("facilityNumber");
 			
@@ -106,7 +109,8 @@ public class BookingController {
 	public String postSearchFacilityByNuame(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) {
+		String userauthResult = util.authenticateMember(req, model);
+		if (authResult.equals("OK") || userauthResult.equals("OK")) {
 			// Get Search Term
 			String fName = req.getParameter("facilityName");
 			

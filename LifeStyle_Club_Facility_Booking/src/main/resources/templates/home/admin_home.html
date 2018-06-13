@@ -69,7 +69,8 @@
 								data-toggle="dropdown" aria-expanded="false" href="#" style="color: #FFFFFF;"><i class="fa fa-3x fa-user-circle"></i>
 							</a>
 								 <div class="dropdown-menu" role="menu">
-									<a class="dropdown-item" role="presentation" href="/user/profile">Profile</a>
+								 <a class="dropdown-item" role="presentation" href="#"><span style="font-size:18px;" th:text="${loginUserName}"></span></a>
+									<a class="dropdown-item" role="presentation" href="/user/profile">View Profile</a>
 									<a class="dropdown-item" role="presentation" href="/user/changepassword">Change Password</a>
 									<a class="dropdown-item" role="presentation" href="/logout">Logout</a>								
 								</div>								
