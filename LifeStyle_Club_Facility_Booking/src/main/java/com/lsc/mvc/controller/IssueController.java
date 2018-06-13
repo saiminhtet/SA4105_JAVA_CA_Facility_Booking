@@ -26,10 +26,10 @@ import com.lsc.mvc.javabeans.AuthenticateUser;
 @RequestMapping("/issue")
 public class IssueController {
 
-@Autowired
+	@Autowired
 	private AuthenticateUser util; 
 
-@Autowired
+	@Autowired
     private IssueService iService;
 
 	@GetMapping
@@ -174,6 +174,7 @@ public class IssueController {
 				// Check Results
 				BindingResult results = binder.getBindingResult();
 				if (results.hasErrors()) {
+					model.addAttribute("message", "Issue adding failed");
 					outputStringToConsole(results.toString());
 					return "issue/manage_issue";
 				}					
@@ -215,6 +216,7 @@ public class IssueController {
 					// Check Results
 					BindingResult results = binder.getBindingResult();
 					if (results.hasErrors()) {
+						model.addAttribute("message", "Issue updating failed");
 						outputStringToConsole(results.toString());
 						return "issue/manage_issue";
 					}					

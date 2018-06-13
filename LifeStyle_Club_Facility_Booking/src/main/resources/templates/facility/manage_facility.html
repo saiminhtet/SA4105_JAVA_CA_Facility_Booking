@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Facility Booking</title>
+<title>Manage Facility</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
@@ -27,8 +27,7 @@
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityType"
-							required="required"  th:field="*{facilityType}" >
+						<input class="form-control" type="text" name="facilityType" th:field="*{facilityType}" >
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -37,8 +36,7 @@
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityName"
-							required="required" th:field="*{facilityName}" >
+						<input class="form-control" type="text" name="facilityName" th:field="*{facilityName}" >
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -47,8 +45,7 @@
 							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
 					</div>
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="capacity"
-							required="required" th:value="${capacity}" >
+						<input class="form-control" type="text" name="capacity" th:value="${capacity}" >
 					</div>
 				</div>
 				<div class="form-row form-group">
@@ -58,7 +55,7 @@
 					</div>
 					<div class="col-sm-6 input-column">
 						<textarea class="form-control" rows="3" cols="20"
-							name="*{facilityDescription}" th:field="*{facilityDescription}" required="required">
+							name="*{facilityDescription}" th:field="*{facilityDescription}">
 						</textarea>
 					</div>
 				</div>
@@ -69,7 +66,7 @@
 							class="btn btn-light active submit-button cancel-btn-hover"
 							type="submit"
 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-							formaction="/"
+							formaction="/issue
 							formmethod="post">
 							Cancel
 							</button>
