@@ -11,8 +11,10 @@ import com.lsc.mvc.model.Booking;
 
 public class BookingValidator implements Validator {
 
+	// [A/M####]
 	private static final Pattern VALID_USER_NUMBER_REGEX = 
 		    Pattern.compile("[A|M][0-9]{4}");
+	// [F###]
 	private static final Pattern VALID_FACILITY_NUMBER_REGEX = 
 		    Pattern.compile("[F][0-9]{3}");
 	
