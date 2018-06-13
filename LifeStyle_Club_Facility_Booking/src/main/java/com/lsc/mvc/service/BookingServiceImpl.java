@@ -2,6 +2,7 @@ package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,6 +17,7 @@ import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
 import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.javabeans.FacilityUsage;
 import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.repository.BookingRepository;
@@ -148,4 +150,43 @@ public class BookingServiceImpl implements BookingService {
 		if (uService.getUser(uNum)==null) throw new UserNotFound("User number provided is invalid");
 		return bRepo.getBookingListByUserNum(uNum);
 	}
+	
+	@Override
+	public FacilityUsage getFacilityUsageByFNumAndDate(String fNum, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound {
+		DecimalFormat fmt = new DecimalFormat("0.00%");
+		Facility f = fService.getFacility(fNum);
+		if (f == null) throw new FacilityNotFound("Facility number provided is invalid");
+		
+		double numSlots = getSlotNumBetweenDates(dStart, dEnd);
+		ArrayList<Booking> bList = bRepo.getBookingListByFNumAndDate(fNum, dStart, dEnd);
+		
+		double numHr = 0;
+		for (Booking b: bList) numHr += getHourNumForBooking(b);
+		
+		FacilityUsage fUsage = new FacilityUsage(f.getFacilityNumber(), f.getFacilityType(), f.getFacilityName(), fmt.format(numHr / numSlots));
+		return fUsage;
+	}
+	
+	public List<FacilityUsage> getFacilityUsageListByFacilityListAndDate(List<Facility> fList, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound {
+		List<FacilityUsage> fUsageList = new ArrayList<FacilityUsage>();
+		for (Facility f: fList) {
+			fUsageList.add(getFacilityUsageByFNumAndDate(f.getFacilityNumber(), dStart, dEnd));
+		}
+		return fUsageList;
+	}
+	
+	// Utility Methods
+	public double getSlotNumBetweenDates(LocalDate dStart, LocalDate dEnd) {
+		double numDays = (double) (dStart.until(dEnd, ChronoUnit.DAYS));
+		return (numDays + 1) * 12;
+	}
+	
+	public double getHourNumForBooking(Booking b) throws BookingNotFound {
+		if (b == null) throw new BookingNotFound("Booking object provided cannot be null");
+		String strStart = b.getSlotTimeStart();
+		String strEnd = b.getSlotTimeEnd();
+		double dblStart = Double.parseDouble(strStart);
+		double dblEnd = Double.parseDouble(strEnd);
+		return (dblEnd-dblStart)/100;
+	}	
 }

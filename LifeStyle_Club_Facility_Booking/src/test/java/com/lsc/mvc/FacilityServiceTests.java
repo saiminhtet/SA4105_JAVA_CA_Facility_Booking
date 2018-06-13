@@ -1,6 +1,7 @@
 package com.lsc.mvc;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -149,6 +150,14 @@ public class FacilityServiceTests {
 //		Facility f = fService.getFacilityByName("Tennis Court 2");
 //		
 //		outputStringToConsole(f.toString());
+//	}
+	
+//	@Test
+//	public void whenGetFacilityList_thenReturnList() {
+//		List<Facility> fList = fService.getFacilityList();
+//		for (Facility f:fList) {
+//			System.out.println(f.toString());
+//		}
 //	}
 	
 	// Utility Methods

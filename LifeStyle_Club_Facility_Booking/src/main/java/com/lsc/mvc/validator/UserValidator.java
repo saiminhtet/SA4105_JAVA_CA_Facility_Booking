@@ -40,7 +40,6 @@ public class UserValidator implements Validator {
         if (u.getPhoneNumber() == null) 	errors.rejectValue("phoneNumber", "phoneNumber.null", "Phone number cannot be null");
         // validate not empty
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "userNumber", "userNumber.empty", "User number cannot be empty");
-
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "title.empty", "Title cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.empty", "First name cannot be empty");
 		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.empty", "Last name cannot be empty");
@@ -51,7 +50,7 @@ public class UserValidator implements Validator {
 		// validate within range
 		ArrayList<String> tList = new ArrayList<String>();
 		tList.add("Dr"); tList.add("Mdm"); tList.add("Mr");tList.add("Mrs"); tList.add("Ms");
-		if (!(tList.contains(u.getTitle()))) errors.rejectValue("title", "title.invalid", "Not a valid title");
+		if (!(tList.contains(u.getTitle()))) errors.rejectValue("title", "title.invalid", "Invalid title");
 
 		// validate format
 		Matcher passwordMatcher = VALID_PASSWORD_REGEX.matcher(u.getPassword());

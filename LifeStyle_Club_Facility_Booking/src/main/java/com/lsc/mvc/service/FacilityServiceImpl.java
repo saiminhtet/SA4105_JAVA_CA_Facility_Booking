@@ -2,6 +2,7 @@ package com.lsc.mvc.service;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -10,7 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.lsc.mvc.exception.BookingNotFound;
 import com.lsc.mvc.exception.FacilityNotFound;
+import com.lsc.mvc.exception.UserNotFound;
+import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
+import com.lsc.mvc.model.User;
 import com.lsc.mvc.repository.FacilityRepository;
 
 @Service
@@ -92,5 +96,18 @@ public class FacilityServiceImpl implements FacilityService {
 	@Override
 	public Facility getFacilityByName(String fName) {
 		return fRepo.getFacilityByName(fName);
+	}
+	
+	@Override
+	public Facility getFacility(Booking b) throws BookingNotFound, FacilityNotFound {
+		if (b == null) throw new BookingNotFound("Booking object provided cannot be null");
+		Facility f = getFacility(b.getFacilityNumber());
+		if (f == null) throw new FacilityNotFound("Unable to find Facility object based on FacilityNumber in Booking object");
+		return f;
+	}
+	
+	@Override
+	public List<Facility> getFacilityList() {
+		return fRepo.findAll();
 	}
 }
