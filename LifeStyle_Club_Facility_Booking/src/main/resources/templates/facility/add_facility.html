@@ -3,111 +3,92 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ADD FACILITY</title>
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
-
-
+<title>Facility Booking</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
 </head>
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-6 offset-md-3">
-			<form th:action="@{/facility/add_facility}" th:method="post"
-				th:object="${facility}" class="custom-form"
-				style="background-color: #f3f3f3; width: auto;">
-				<h1
-					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">ADD FACILITY
+		<div class="col-md-10 offset-sm-1">
+		<form class="custom-form" style="background-color: #f3f3f3; width: auto;"
+			th:action="@{/facility/manage_facility}" th:method="post" th:object="${facility}">
+				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
+					Add Facility
 				</h1>
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="facilitytype"
-							style="padding-right: 28%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-							Type </label>
+					<div class="col-md-5 label-column">
+						<label class="col-form-label" for="facilityType"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Booking Number </label>
 					</div>
-					<div class="col-sm-4 input-column">
-						<div class="dropdown">
-						
-							<select class="custom-select" id="facilityType" th:field="*{facilityType}">
+					<div class="col-sm-6 input-column">
+						<select class="custom-select" id="facilityType" th:field="*{facilityType}">
 								<option th:each="ftype : ${facilityType}" th:value="${ftype}"
 									th:text="${ftype}">Choose Type...</option>
-							</select>
-							
-						</div>
+						</select>	
 					</div>
 				</div>
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="facilityname"
-							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility
-							Name </label>
+					<div class="col-sm-5 label-column">
+						<label class="col-form-label" for="facilityName"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member Number </label>
 					</div>
-					
-						<div class="col-sm-6 input-column">
-						<input class="form-control" type="text" name="facilityname"
-							th:field="*{facilityName}" required="required">
-					</div>
-					
-				</div>
-
-				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="capacity"
-							style="padding-right: 37%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Capacity
-						</label>
-					</div>
-					
 					<div class="col-sm-6 input-column">
-						<input class="form-control" type="number" name="capacity"
-							th:field="*{capacity}" required="required" min="0">
+						<input class="form-control" type="text" name="facilityName"
+							required="required" th:field="*{facilityName}" >
 					</div>
-					
 				</div>
-
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column">
-						<label class="col-form-label" for="
-							description"
-							style="padding-right: 29%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Description
-						</label>
+					<div class="col-sm-5 label-column">
+						<label class="col-form-label" for="capacity"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Full Name </label>
+					</div>
+					<div class="col-sm-6 input-column">
+						<input class="form-control" type="text" name="capacity"
+							required="required" th:value="${capacity}" >
+					</div>
+				</div>
+				<div class="form-row form-group">
+					<div class="col-sm-5 label-column">
+						<label class="col-form-label" for="*{facilityDescription}"
+							style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Facility Number </label>
 					</div>
 					<div class="col-sm-6 input-column">
 						<textarea class="form-control" rows="3" cols="20"
-							name="description" th:field="*{facilityDescription}" required="required">
-						
+							name="*{facilityDescription}" th:field="*{facilityDescription}" required="required">
 						</textarea>
 					</div>
 				</div>
-
-
+				
 				<div class="form-row form-group">
-					<div class="col-sm-4 label-column" style="height: 90px;"></div>
-					<div class="col-sm-4 input-column" style="height: 90px;">
+					<div class="col-sm-5 input-column" style="height: 90px;">
 						<button
 							class="btn btn-light active submit-button cancel-btn-hover"
-							type="reset"
-							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 50%;">Cancel</button>
+							type="submit"
+							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
+							formaction="/"
+							formmethod="post">
+							Cancel
+							</button>
 					</div>
-					<div class="col-sm-4 input-column" style="height: 90px;">
+					<div class="col-sm-6 input-column" style="height: 90px;">
 						<button class="btn btn-light submit-button button-hover"
 							type="submit"
-							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 70%;">Submit
+							style="margin-left: 10px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+							formaction="/"
+							formmethod="post">
+							Submit
 						</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
