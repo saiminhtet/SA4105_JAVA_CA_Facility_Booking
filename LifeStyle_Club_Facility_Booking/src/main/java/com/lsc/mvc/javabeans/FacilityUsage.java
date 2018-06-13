@@ -8,7 +8,7 @@ public class FacilityUsage {
 	private String facilityNumber;
 	private String facilityType;
 	private String facilityName;
-	private double facilityUsage;
+	private String facilityUsage;
 	
 	// Getters and Setters
 	public String getFacilityNumber() {
@@ -29,17 +29,17 @@ public class FacilityUsage {
 	public void setFacilityName(String facilityName) {
 		this.facilityName = facilityName;
 	}
-	public double getFacilityUsage() {
+	public String getFacilityUsage() {
 		return facilityUsage;
 	}
-	public void setFacilityUsage(double facilityUsage) {
+	public void setFacilityUsage(String facilityUsage) {
 		this.facilityUsage = facilityUsage;
 	}
 	
 	// Constructors
 	public FacilityUsage() { }
 	
-	public FacilityUsage(String facilityNumber, String facilityType, String facilityName, double facilityUsage) {
+	public FacilityUsage(String facilityNumber, String facilityType, String facilityName, String facilityUsage) {
 		super();
 		this.facilityNumber = facilityNumber;
 		this.facilityType = facilityType;

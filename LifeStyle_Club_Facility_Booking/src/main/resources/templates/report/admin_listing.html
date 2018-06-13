@@ -19,10 +19,10 @@
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-9 offset-sm-1">
+		<div class="col-md-10 offset-sm-1">
 			<form class="custom-form" style="background-color: #f3f3f3; width: auto;">
 				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
-					Facility Listing
+					Admin Listing
 				</h1>
 				<div class="form-row form-group">
 					<div class="col-sm-6 label-column" style="height: 90px; min-width: 100px;">
@@ -48,18 +48,24 @@
 					<table style="margin-left:auto; margin-right:auto; text-align:center;">
 						<thead>
 							<tr>
-								<th>Facility Number</th>
-								<th>Type</th>
-								<th>Name</th>
-								<th>Capacity</th>
+								<th>Admin Number</th>
+								<th>Title</th>
+								<th>First Name</th>
+								<th>Last Name</th>
+								<th>Middle Name</th>
+								<th>Email Address</th>
+								<th>Phone Number</th>
 							</tr>
 						</thead>
-					   <tbody th:each="facility : ${facilityListing}" th:remove="tag">
+					   <tbody th:each="user : ${adminListing}" th:remove="tag">
 					      <tr>
-					         <td th:text="${facility.facilityNumber}">...</td>
-					         <td th:text="${facility.facilityType}">...</td>
-					         <td th:text="${facility.facilityName}">...</td>
-					         <td th:text="${facility.capacity}">...</td>
+					         <td th:text="${user.userNumber}">...</td>
+					         <td th:text="${user.title}">...</td>
+					         <td th:text="${user.firstName}">...</td>
+					         <td th:text="${user.lastName}">...</td>
+					         <td th:text="${user.middleName}">...</td>
+					         <td th:text="${user.emailAddress}">...</td>
+					         <td th:text="${user.phoneNumber}">...</td>
 					      </tr>
 					   </tbody>
 					</table>

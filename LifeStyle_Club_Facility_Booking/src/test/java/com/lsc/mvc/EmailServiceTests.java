@@ -47,9 +47,15 @@ public class EmailServiceTests {
 			User u = uService.getUser("M0015");	
 			// In order to verify success and not randomly send emails to others
 			// This is not for production implementation
-			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
 			
-			eService.notifyResetPassword(u, "1fF!3sdsg");
+			
+			// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
+			// -------------------------------------------------- START SECTION --------------------------------------------------
+			u.setEmailAddress("lifestyleclub.singapore@gmail.com");
+			// -------------------------------------------------- END SECTION --------------------------------------------------
+			
+			
+			eService.notifyResetPassword(u, u.getPassword());
 			outputStringToConsole(u.toString());
 		} catch (UserNotFound e) {
 			outputStringToConsole(e.getMessage());

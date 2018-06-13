@@ -10,6 +10,7 @@
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
 <style>
 	table > thead > tr > th, table > tbody > tr > td {
 		padding: 12px;
@@ -19,10 +20,10 @@
 
 <body style="background-color: #f3f3f3;">
 	<div class="row register-form">
-		<div class="col-md-9 offset-sm-1">
+		<div class="col-md-10 offset-sm-1">
 			<form class="custom-form" style="background-color: #f3f3f3; width: auto;">
 				<h1 style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">
-					Facility Listing
+					Facility Usage
 				</h1>
 				<div class="form-row form-group">
 					<div class="col-sm-6 label-column" style="height: 90px; min-width: 100px;">
@@ -51,15 +52,15 @@
 								<th>Facility Number</th>
 								<th>Type</th>
 								<th>Name</th>
-								<th>Capacity</th>
+								<th>Usage</th>
 							</tr>
 						</thead>
-					   <tbody th:each="facility : ${facilityListing}" th:remove="tag">
+					   <tbody th:each="fUsage : ${fUsageListing}" th:remove="tag">
 					      <tr>
-					         <td th:text="${facility.facilityNumber}">...</td>
-					         <td th:text="${facility.facilityType}">...</td>
-					         <td th:text="${facility.facilityName}">...</td>
-					         <td th:text="${facility.capacity}">...</td>
+					         <td th:text="${fUsage.facilityNumber}">...</td>
+					         <td th:text="${fUsage.facilityType}">...</td>
+					         <td th:text="${fUsage.facilityName}">...</td>
+					         <td th:text="${fUsage.facilityUsage}">...</td>
 					      </tr>
 					   </tbody>
 					</table>

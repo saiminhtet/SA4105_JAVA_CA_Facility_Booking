@@ -153,6 +153,7 @@ public class BookingServiceImpl implements BookingService {
 	
 	@Override
 	public FacilityUsage getFacilityUsageByFNumAndDate(String fNum, LocalDate dStart, LocalDate dEnd) throws FacilityNotFound, BookingNotFound {
+		DecimalFormat fmt = new DecimalFormat("0.00%");
 		Facility f = fService.getFacility(fNum);
 		if (f == null) throw new FacilityNotFound("Facility number provided is invalid");
 		
@@ -162,7 +163,7 @@ public class BookingServiceImpl implements BookingService {
 		double numHr = 0;
 		for (Booking b: bList) numHr += getHourNumForBooking(b);
 		
-		FacilityUsage fUsage = new FacilityUsage(f.getFacilityNumber(), f.getFacilityType(), f.getFacilityName(), (numHr / numSlots));
+		FacilityUsage fUsage = new FacilityUsage(f.getFacilityNumber(), f.getFacilityType(), f.getFacilityName(), fmt.format(numHr / numSlots));
 		return fUsage;
 	}
 	
