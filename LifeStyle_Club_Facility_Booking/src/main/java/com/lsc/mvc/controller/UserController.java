@@ -62,6 +62,14 @@ public class UserController {
 		else
 			return "user/signup";
 	}
+	
+	@PostMapping
+	public String postUserPage(HttpServletRequest req, ModelMap model) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
+	}
 
 	@GetMapping("signup")
 	public String getSignUp(HttpServletRequest req, ModelMap model) {
@@ -79,6 +87,7 @@ public class UserController {
 
 		// Determining the accountType for the signup
 		String acctType;
+		
 		try {
 			String userType = usrService.getUserType(util.getUNum(req)); // throws UserNotFound
 			switch (userType) {
@@ -86,9 +95,10 @@ public class UserController {
 				return "redirect:/member"; // Member is not supposed to be able to sign up for other accounts
 			case "Admin":
 				acctType = "Member"; // Admin is allowed to sign up for member, e.g. guest request counter staff to
-										// sign up for them
+				break;						// sign up for them
 			case "SuperAdmin":
 				acctType = "Admin"; // SuperAdmin is allowed to sign up for admin
+				break;
 			default:
 				acctType = "Member"; // Guests are allowed to sign up member accounts
 			}
@@ -96,7 +106,7 @@ public class UserController {
 			// This means that userNumber is invalid, thus default
 			acctType = "Member";
 		}
-
+		
 		// Setting the appropriate userNumber for the user object based on acctType
 		try {
 			usrService.setNewUserNum(user, acctType); // throws UserNotFound
@@ -105,7 +115,7 @@ public class UserController {
 			// redirect back to signup page to restart
 			return "user/signup";
 		}
-
+		System.out.println(acctType + ", " + user.toString());
 		// Perform validation Using UserValidator Class
 		// Create UserValidator
 		UserValidator uservalidator = new UserValidator();
@@ -511,6 +521,14 @@ public class UserController {
 		}
 		model.put("memberlist", uList);
 		return "user/search_member";
+	}
+	
+	@GetMapping("/return_home")
+	public String ReturnHome(ModelMap model, HttpServletRequest req) {
+		// Authenticate User
+		String authResult = util.authenticateUser(req, model);
+		if (authResult.equals("NG")) return "user/login";
+		else return authResult;
 	}
 
 	@ModelAttribute("user")
