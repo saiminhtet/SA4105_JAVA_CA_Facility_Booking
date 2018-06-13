@@ -27,6 +27,7 @@ import com.lsc.mvc.model.Booking;
 import com.lsc.mvc.model.Facility;
 import com.lsc.mvc.model.User;
 import com.lsc.mvc.service.BookingService;
+import com.lsc.mvc.service.EmailService;
 import com.lsc.mvc.service.FacilityService;
 import com.lsc.mvc.service.UserService;
 
@@ -45,7 +46,10 @@ public class BookingController {
 	private UserService uService;
 	
 	@Autowired
-	private AuthenticateUser util; 
+	private AuthenticateUser util;
+	
+	@Autowired
+	private EmailService eService;
 	
 	@GetMapping("search-facility")
 	public String getSearchFacility(HttpServletRequest req, ModelMap model) {
@@ -242,6 +246,19 @@ public class BookingController {
 	        model.addAttribute("booking", b);
 	        try {
 				bService.addBooking(b);
+				
+				// For Testing Purposes : PLEASE DELETE BEFPORE RELEASE FOR PRODUCTION
+				// -------------------------------------------------- START SECTION --------------------------------------------------
+				u.setEmailAddress("lifestyleclub.singapore@gmail.com");
+				// -------------------------------------------------- END SECTION --------------------------------------------------
+				
+				try {
+					eService.notifyBookingSummary(b);
+				} catch (UserNotFound e) {
+					
+				} catch (FacilityNotFound e) {
+					System.out.println(e.getMessage());
+				}
 			} catch (BookingNotFound e1) {
 				try {
 					model.addAttribute("acctType", uService.getUserType(util.getUNum(req)));
@@ -255,69 +272,4 @@ public class BookingController {
 		}
 		else return "user/login";
 	}
-
-//	@GetMapping("/managebooking")
-//	public String managebooking(ModelMap model) throws FacilityNotFound, ResourceDefinitionInvalid {
-//
-//		Booking booking = new Booking();
-//		model.put("facilityname", fservice.getFacilityListByType("Meeting Room"));
-//		model.put("slotstarttime", bservice.getAvailableSlots(LocalDate.of(2018, 6, 07), "F001"));
-//		model.put("booking", booking);
-//		return "booking/manage_booking";
-//
-//	}
-//
-//	@PostMapping("/managebooking")
-//	public String updateBooking(HttpServletRequest req, HttpServletResponse res, Booking booking)
-//			throws ResourceDefinitionInvalid, BookingNotFound {
-//
-//		String bookingNumber = "B000001";
-//
-//		Booking existingbooking = new Booking();
-//
-//		existingbooking = bservice.getBooking(bookingNumber);
-//		existingbooking.setFacilityNumber(booking.getFacilityNumber());
-//		existingbooking.setSlotDate(booking.getSlotDate());
-//		existingbooking.setSlotTimeStart(booking.getSlotTimeStart());
-//		existingbooking.setSlotTimeEnd(booking.getSlotTimeEnd());
-//
-//		bservice.updateBooking(existingbooking);
-//		return "booking/manage_booking";
-//	}
-//
-//	@GetMapping("/bookfacility")
-//	public String Bookingfacility(ModelMap model) throws FacilityNotFound {
-//
-//		Booking booking = new Booking();
-//		model.put("facilityname", fservice.getFacilityListByType("Meeting Room"));// Retrieve type list to populate
-//																					// dropdownlist in addfacility form
-//		model.put("bookingslot", bservice.getAvailableSlots(LocalDate.of(2018, 6, 07), "F001"));
-//		model.put("booking", booking);
-//
-//		return "booking/book_facility";
-//	}
-//
-//	@PostMapping("/bookfacility")
-//	public String addNewFacility(HttpServletRequest req, Booking booking) throws FacilityNotFound, BookingNotFound {// throws																					// ResourceDefinitionInvalid,
-//																													// FacilityNotFound{
-//		booking.setUserNumber("M0056");
-//		booking.setSlotTimeEnd("1100");
-//		//booking.setTransDateTime(LocalDateTime.now());
-//		bservice.setNewBookingNum(booking);		
-//		bservice.addBooking(booking);
-//		System.out.println(booking);
-//		return "booking/book_facility"; // default redirection to retry
-//	}
-//
-//
-//	@GetMapping("/bookingsummary")
-//	public String Bookingsummary(ModelMap model) throws BookingNotFound{
-//		
-//		Booking bookingsummary = new Booking();
-//		String bookingNumber = "B000001";
-//		bookingsummary = bservice.getBooking(bookingNumber);
-//		model.put("booking", bookingsummary);
-//		
-//		return "booking/booking_summary";
-//	}
 }

@@ -29,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
 		else {
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] User Registration";
-			String bodyText = "You have recently registered for an account with LifeStyleClub and we are glad to have you onboard.\n" + 
+			String bodyText = "You have recently registered for an account with LifeStyleClub and we are glad to have you onboard.\n\n" + 
 						"Your User Number is " + u.getUserNumber() + ".\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
@@ -43,9 +43,10 @@ public class EmailServiceImpl implements EmailService {
 		else {
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Reset Password";
-			String bodyText = "You have required to reset your password.\n" + 
-						"Your new password is \"" + u.getPassword() + "\", please use this password and your User Number to login to your account.\n" +
-					"You are strongly advised to change your password immediately.\n";
+			String bodyText = "You have requested to reset your password.\n" + 
+						"Your new password is \n\n\"" + u.getPassword() + "\"\n\n, please use this password and your User Number to login to your account.\n\n" +
+					"You are strongly advised to change your password immediately.\n"
+					+ "If you need further assistance, please feel free to contact us.";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
@@ -107,7 +108,7 @@ public class EmailServiceImpl implements EmailService {
 			Facility f = fService.getFacility(b);
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Booking Cancellation";
-			String bodyText = "You have recently cancelled a booking, bellow is the detail.\n\n" + 
+			String bodyText = "You have recently cancelled a booking, below is the detail.\n\n" + 
 					"Facility Name: " + f.getFacilityName() + "\n" +
 					"Slot Date: " + b.getSlotDate().toString() + "\n" +
 						"Slot Start Time: " + b.getSlotTimeStart().toString() + "\n" +
@@ -125,7 +126,7 @@ public class EmailServiceImpl implements EmailService {
 			String receiverEmailAddress = u.getEmailAddress();
 			String subjectText = "[Notification] Account Expired";
 			String bodyText = "You account has been deactivated.\n" + 
-						"If you wish to activate your account, please contact our staff for assistance.\n";
+						"If this action is not performed by you, please contact our staff for assistance.\n";
 			eg.generateEmail(receiverEmailAddress, subjectText, bodyText);
 		}
 
