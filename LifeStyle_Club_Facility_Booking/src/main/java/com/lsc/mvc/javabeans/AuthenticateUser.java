@@ -233,6 +233,24 @@ public class AuthenticateUser {
 		return uNum;
 	}
 	
+	//To Get Session User Name
+	public String getUserName(HttpServletRequest req) {
+		HttpSession session = req.getSession();
+		String uNum = (String) session.getAttribute("userName");
+		return uNum;
+	}
+	
+	public void getUserAccountType(String uType, ModelMap model) {
+		String makeAcctType = "";
+		switch (uType) {
+			case "Member": 		makeAcctType = "Member";
+			case "Admin" : 		makeAcctType = "Admin";
+			case "SuperAdmin": 	makeAcctType = "SuperAdmin";
+			default: 			makeAcctType = "NA";
+		}
+		model.addAttribute("MenuType", makeAcctType);
+	}
+	
 	public void checkMakeAcctType(HttpServletRequest req, ModelMap model) {
 		HttpSession session = req.getSession();
 		String uNum = (String) session.getAttribute("userNumber");

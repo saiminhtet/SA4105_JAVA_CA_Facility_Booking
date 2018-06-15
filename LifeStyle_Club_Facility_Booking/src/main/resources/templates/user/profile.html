@@ -5,18 +5,30 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Profile</title>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+	integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+<link rel="stylesheet" th:href="@{/css/admin.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
 
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
-
 </head>
 
 <body style="background-color: #f3f3f3;">
+<div th:replace="layouts/header :: header">&nbsp;</div>
 	<div class="row register-form">
 		<div class="col-md-6 offset-md-3">
 			<form class="custom-form"
@@ -108,8 +120,6 @@
 <!-- 						th:value="${user.phoneNumber}" -->
 					</div>
 				</div>
-				<input type="hidden" th:field="*{password}" th:text="${password}"/>
-
 				<div class="form-row form-group">
 					<div class="col-sm-4 label-column" style="height: 90px;"></div>
 					<div class="col-sm-4 input-column" style="height: 90px;">
@@ -133,7 +143,7 @@
 		</div>
 
 	</div>
-	
+		<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script

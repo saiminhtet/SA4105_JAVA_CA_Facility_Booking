@@ -23,6 +23,7 @@ import com.lsc.mvc.exception.ResourceDefinitionInvalid;
 import com.lsc.mvc.exception.UserNotFound;
 import com.lsc.mvc.javabeans.AuthenticateUser;
 import com.lsc.mvc.model.User;
+import com.lsc.mvc.service.EmailService;
 import com.lsc.mvc.service.UserService;
 import com.lsc.mvc.validator.UserValidator;
 
@@ -36,6 +37,9 @@ public class HomeController {
 	@Autowired
 	private AuthenticateUser util;
 
+	@Autowired
+	private EmailService eMailService;
+	
 	@GetMapping
 	public String Home(ModelMap model, HttpServletRequest req) {
 	
@@ -97,13 +101,12 @@ public class HomeController {
 
 		try {
 			user = usrService.validateLogin(login_userNumber, login_password);
-
+			if (user.equals(null)) return "home/login";
 		} catch (UserNotFound e) {
-			
 			model.put("error", "Login Failed!");
 			return "home/login";
 		}
-		if (user == null) return "home/login";
+		if (user.equals(null)) return "home/login";
 		// Save user info in the session
 		String userNumber = user.getUserNumber();
 		String userName = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
@@ -133,32 +136,29 @@ public class HomeController {
 	}
 
 	@GetMapping("/member")
-	public String Member(ModelMap model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");// get the session userName
+	public String Member(ModelMap model, HttpServletRequest req) {		
+		String loginUserName = util.getUserName(req);// get the session userName
 		String authMemberResult = util.authenticateMember(req, model);
+		model.put("loginUserName", loginUserName);// to view user session name in home page
 		if (authMemberResult.equals("OK")) {
-			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "home/member_home";
 		} else if (loginUserName.equals(null))
 			return "home/login";
 		else
-			model.put("loginUserName", loginUserName);
 		return authMemberResult;
 	}
 
 	@GetMapping("/admin")
 	public String Admin(ModelMap model, HttpServletRequest req) {
-		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");// get the session userName
+		
+		String loginUserName = util.getUserName(req);// get the session userName
 		String authAdminResult = util.authenticateAdmin(req, model);
+		model.put("loginUserName", loginUserName);// to view user session name in home page
 		if (authAdminResult.equals("OK")) {
-			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "home/admin_home";
 		} else if (loginUserName.equals(null))
 			return "home/login";
-		else
-			model.put("loginUserName", loginUserName);
+		else			
 		return authAdminResult;
 	}
 
@@ -178,6 +178,37 @@ public class HomeController {
 
 	}
 
+	@GetMapping("/resetpassword")
+	public String resetPassword(HttpServletRequest req, ModelMap model) {
+		return "user/resetpassword";
 
+	}
+
+	@PostMapping("/resetpassword")
+	public String UpdateresetPassword(HttpServletRequest req, ModelMap model) {
+		String usernumber = req.getParameter("usernumber");
+		User user;
+		try {
+			user = usrService.getUser(usernumber);
+			if (user != null) {
+				try {
+					String autogeneratepassword = usrService.generateRandomPw();
+					user = usrService.updatePassword(user.getUserNumber(), autogeneratepassword);
+					eMailService.notifyResetPassword(user);
+
+					return "redirect:/login";
+				} catch (UserNotFound e) {
+					return "redirect:/login";
+				}
+
+			}
+		} catch (UserNotFound e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		return "redirect:/login";
+
+	}
 
 }

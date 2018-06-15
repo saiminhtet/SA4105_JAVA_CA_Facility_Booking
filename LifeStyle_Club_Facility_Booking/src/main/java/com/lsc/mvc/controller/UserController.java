@@ -49,26 +49,82 @@ public class UserController {
 	@GetMapping
 	public String Get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
-		// Set the variables to authenticate user
+		// Set the variables to authenticate user	
+		
 		String authAdminResult = util.authenticateAdmin(req, model);
-
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
 
-		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK")))
-			return "user/signup";
-		else if (authMemberResult.equals("OK"))
-			return "redirect:/member";
-		else
-			return "user/signup";
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
+
+			String userNumber = util.getUNum(req); // to check user is login or not
+			String userName = util.getUserName(req);
+			try {
+				// throws UserNotFound
+
+				String AccountType = usrService.getUserType(util.getUNum(req)); // Get user type for displaying
+																				// different menu
+				// At this point, if no exception, userNumber is valid and user object is
+				// retrieved
+				// Check user to decide which profile page to redirect
+
+				model.put("loginUserName", userName);// to view user session name in home page
+				model.put("MenuType", AccountType); // Set menu type by user type
+
+				switch (AccountType) {
+				case "Member":
+					return "home/member_home";
+				case "Admin":
+					return "home/admin_home";
+				case "SuperAdmin":
+					return "home/super_admin_home";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, thus return to login page
+				return "redirect:/login";
+			}
 	}
-	
+		return "redirect:/login";
+	}
+
 	@PostMapping
-	public String postUserPage(HttpServletRequest req, ModelMap model) {
-		// Authenticate User
-		String authResult = util.authenticateUser(req, model);
-		if (authResult.equals("NG")) return "user/login";
-		else return authResult;
+	public String postUserPage(HttpServletRequest req, ModelMap model) {	
+		
+		String authAdminResult = util.authenticateAdmin(req, model);
+		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
+		String authMemberResult = util.authenticateMember(req, model);
+
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
+
+			String userNumber = util.getUNum(req); // to check user is login or not
+			String userName = util.getUserName(req);
+			try {
+				// throws UserNotFound
+
+				String AccountType = usrService.getUserType(util.getUNum(req)); // Get user type for displaying
+																				// different menu
+				// At this point, if no exception, userNumber is valid and user object is
+				// retrieved
+				// Check user to decide which profile page to redirect
+
+				model.put("loginUserName", userName);// to view user session name in home page
+				model.put("MenuType", AccountType); // Set menu type by user type
+
+				switch (AccountType) {
+				case "Member":
+					return "home/member_home";
+				case "Admin":
+					return "home/admin_home";
+				case "SuperAdmin":
+					return "home/super_admin_home";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, thus return to login page
+				return "redirect:/login";
+			}
+		}
+
+		return "redirect:/login";
 	}
 
 	@GetMapping("signup")
@@ -87,7 +143,7 @@ public class UserController {
 
 		// Determining the accountType for the signup
 		String acctType;
-		
+
 		try {
 			String userType = usrService.getUserType(util.getUNum(req)); // throws UserNotFound
 			switch (userType) {
@@ -95,7 +151,7 @@ public class UserController {
 				return "redirect:/member"; // Member is not supposed to be able to sign up for other accounts
 			case "Admin":
 				acctType = "Member"; // Admin is allowed to sign up for member, e.g. guest request counter staff to
-				break;						// sign up for them
+				break; // sign up for them
 			case "SuperAdmin":
 				acctType = "Admin"; // SuperAdmin is allowed to sign up for admin
 				break;
@@ -106,7 +162,7 @@ public class UserController {
 			// This means that userNumber is invalid, thus default
 			acctType = "Member";
 		}
-		
+
 		// Setting the appropriate userNumber for the user object based on acctType
 		try {
 			usrService.setNewUserNum(user, acctType); // throws UserNotFound
@@ -160,16 +216,27 @@ public class UserController {
 		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
 
 			String userNumber = util.getUNum(req); // to check user is login or not
+			String userName = util.getUserName(req);
 			try {
 				user = usrService.getUser(userNumber); // throws UserNotFound
-				user.setPassword("Please enter a password");// set as a hidden field in profile view using to set
-															// existing password in post method
+
+				String AccountType = usrService.getUserType(util.getUNum(req)); // Get user type for displaying
+																				// different menu
 				// At this point, if no exception, userNumber is valid and user object is
 				// retrieved
 				// Check user to decide which profile page to redirect
 				if (user != null) {
+					model.put("loginUserName", userName);// to view user session name in home page
+					model.put("MenuType", AccountType); // Set menu type by user type
 					model.addAttribute("user", user);
-					return "user/profile";
+					switch (AccountType) {
+					case "Member":
+						return "user/profile";
+					case "Admin":
+						return "user/profile";
+					case "SuperAdmin":
+						return "user/profile";
+					}
 				}
 			} catch (UserNotFound e) {
 				// This means that userNumber is invalid, thus return to login page
@@ -196,15 +263,14 @@ public class UserController {
 				existinguser = usrService.getUser(userNumber);
 				user.setPassword(existinguser.getPassword());
 				user.setUserId(existinguser.getUserId());
+				String AccountType = usrService.getUserType(util.getUNum(req)); // Get user type for displaying
+																				// different menu
 				System.out.println(existinguser);
 			} catch (UserNotFound e1) {
 				// if user not found
-				return "redirect:/";
+				return "redirect:/login";
 			}
 			System.out.println(existinguser.toString());
-			// existinguser.setEmailAddress(user.getEmailAddress());
-			// existinguser.setPhoneNumber(user.getPhoneNumber());
-			//user.setPassword(existinguser.getPassword());
 			// Validation Using UserValidator Class
 			// Perform validation Using UserValidator Class
 			// Create UserValidator
@@ -242,27 +308,42 @@ public class UserController {
 
 	@GetMapping("/changepassword")
 	public String changePassword(HttpServletRequest req, ModelMap model) {
-		String userNumber = util.getUNum(req);
 		// Setting up variable to set attributes in view
 		String authAdminResult = util.authenticateAdmin(req, model);
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
 
-		// get the session variable
-		HttpSession session = req.getSession();
-		if (authAdminResult.equals("OK")) {
+		if (authAdminResult.equals("OK") || (authSuperAdminResult.equals("OK") || authMemberResult.equals("OK"))) {
 
-			return "user/changepassword";
-		}
-		if (authSuperAdminResult.equals("OK")) {
+			String userNumber = util.getUNum(req); // to check user is login or not
+			String userName = util.getUserName(req);
+			try {
+				// throws UserNotFound
 
-			return "user/changepassword";
-		}
-		if (authMemberResult.equals("OK")) {
+				String AccountType = usrService.getUserType(util.getUNum(req)); // Get user type for displaying
+																				// different menu
+				// At this point, if no exception, userNumber is valid and user object is
+				// retrieved
+				// Check user to decide which profile page to redirect
 
-			return "user/changepassword";
+				model.put("loginUserName", userName);// to view user session name in home page
+				model.put("MenuType", AccountType); // Set menu type by user type
+
+				switch (AccountType) {
+				case "Member":
+					return "user/changepassword";
+				case "Admin":
+					return "user/changepassword";
+				case "SuperAdmin":
+					return "user/changepassword";
+				}
+			} catch (UserNotFound e) {
+				// This means that userNumber is invalid, thus return to login page
+				return "redirect:/login";
+			}
 		}
-		return "home/login";
+
+		return "redirect:/login";
 
 	}
 
@@ -285,14 +366,8 @@ public class UserController {
 				usrService.validatePasswordChange(userNumber, currentpassword, newpassword, confirmpassword);
 				User existinguser = new User();
 				existinguser = usrService.getUser(userNumber);
-
-				System.out.println(existinguser.toString());
-
 				existinguser = usrService.updatePassword(userNumber, newpassword);
-
-				//existinguser.setEmailAddress("lifestyleclub.singapore@gmail.com");
 				eMailService.notifyChangePassword(existinguser); // sending email for new user
-
 				User updateuser = usrService.getUser(userNumber);
 				System.out.println(updateuser.toString());
 
@@ -302,8 +377,7 @@ public class UserController {
 				String authMemberResult = util.authenticateMember(req, model);
 
 				// get the session variable
-				HttpSession session = req.getSession();
-				String loginUserName = (String) session.getAttribute("userName");
+				String loginUserName = util.getUserName(req);
 				if (authAdminResult.equals("OK")) {
 					model.put("loginUserName", loginUserName);// to view user session name in home page
 					return "redirect:/admin";
@@ -323,65 +397,27 @@ public class UserController {
 		}
 		return "redirect:/login";
 	}
-	
-	@GetMapping("/resetpassword")
-	public String resetPassword(HttpServletRequest req, ModelMap model) {
-		return "user/resetpassword";
-
-	}
-	
-	@PostMapping("/resetpassword")
-	public String UpdateresetPassword(HttpServletRequest req, ModelMap model) {
-		String usernumber = req.getParameter("usernumber");
-		User user;
-		try {
-			user = usrService.getUser(usernumber);
-			if(user!=null) {
-				try {
-					String autogeneratepassword = usrService.generateRandomPw();
-					user = usrService.updatePassword(user.getUserNumber(), autogeneratepassword);
-					eMailService.notifyResetPassword(user);
-					
-					return "redirect:/login";
-				} catch (UserNotFound e) {
-					return "redirect:/login";
-				}
-				
-			}
-		} catch (UserNotFound e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		
-		return "redirect:/login";
-
-	}
-	
 
 	// get member list and bind data to manage member view
 	@GetMapping("searchmember")
 	public String getMembers(ModelMap model, HttpServletRequest req) {
 		String authAdminResult = util.authenticateAdmin(req, model);
-		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");
+		
+		String loginUserName = util.getUserName(req);
 		if (authAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "user/search_member";
-		} else
+		} else {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
-		return authAdminResult;
-
+			return authAdminResult;}
 		// model.put("memberlist", usrService.getMList());
-
 	}
 
 	@PostMapping("searchmember")
 	public String searchMemer(HttpServletRequest req, ModelMap model) {
 		String userNumber = req.getParameter("membernumber");
 		String userName = req.getParameter("membername");
-		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");
-		
+		String loginUserName = util.getUserName(req);
 		if (userNumber != null) {
 			List<User> uList;
 			try {
@@ -393,7 +429,6 @@ public class UserController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		if (userName != null) {
 			List<User> uList;
@@ -406,7 +441,6 @@ public class UserController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 		}
 		model.put("loginUserName", loginUserName);// to view user session name in home page
 		return "user/search_member";
@@ -414,10 +448,9 @@ public class UserController {
 
 	@RequestMapping(value = "/managemember/{memberNum}", method = RequestMethod.GET)
 	public String updateMember(@PathVariable("memberNum") String memberNum, ModelMap model, HttpServletRequest req) {
-		
+
 		String authAdminResult = util.authenticateAdmin(req, model);
-		HttpSession session = req.getSession();
-		String loginUserName = (String) session.getAttribute("userName");
+		String loginUserName = util.getUserName(req);
 		if (authAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
 			User user = new User();
@@ -434,7 +467,7 @@ public class UserController {
 			}
 		} else
 			model.put("loginUserName", loginUserName);// to view user session name in home page
-		return authAdminResult;	
+		return authAdminResult;
 	}
 
 	@RequestMapping(value = "/updateMember", method = RequestMethod.POST)
@@ -508,9 +541,9 @@ public class UserController {
 		try {
 
 			user = usrService.getUser(memberNum);
-			String username = user.getFirstName();
+			// String username = user.getFirstName();
 			usrService.removeUser(memberNum);
-
+			eMailService.notifyExpireUser(user);
 			uList = usrService.getMListByName(user.getFirstName());
 
 		} catch (UserNotFound e) {
@@ -522,13 +555,17 @@ public class UserController {
 		model.put("memberlist", uList);
 		return "user/search_member";
 	}
-	
+
 	@GetMapping("/return_home")
 	public String ReturnHome(ModelMap model, HttpServletRequest req) {
 		// Authenticate User
 		String authResult = util.authenticateUser(req, model);
-		if (authResult.equals("NG")) return "user/login";
-		else return authResult;
+		String loginUserName = util.getUserName(req);
+		if (authResult.equals("NG"))
+			return "user/login";
+		else
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return authResult;
 	}
 
 	@ModelAttribute("user")

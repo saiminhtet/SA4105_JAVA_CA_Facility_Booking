@@ -30,15 +30,16 @@
 						<span class="sr-only">Toggle navigation</span><span
 							class="navbar-toggler-icon"></span>
 					</button>
-					<div class="collapse navbar-collapse" id="navcol-1">
+					<div class="collapse navbar-collapse" id="navcol-1" th:switch="${MenuType}" >
 						<ul class="nav navbar-nav">							
 							<li class="dropdown"><a
 								class=" nav-link "
 								data-toggle="dropdown" aria-expanded="false" href="#" style="color: #FFFFFF;"><i class="fas fa-3x fa-bars"></i>
 							</a>
-								 <div class="dropdown-menu" role="menu">
-								    <a class="dropdown-item" role="presentation" href="/">Home</a>
-									<a class="dropdown-item" role="presentation" href="/booking/search_facility">Make New Booking</a>
+								 <div class="dropdown-menu" role="menu" th:case="'Admin'">
+								 <!-- Menu Items For Admin -->
+								 	<a class="dropdown-item" role="presentation" href="/">Home</a>
+									<a class="dropdown-item" role="presentation" href="/booking/search_facility" >Make New Booking</a>
 									<a class="dropdown-item" role="presentation" href="/booking/search_booking">Manage Booking</a>
 									<a class="dropdown-item" role="presentation" href="/facility/add_facility">Add Facility</a>
 									<a class="dropdown-item" role="presentation" href="/booking/search_facility">Manage Facility</a>
@@ -46,7 +47,18 @@
 									<a class="dropdown-item" role="presentation" href="/user/searchmember">Manage Member</a>
 									<a class="dropdown-item" role="presentation" href="/issue/manage-issue">Add Issue</a>
 									<a class="dropdown-item" role="presentation" href="/issue/search-issue">Manage Issue</a>
-									<a class="dropdown-item" role="presentation" href="/view-reports">View Reports</a>
+									<a class="dropdown-item" role="presentation" href="/view-reports">View Reports</a>									
+								</div>									
+								<div class="dropdown-menu" role="menu" th:case="'Member'" >
+								<!-- Menu Items For User -->
+									<a class="dropdown-item" role="presentation" href="/">Home</a>
+									<a class="dropdown-item" role="presentation" href="/booking/search_facility" >Make New Booking</a>
+									<a class="dropdown-item" role="presentation" href="/booking/search_booking">Manage Booking</a>
+								</div>	
+								<div class="dropdown-menu" role="menu" th:case="'SuperAdmin'" >
+									<!-- Menu Items For SuperAdmin -->
+									<a class="dropdown-item" role="presentation" href="/">Home</a>
+									<a class="dropdown-item" role="presentation" href="/user/signup">Add Admin</a>
 								</div>								
 								</li>
 						</ul>
@@ -77,5 +89,6 @@
 			</nav>			
 		</div>
 	</div>
+	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
 </body>
 </html>

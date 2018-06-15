@@ -5,11 +5,23 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SEARCH MEMBER</title>
 <link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
 <link rel="stylesheet"
-	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+	integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+<link rel="stylesheet" th:href="@{/css/admin.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.min.css}">
+<link rel="stylesheet"
+	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 
 
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
@@ -33,17 +45,19 @@
 </head>
 
 <body style="background-color: #f3f3f3;">
+	<div th:replace="layouts/admin_header :: header">&nbsp;</div>
 	<div class="row register-form">
 		<div class="col-md-10 offset-md-1">
 			<form class="custom-form"
-				style="background-color: #f3f3f3; width: auto;" th:action="@{/user/searchmember}" method="post">
+				style="background-color: #f3f3f3; width: auto;"
+				th:action="@{/user/searchmember}" method="post">
 				<h1
 					style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">SEARCH
 					MEMBER</h1>
 				<div class="offset-sm-2">
 					<div class="form-row form-group">
-					
-					
+
+
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="membernumber"
 								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member
@@ -54,14 +68,14 @@
 						</div>
 						<div class="col-sm-2 input-column" style="height: 20%;">
 							<button class="btn btn-success" type="submit"
-								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
 							</button>
 						</div>
-						
+
 					</div>
 					<div class="form-row form-group">
-					
-					
+
+
 						<div class="col-sm-2  offset-sm-2 label-column">
 							<label class="col-form-label" for="membername"
 								style="padding-right: 25%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Member
@@ -72,22 +86,19 @@
 						</div>
 						<div class="col-sm-2 input-column" style="height: 20%;">
 							<button class="btn btn-success" type="submit"
-								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
 							</button>
 						</div>
-					
-						
+
+
 					</div>
-					<div class="col-md-12 input-column" style="height: 90px;">
-					<button
-						class="btn btn-light active submit-button cancel-btn-hover"
-						type="submit"
-						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-						formaction="/user"
-						formmethod="post">
-						Home
-					</button>
-				</div>
+<!-- 					<div class="col-md-12 input-column" style="height: 90px;"> -->
+<!-- 						<button -->
+<!-- 							class="btn btn-light active submit-button cancel-btn-hover" -->
+<!-- 							type="submit" -->
+<!-- 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;" -->
+<!-- 							formaction="/user" formmethod="post">Home</button> -->
+<!-- 					</div> -->
 
 
 					<!-- 					<div class="offset-sm-2"> -->
@@ -108,8 +119,7 @@
 					<!-- 					</div> -->
 					<!-- 				</div> -->
 				</div>
-				<br />
-				<br/>
+				<br /> <br />
 				<div class="table-responsive col-md-10 offset-md-1">
 					<table class="table table-hover">
 						<thead>
@@ -126,31 +136,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="member : ${memberlist}">								
+							<tr th:each="member : ${memberlist}">
 								<th scope="row" th:text="${member.userNumber}"></th>
 								<td th:text="${member.title}"></td>
 								<td th:text="${member.firstName}"></td>
 								<td th:text="${member.lastName}"></td>
 								<td th:text="${member.middleName}"></td>
 								<td th:text="${member.emailAddress}"></td>
-								<td th:text="${member.phoneNumber}"></td>						
-								<td><a th:href="@{'/user/managemember/' + ${member.userNumber}}" class="btn btn-primary">Update</a></td>
-								<td><a th:href="@{'/user/expiremember/' + ${member.userNumber}}" class="btn btn-danger">Expire</a></td>
+								<td th:text="${member.phoneNumber}"></td>
+								<td><a
+									th:href="@{'/user/managemember/' + ${member.userNumber}}"
+									class="btn btn-primary">Update</a></td>
+								<td><a
+									th:href="@{'/user/expiremember/' + ${member.userNumber}}"
+									class="btn btn-danger">Expire</a></td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</div>
-				</form>
-			</div>
-			
+			</form>
 		</div>
 
-		<script type="text/javascript" th:inline="javascript">
-		
-		</script>
-
-
+	</div>
+	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script

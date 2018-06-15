@@ -36,7 +36,7 @@ public class IssueController {
 	public String get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "home/admin_home";
+		if (authResult.equals("OK")) return "issue/search_issue";
 		else return authResult;
 	}
 
