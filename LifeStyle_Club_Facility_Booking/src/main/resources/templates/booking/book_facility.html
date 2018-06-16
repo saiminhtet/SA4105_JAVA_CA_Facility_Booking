@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Facility Booking</title>
 <link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
+<link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
@@ -42,6 +49,7 @@
 </head>
 
 <body style="background-color: #f3f3f3;">
+	<div th:replace="layouts/header :: header">&nbsp;</div>
 	<div class="row register-form">
 		<div class="col-md-10 offset-md-1">
 			<form class="custom-form"
@@ -78,13 +86,13 @@
 						</div>
 						<div class="col-sm-3 input-column">
 							<input type="date" class="form-control" id="date"
-								placeholder="Select value" name="targetDate"
+								placeholder="Select value" name="targetDate" th:value="${bCurrent.slotDate}"
 								style="height: 50px;">
 						</div>
 						<div class="col-sm-3 input-column">
 							<button class="btn btn-primary submit-button button-hover"
 								type="submit"
-								style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+								style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
 								formaction="/booking/search-slots/" formmethod="post">
 								Check</button>
 						</div>
@@ -98,7 +106,7 @@
 						<div class="col-sm-3 input-column">
 							<div class="dropdown">
 								<select name="targetSlot" class="custom-select" id="targetSlot"
-									style="height: 50px;">
+									re style="height: 50px;">
 									<option th:each="s : ${slotList}" th:value="${s}"
 										th:text="${s}">Choose ...</option>
 								</select>
@@ -107,7 +115,7 @@
 						<div class="col-sm-3 input-column">
 							<button class="btn btn-light submit-button button-hover"
 								type="submit"
-								style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
+								style="margin: 2px 0px 0px 20px; height: 45px; padding: 0px; min-width: 100px; background-color: #b6d7a8; color: rgb(8, 8, 8); font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 100%;"
 								formaction="/booking/booking-summary" formmethod="post">
 								Book</button>
 						</div>
@@ -126,25 +134,46 @@
 					</h3>
 				</div>
 
-				<div style="text-align:center;"><h3>You have selected 
-					<div th:if="${bCurrent} != null" th:text="${bCurrent.facilityNumber}" style="display: inline;"></div> 
-					<div th:if="${bCurrent} != null" th:text="${fName}" style="display: inline;"></div> 
-					for <div th:if="${bCurrent} != null" th:text="${bCurrent.slotDate}" style="display: inline;"></div></h3></div>
-				<div class="col-md-12 input-column" style="height: 90px;">
-					<button
-						class="btn btn-light active submit-button cancel-btn-hover"
-						type="submit"
-						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-						formaction="/booking"
-						formmethod="post">
-						Home
-					</button>
-				</div>
+				<!-- 				<div style="text-align:center;"><h3>You have selected  -->
+				<!-- 					<div th:if="${bCurrent} != null" th:text="${bCurrent.facilityNumber}" style="display: inline;"></div>  -->
+				<!-- 					<div th:if="${bCurrent} != null" th:text="${fName}" style="display: inline;"></div>  -->
+				<!-- 					for <div th:if="${bCurrent} != null" th:text="${bCurrent.slotDate}" style="display: inline;"></div></h3></div> -->
+				<!-- 				<div class="col-md-12 input-column" style="height: 90px;"> -->
+				<!-- 					<button -->
+				<!-- 						class="btn btn-light active submit-button cancel-btn-hover" -->
+				<!-- 						type="submit" -->
+				<!-- 						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;" -->
+				<!-- 						formaction="/booking" -->
+				<!-- 						formmethod="post"> -->
+				<!-- 						Home -->
+				<!-- 					</button> -->
+				<!-- 				</div> -->
 
 			</form>
+			<br />
 		</div>
 	</div>
 	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
+	<script type="text/javascript">
+		$(function() {
+			var dtToday = new Date();
+
+			var month = dtToday.getMonth() + 1;
+			var day = dtToday.getDate();
+			var year = dtToday.getFullYear();
+			var next5day = day + 5;
+			if (month < 10)
+				month = '0' + month.toString();
+			if (day < 10)
+				day = '0' + day.toString();
+
+			var minDate = year + '-' + month + '-' + day;
+			var maxDate = year + '-' + month + '-' + next5day;
+			$('#date').attr('min', minDate);
+// 			$('#date').attr('max', maxDate);
+
+		});
+	</script>
 </body>
 
 </html>

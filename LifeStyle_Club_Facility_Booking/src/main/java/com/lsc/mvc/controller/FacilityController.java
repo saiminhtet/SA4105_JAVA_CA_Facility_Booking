@@ -33,6 +33,8 @@ public class FacilityController {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "home/admin_home";
 		}
 		else return authResult;
@@ -43,6 +45,8 @@ public class FacilityController {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
 		if (authResult.equals("OK")) {
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "facility/add_facility";
 		}
 		else return "user/login";

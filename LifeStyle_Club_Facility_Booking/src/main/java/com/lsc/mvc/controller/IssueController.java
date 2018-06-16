@@ -36,7 +36,11 @@ public class IssueController {
 	public String get(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "issue/search_issue";
+		if (authResult.equals("OK")) {
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "issue/search_issue";
+		}
 		else return authResult;
 	}
 
@@ -44,7 +48,11 @@ public class IssueController {
 	public String ManageIssue(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "issue/manage_issue";
+		if (authResult.equals("OK")) {
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "issue/manage_issue";
+		}
 		else return "user/login";
 	}
 	
@@ -52,7 +60,11 @@ public class IssueController {
 	public String IssueSearch(HttpServletRequest req, ModelMap model) {
 		// Authenticate User
 		String authResult = util.authenticateAdmin(req, model);
-		if (authResult.equals("OK")) return "issue/search_issue";
+		if (authResult.equals("OK")) {
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
+			return "issue/search_issue";
+		}
 		else return "user/login";
 	}
 	
@@ -67,6 +79,8 @@ public class IssueController {
 			} catch (FacilityNotFound e) {
 				e.printStackTrace();
 			}
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "issue/search_issue";
 		}
 		else return "user/login";
@@ -83,6 +97,8 @@ public class IssueController {
 			} catch (IssueNotFound e) {
 				e.printStackTrace();
 			}
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "issue/search_issue";
 		}
 		else return "user/login";
@@ -103,6 +119,8 @@ public class IssueController {
 			} catch (IssueNotFound e) {
 				model.addAttribute("message", "Issue not found");
 			}
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			model.addAttribute("message", "Issue deleted successfully");
 			return "issue/search_issue";	
 		}
@@ -123,6 +141,8 @@ public class IssueController {
 			} catch (IssueNotFound e) {
 				e.printStackTrace();
 			}
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "issue/manage_issue";
 		}	
 		else return "user/login";
@@ -177,6 +197,8 @@ public class IssueController {
 				if (results.hasErrors()) {
 					model.addAttribute("message", "Issue adding failed");
 					outputStringToConsole(results.toString());
+					String loginUserName = util.getUserName(req);// to display user session name in view
+					model.put("loginUserName", loginUserName);// to view user session name in home page
 					return "issue/manage_issue";
 				}					
 				else {
@@ -216,6 +238,8 @@ public class IssueController {
 					// Check Results
 					BindingResult results = binder.getBindingResult();
 					if (results.hasErrors()) {
+						String loginUserName = util.getUserName(req);// to display user session name in view
+						model.put("loginUserName", loginUserName);// to view user session name in home page
 						model.addAttribute("message", "Issue updating failed");
 						outputStringToConsole(results.toString());
 						return "issue/manage_issue";
@@ -232,6 +256,8 @@ public class IssueController {
 					e.printStackTrace();
 				}
 			}
+			String loginUserName = util.getUserName(req);// to display user session name in view
+			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return "issue/manage_issue";
 			
 		};

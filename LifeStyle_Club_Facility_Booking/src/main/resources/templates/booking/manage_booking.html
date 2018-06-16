@@ -8,6 +8,15 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Julius+Sans+One">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz">
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootswatch/4.0.0/lumen/bootstrap.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,400italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+<link rel="stylesheet"href="https://fonts.googleapis.com/css?family=Bitter:400,700">
+<link rel="stylesheet" th:href="@{/css/admin.min.css}">
+<link rel="stylesheet" th:href="@{/css/styles.min.css}">
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
 
@@ -26,6 +35,7 @@
 </head>
 
 <body style="background-color: #f3f3f3;">
+<div th:replace="layouts/header :: header">&nbsp;</div>
 	<div class="row register-form">
 		<div class="col-md-10 offset-md-1">
 		<form class="custom-form" style="background-color: #f3f3f3; width: auto;"
@@ -96,19 +106,22 @@
 					<div th:if="${booking} != null" th:text="${booking.facilityNumber}" style="display: inline;"></div> 
 					<div th:if="${booking} != null" th:text="${fName}" style="display: inline;"></div> 
 					for <div th:if="${booking} != null" th:text="${booking.slotDate}" style="display: inline;"></div></h3></div>
-				<div class="col-md-12 input-column" style="height: 90px;">
-					<button
-						class="btn btn-light active submit-button cancel-btn-hover"
-						type="submit"
-						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;"
-						formaction="/booking"
-						formmethod="post">
-						Home
-					</button>
-				</div>
+<!-- 				<div class="col-md-12 input-column" style="height: 90px;"> -->
+<!-- 					<button -->
+<!-- 						class="btn btn-light active submit-button cancel-btn-hover" -->
+<!-- 						type="submit" -->
+<!-- 						style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;" -->
+<!-- 						formaction="/booking" -->
+<!-- 						formmethod="post"> -->
+<!-- 						Home -->
+<!-- 					</button> -->
+<!-- 				</div> -->
 			</form>
 		</div>
 	</div>
+	<br/>
+	<br/>
+	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
 </body>
 
 </html>
