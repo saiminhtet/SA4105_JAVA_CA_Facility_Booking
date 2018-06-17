@@ -39,10 +39,10 @@ public class HomeController {
 
 	@Autowired
 	private EmailService eMailService;
-	
+
 	@GetMapping
 	public String Home(ModelMap model, HttpServletRequest req) {
-	
+
 		String authAdminResult = util.authenticateAdmin(req, model);
 		String authSuperAdminResult = util.authenticateSuperAdmin(req, model);
 		String authMemberResult = util.authenticateMember(req, model);
@@ -101,12 +101,18 @@ public class HomeController {
 
 		try {
 			user = usrService.validateLogin(login_userNumber, login_password);
-			if (user.equals(null)) return "home/login";
+			if (user.equals(null)) {
+				model.put("error", "Login failed! User Number or Password did not match");
+				return "home/login";
+			}
 		} catch (UserNotFound e) {
-			model.put("error", "Login Failed!");
+			model.put("error", "Login failed! User Number or Password did not match");
 			return "home/login";
 		}
-		if (user.equals(null)) return "home/login";
+		if (user.equals(null)) {
+			model.put("error", "Login failed! User Number or Password did not match");
+			return "home/login";
+		}
 		// Save user info in the session
 		String userNumber = user.getUserNumber();
 		String userName = user.getFirstName() + " " + user.getMiddleName() + " " + user.getLastName();
@@ -136,7 +142,7 @@ public class HomeController {
 	}
 
 	@GetMapping("/member")
-	public String Member(ModelMap model, HttpServletRequest req) {		
+	public String Member(ModelMap model, HttpServletRequest req) {
 		String loginUserName = util.getUserName(req);// get the session userName
 		String authMemberResult = util.authenticateMember(req, model);
 		model.put("loginUserName", loginUserName);// to view user session name in home page
@@ -145,12 +151,12 @@ public class HomeController {
 		} else if (loginUserName.equals(null))
 			return "home/login";
 		else
-		return authMemberResult;
+			return authMemberResult;
 	}
 
 	@GetMapping("/admin")
 	public String Admin(ModelMap model, HttpServletRequest req) {
-		
+
 		String loginUserName = util.getUserName(req);// get the session userName
 		String authAdminResult = util.authenticateAdmin(req, model);
 		model.put("loginUserName", loginUserName);// to view user session name in home page
@@ -158,8 +164,8 @@ public class HomeController {
 			return "home/admin_home";
 		} else if (loginUserName.equals(null))
 			return "home/login";
-		else			
-		return authAdminResult;
+		else
+			return authAdminResult;
 	}
 
 	@GetMapping("/superadmin")

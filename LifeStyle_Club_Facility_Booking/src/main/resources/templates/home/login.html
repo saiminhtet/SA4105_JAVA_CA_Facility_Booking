@@ -38,20 +38,20 @@
 					<h1
 						style="font-family: 'Julius Sans One', sans-serif; font-size: 33px;">Login
 					</h1>
-
+					
 					<div class="form-row form-group">
 						<div class="col-sm-4 label-column">
 							<label class="col-form-label" for="email"
-								style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">User Number
-							</label>
+								style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">User
+								Number </label>
 						</div>
 						<div class="col-sm-6 input-column">
 							<input class="form-control" type="text" required="required"
 								placeholder="" name="usernumber">
 						</div>
 					</div>
-					
-					<div class="form-row form-group">						
+
+					<div class="form-row form-group">
 						<div class="col-sm-4 label-column">
 							<label class="col-form-label" for="password"
 								style="padding-right: 54%; font-family: 'Yanone Kaffeesatz', sans-serif; font-size: 20px;">Password
@@ -84,10 +84,10 @@
 
 						<div class="col-md-8 offset-md-3">
 							<a href="/resetpassword">click here to reset password</a>
-						
+
 						</div>
 					</div>
-
+					<label style="color:#ff1a1a"  th:if="${error}" th:text="${error}"></label>
 				</form>
 			</div>
 		</div>
