@@ -22,9 +22,16 @@
 <link rel="stylesheet" th:href="@{/css/styles.min.css}">
 <link rel="stylesheet"
 	th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
-
-
 <link rel="stylesheet" th:href="@{/css/form-styles.min.css}">
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
+
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" charset="utf8"
+	src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
 <style type="text/css">
 .resultsTable {
 	/* 	border-radius: 25px !important; */
@@ -68,7 +75,7 @@
 						</div>
 						<div class="col-sm-2 input-column" style="height: 20%;">
 							<button class="btn btn-success" type="submit"
-								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
 							</button>
 						</div>
 
@@ -86,19 +93,19 @@
 						</div>
 						<div class="col-sm-2 input-column" style="height: 20%;">
 							<button class="btn btn-success" type="submit"
-								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
+								style="margin-left: 10px; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; width: 50%;">Search
 							</button>
 						</div>
 
 
 					</div>
-<!-- 					<div class="col-md-12 input-column" style="height: 90px;"> -->
-<!-- 						<button -->
-<!-- 							class="btn btn-light active submit-button cancel-btn-hover" -->
-<!-- 							type="submit" -->
-<!-- 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;" -->
-<!-- 							formaction="/user" formmethod="post">Home</button> -->
-<!-- 					</div> -->
+					<!-- 					<div class="col-md-12 input-column" style="height: 90px;"> -->
+					<!-- 						<button -->
+					<!-- 							class="btn btn-light active submit-button cancel-btn-hover" -->
+					<!-- 							type="submit" -->
+					<!-- 							style="margin-right: 20px; margin-left: 1px; background-color: #d9d9d9; font-family: &amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; Yanone Kaffeesatz&amp;amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; amp; #39; , sans-serif; font-size: 1.5em; color: rgb(18, 14, 14); width: 100%;" -->
+					<!-- 							formaction="/user" formmethod="post">Home</button> -->
+					<!-- 					</div> -->
 
 
 					<!-- 					<div class="offset-sm-2"> -->
@@ -121,7 +128,7 @@
 				</div>
 				<br /> <br />
 				<div class="table-responsive col-md-10 offset-md-1">
-					<table class="table table-hover">
+					<table id="member_table" class="table table-hover display">
 						<thead>
 							<tr>
 								<th scope="col">ID</th>
@@ -160,10 +167,12 @@
 
 	</div>
 	<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#member_table').DataTable();
+		});
+	</script>
+
 </body>
 
 </html>

@@ -469,9 +469,17 @@ public class BookingController {
 				uNum = req.getParameter("tbx_uNum");
 			model.addAttribute("uNum", uNum);
 
-			LocalDate dateStart = LocalDate.parse(req.getParameter("startDate"));
-			LocalDate dateEnd = LocalDate.parse(req.getParameter("endDate"));
-
+			String StartDate = req.getParameter("startDate");
+			String EndDate = req.getParameter("endDate");
+			if (StartDate=="" && EndDate=="" || StartDate=="" || EndDate=="") {
+				model.put("loginUserName", loginUserName);// to view user session name in home page
+				model.put("MenuType", AccountType); // Set menu type by user type
+				model.put("warning", "Please Select Start Date and End Date!");
+				return "booking/search_booking";
+			}
+			LocalDate dateStart = LocalDate.parse(StartDate);
+			LocalDate dateEnd = LocalDate.parse(EndDate);
+			
 			// Load Data into Model
 			try {
 				model.addAttribute("bList", bService.getBookingListByUserNumAndDate(uNum, dateStart, dateEnd));

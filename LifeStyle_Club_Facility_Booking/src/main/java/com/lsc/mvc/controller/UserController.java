@@ -406,11 +406,12 @@ public class UserController {
 		String loginUserName = util.getUserName(req);
 		if (authAdminResult.equals("OK")) {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
+			model.put("memberlist", usrService.getMList());
 			return "user/search_member";
 		} else {
 			model.put("loginUserName", loginUserName);// to view user session name in home page
 			return authAdminResult;}
-		// model.put("memberlist", usrService.getMList());
+		
 	}
 
 	@PostMapping("searchmember")

@@ -17,9 +17,11 @@
 <link rel="stylesheet" th:href="@{/css/admin.min.css}">
 <link rel="stylesheet" th:href="@{/css/styles.min.css}">
 <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	href="https://cdn.datatables.net/1.10.18/css/jquery.dataTables.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.js"></script>
 
 <style type="text/css">
 .resultsTable {
@@ -109,19 +111,21 @@
 			</form>
 			
 			<div class="table-responsive col-md-10 offset-md-1">
-				<table class="table table-hover">
+				<table id="issues_table" class="table table-hover display">
 					<thead>
 						<tr>
-							<th>Issue Number</th>
-							<th>Admin Number</th>
-							<th>Facility Number</th>
-							<th>Report Date Time</th>
-					    	<th>Issue Status</th>
+							<th scope="col">Issue Number</th>
+							<th scope="col">Admin Number</th>
+							<th scope="col">Facility Number</th>
+							<th scope="col">Report Date Time</th>
+					    	<th scope="col">Issue Status</th>
+					    	<th scope="col"></th>
+					    	<th scope="col"></th>
 						</tr>
 					</thead>
-				    <tbody th:each="issue : ${issueListing}" th:remove="tag">
-					      <tr>
-					         <td th:text="${issue.issueNumber}">...</td>
+				    <tbody>
+					      <tr th:each="issue : ${issueListing}" th:remove="tag">
+					         <th scope="row" th:text="${issue.issueNumber}">...</th>
 					         <td th:text="${issue.adminNumber}">...</td>
 					         <td th:text="${issue.facilityNumber}">...</td>
 					         <td th:text="${issue.reportDateTime}">...</td>
@@ -138,6 +142,11 @@
 	<br/>
 	<br/>
 		<div th:replace="layouts/footer :: footer-dark">&nbsp;</div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#issues_table').DataTable();
+		});
+	</script>
 </body>
 
 </html>
